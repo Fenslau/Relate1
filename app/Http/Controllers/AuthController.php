@@ -32,7 +32,7 @@ class AuthController extends Controller
     $client_id = env('CLIENT_ID');
     $client_secret = env('CLIENT_SECRET');
     $redirect_uri = 'https://lara.sarby.ru/vk-auth-code';
-    $code = 'CODE';
+    $code = Request::input('code');
 
     $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
     $access_token = $response['access_token'];
