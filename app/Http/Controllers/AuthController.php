@@ -16,10 +16,10 @@ class AuthController extends Controller
 
     $oauth = new VKOAuth();
     $client_id = env('CLIENT_ID');
-    $redirect_uri = 'http://lara.sarby.ru/vk-auth-code?url='.Request::post('url');
+    $redirect_uri = 'https://lara.sarby.ru/vk-auth-code';
     $display = VKOAuthDisplay::PAGE;
     $scope = array(VKOAuthUserScope::STATS, VKOAuthUserScope::VIDEO);
-    $state = env('CLIENT_SECRET');
+    $state = Request::post('url');
     $revoke_auth = false;
 
     $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
@@ -31,7 +31,7 @@ class AuthController extends Controller
     $oauth = new VKOAuth();
     $client_id = env('CLIENT_ID');
     $client_secret = env('CLIENT_SECRET');
-    $redirect_uri = 'http://lara.sarby.ru/vk-auth-code?url='.Request::input('url');
+    $redirect_uri = 'https://lara.sarby.ru/vk-auth-code';
     $code = 'CODE';
 
     $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
