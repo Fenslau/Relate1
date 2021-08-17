@@ -18,5 +18,8 @@
 }
 
 .service {
+    width: -webkit-min-content;
+    width: -moz-min-content;
     width: min-content;
 }
+

@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+Route::post('/auth-vk', 'App\Http\Controllers\AuthController@authVK')
+->name('auth-vk');
+
+Route::get('/vk-auth-code', 'App\Http\Controllers\AuthController@authVKcode')
+->name('auth-vk-code');
