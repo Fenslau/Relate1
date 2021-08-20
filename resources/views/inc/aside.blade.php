@@ -1,7 +1,7 @@
 
 @section('aside')
-  <div class="aside">
+  <aside>
 
 
     @show
-  </div>
+  </aside>

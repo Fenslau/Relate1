@@ -15,21 +15,10 @@
 <body>
   @include('inc.header')
 
-  <div class="container">
-
-    @include('inc.messages')
-
-    <div class="row">
-      <div class="col-8">
-        @yield('content')
-      </div>
-
-      <div class="col-4">
-        @include('inc.aside')
-      </div>
-    </div>
-  </div>
-
+  @include('inc.messages')
+<main>
+  @yield('content')
+</main>
 
   @include('inc.footer')
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

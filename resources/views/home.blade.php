@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
-@section('title-block')Relate @endsection
+@section('title-block', 'Поиск ТОП-групп ВК')
 
 @section('content')
 
 
 
-@endsection
 
-@section('aside')
-  @parent
-  <p></p>
 @endsection

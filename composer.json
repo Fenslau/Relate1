@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
+        "qiwi/bill-payments-php-sdk": "^0.2.2",
         "vkcom/vk-php-sdk": "^5.101"
     },
     "require-dev": {
