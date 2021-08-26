@@ -117,3 +117,7 @@
 .popular .tarif-bottom {
     margin-bottom: 0;
 }
+
+.table td, .table th, .table thead th {
+    vertical-align: middle;
+  }

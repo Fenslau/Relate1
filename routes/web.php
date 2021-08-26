@@ -13,13 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', 'App\Http\Controllers\MainController@main')
+->name('home');
+
+Route::get('/download/{filename}', 'App\Http\Controllers\DownloadController@download')
+->name('download');
 
 Route::get('/stat', function () {
     return view('stat');
 })->name('stat');
+
+Route::post('/stat', 'App\Http\Controllers\VisitorsStatController@getStat')
+->name('stat');
 
 Route::get('/tarifs', function () {
     return view('tarifs');

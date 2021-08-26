@@ -27,11 +27,11 @@
       <div class="p-2 d-flex align-items-center">
         <div class="px-1 d-inline-block">
           <a target="_blank" href="https://vk.com/id{{ $user_profile->id }}">
-            <img class="rounded" src="{{ $user_profile->photo_50 }}" alt="">
+            <img class="rounded" src="{{ $user_profile->photo_50 }}" width="32" alt="">
           </a>
         </div>
 
-        <div class="d-inline-block">
+        <div class="d-none d-sm-inline-block">
             <a target="_blank" href="https://vk.com/id{{ $user_profile->id }}">
               {{ $user_profile->first_name }} {{ $user_profile->last_name }}</a>
             @if($user_profile->id = 151103777 OR $user_profile->id = 409899462)

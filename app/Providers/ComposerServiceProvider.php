@@ -15,7 +15,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
     /**
@@ -25,8 +25,8 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('inc.auth', function($view) {
-              $view->with(['user_profile' => AuthController::getUser(session('token'))]);
+        View::composer(['layouts.app'], function($view) {
+              $view->with(['user_profile' => AuthController::getUser()]);
         });
     }
 }

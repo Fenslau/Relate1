@@ -6,9 +6,6 @@
 
 
 <h2 class="text-center p-5">Тарифы</h2>
-
-<form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
-  @csrf
   <div class="container-fluid">
       <div class="row">
         <div class="col-xl-6 text-center">
@@ -28,7 +25,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
-                        <input class="kupit" type="submit" name="submit199" value="Купить">
+                        <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                          @csrf
+                          <input type="hidden" name="amount" value="194">
+                          <input type="hidden" name="comment" value="Оплата за доступ на три дня. После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                          <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                          @if(Session::has('token'))
+                          <input class="kupit" type="submit" name="submit199" value="Купить">
+                          @else
+                          <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                          <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit199" value="Купить">
+                          </span>
+                          @endif
+                        </form>
                         <div class="price">
                             199₽
                         </div>
@@ -49,7 +58,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
+                      <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount" value="538">
+                        <input type="hidden" name="comment" value="Оплата за доступ на 30 дней. После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                        <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                        @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit549" value="Купить">
+                        @else
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit549" value="Купить">
+                        </span>
+                        @endif
+                      </form>
                         <div class="price">
                             549₽
                         </div>
@@ -68,7 +89,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
+                      <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount" value="1273">
+                        <input type="hidden" name="comment" value="Оплата за доступ на 90 дней. После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                        <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                        @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit1299" value="Купить">
+                        @else
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit1299" value="Купить">
+                        </span>
+                        @endif
+                      </form>
                         <div class="price">
                             1299₽
                         </div>
@@ -97,7 +130,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
+                      <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount" value="342">
+                        <input type="hidden" name="comment" value="Оплата за тариф POST1 (7 дней). После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                        <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                        @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit349" value="Купить">
+                        @else
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit349" value="Купить">
+                        </span>
+                        @endif
+                      </form>
                         <div class="price">
                             349₽
                         </div>
@@ -122,7 +167,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
-                        <input class="kupit" type="submit" name="submit550" value="Купить">
+                      <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount" value="539">
+                        <input type="hidden" name="comment" value="Оплата за тариф POST2 (7 дней). После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                        <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                        @if(Session::has('token'))
+                        <input class="kupit" type="submit" name="submit549" value="Купить">
+                        @else
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit549" value="Купить">
+                        </span>
+                        @endif
+                      </form>
                         <div class="price">
                             549₽
                         </div>
@@ -144,7 +201,19 @@
                         </ul>
                     </div>
                     <div class="tarif-bottom">
+                      <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                        @csrf
+                        <input type="hidden" name="amount" value="979">
+                        <input type="hidden" name="comment" value="Оплата за тариф POST3 (30 дней). После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                        <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                        @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit999" value="Купить">
+                        @else
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit999" value="Купить">
+                        </span>
+                        @endif
+                      </form>
                         <div class="price">
                             999₽
                         </div>
@@ -154,7 +223,7 @@
         </div>
     </div>
   </div>
-</form>
+
 
 
 @endsection

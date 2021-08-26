@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\ParseGroups::class,
+        Commands\Top1000::class,
     ];
 
     /**
@@ -24,7 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('Parse:Groups')->monthlyOn(4, '15:00')->withoutOverlapping()->runInBackground()->sendOutputTo('storage/logs/ParseGroups.log');
+
+        $schedule->command('Top1000:get')->every5minutes()->withoutOverlapping()->runInBackground()->sendOutputTo('storage/logs/Top1000.log');      
     }
 
     /**

@@ -8,24 +8,18 @@ use \Qiwi\Api\BillPayments;
 class TarifController extends Controller
 {
   public function choose(Request $request) {
-
-    $billPayments = new BillPayments(env('SECRET_KEY'));
-    if (isset($request->submit199)) {
-
+      $billPayments = new BillPayments(env('SECRET_KEY'));
       $lifetime = $billPayments->getLifetimeByDay(1);
       $billId = $billPayments->generateId();
       $fields = [
-        'amount' => 1.00,
+        'amount' => 1, //$request->amount,
         'currency' => 'RUB',
-        'comment' => 'Оплата за доступ на 3 дня. После оплаты, пожалуйста, вернитесь на сайт самостоятельно.',
+        'comment' => $request->comment,
         'expirationDateTime' => $lifetime,
         'customFields' => ['themeCode'  =>  'Evgenyi-KRvq8Ldyhy'],
-        'account' => 123
+        'account' => $request->vkid
       ];
-
-      dd($fields);
       $response = $billPayments->createBill($billId, $fields);
       return redirect($response['payUrl']);
-    }
   }
 }

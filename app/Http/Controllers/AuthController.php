@@ -11,6 +11,7 @@ use \VK\OAuth\VKOAuthResponseType;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Models\Visitors;
 
 class AuthController extends Controller
 {
@@ -34,9 +35,26 @@ class AuthController extends Controller
     $client_secret = env('CLIENT_SECRET');
     $redirect_uri = 'http://lara.sarby.ru/vk-auth-code';
     $code = Request::input('code');
+    try {
+      $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+      if (!empty($response['access_token'])) {
+        $vk = new VKApiClient();
+          $user_profile = $vk->users()->get($response['access_token'], array(
+            'fields' => 'photo_50, city'
+          ));
 
-    $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
-    //проверить, нет ли какой, сука, ошибки в авторизации
+        $visitor = New Visitors();
+        $visitor->vkid=$response['user_id'];
+        $visitor->firstname = $user_profile['0']['first_name'];
+        $visitor->lastname = $user_profile['0']['last_name'];
+        if(isset($user_profile['0']['city']['title'])) $visitor->city = $user_profile['0']['city']['title'];
+        if(isset($user_profile['0']['photo_50'])) $visitor->photo = $user_profile['0']['photo_50'];
+        $visitor->save();
+      }
+    } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+        Session::flush();
+        return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
+    }
     session(['token' => $response['access_token'], 'vkid' => $response['user_id']]);
     /*
     |--------------------------------------------------------------------------
@@ -47,13 +65,18 @@ class AuthController extends Controller
     return redirect()->route(Request::input('state'));
   }
 
-  public static function getUser($token) {
-
+  public static function getUser() {
+    $token=session('token');
     if (!empty($token)) {
       $vk = new VKApiClient();
-      $user_profile = $vk->users()->get($token, array(
-        'fields' => 'photo_50, city'
-      ));
+      try {
+        $user_profile = $vk->users()->get($token, array(
+          'fields' => 'photo_50, city'
+        ));
+      } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+          Session::flush();
+          return back()->with('info', 'Ваша сессия устарела. Залогиньтесь заново');
+      }
       return (object)($user_profile[0]);
     }
     else return ($user_profile=0);

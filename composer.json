@@ -10,7 +10,9 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
+        "mk-j/php_xlsxwriter": "^0.38.0",
         "qiwi/bill-payments-php-sdk": "^0.2.2",
+        "shuchkin/simplexlsx": "^0.8.26",
         "vkcom/vk-php-sdk": "^5.101"
     },
     "require-dev": {
