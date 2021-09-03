@@ -11,7 +11,7 @@
       @else
         <form action="{{ route('auth-vk') }}" method="get">
           <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
-          <button type="submit" class="btn btn-sm btn-secondary"><i class="fab fa-vk"></i> Вход / Регистрация через ВКонтакте</button>
+          <button type="submit" class="btn btn-sm btn-secondary"><i class="fab fa-vk"></i> Вход / Регистрация <span class="d-none d-md-inline"> через ВКонтакте</span></button>
         </form>
       @endif
     </div>
@@ -34,7 +34,7 @@
         <div class="d-none d-sm-inline-block">
             <a target="_blank" href="https://vk.com/id{{ $user_profile->id }}">
               {{ $user_profile->first_name }} {{ $user_profile->last_name }}</a>
-            @if($user_profile->id = 151103777 OR $user_profile->id = 409899462)
+            @if($user_profile->id == 151103777 OR $user_profile->id == 409899462)
               <a target="_blank" href="{{ route('stat') }}">Статистика</a>
             @endif
         </div>

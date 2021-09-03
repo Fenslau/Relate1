@@ -6,10 +6,6 @@ use Illuminate\Console\Command;
 use App\Models\Top;
 use App\Models\VkGroups;
 use \VK\Client\VKApiClient;
-use \VK\OAuth\VKOAuth;
-use \VK\OAuth\VKOAuthDisplay;
-use \VK\OAuth\Scopes\VKOAuthUserScope;
-use \VK\OAuth\VKOAuthResponseType;
 
 class ParseGroups extends Command
 {
@@ -49,12 +45,11 @@ class ParseGroups extends Command
 
       $top1000 = $top->findOrFail(1);
       $i_count=1;
-
+      if(empty($top1000->current_group)) $top1000->current_group = 0;
       for ($j=$top1000->current_group; $j<413408; $j++) {
         $group_ids=$i_count;
         for ($i=($i_count+1); $i<=($i_count+499); $i++) {
-        $group_ids .= ','.$i;
-
+          $group_ids .= ','.$i;
         }
         $i_count=500*($j+1);
 
@@ -90,7 +85,7 @@ class ParseGroups extends Command
               if (($tag_status[0])) $tags .= implode(' ', $tag_status[0]);
               $data['tags']=$tags;
 
-              if (isset($group_get[$i]['city'])) $data['city'] = substr($group_get[$i]['city']['title'], 0, 64); else $data['city']='';
+              if (isset($group_get[$i]['city'])) $data['city'] = mb_substr($group_get[$i]['city']['title'], 0, 64); else $data['city']='';
               $data['contacts'] = '';
               if (isset($group_get[$i]['contacts'])) {
                 foreach ($group_get[$i]['contacts'] as $contact) {
@@ -105,18 +100,18 @@ class ParseGroups extends Command
               $data['type'] = $group_get[$i]['type'];
 
               $data['wall'] = $group_get[$i]['wall'];
-              if (isset($group_get[$i]['site'])) $data['site'] = substr($group_get[$i]['site'], 0, 128); else $data['site']='';
+              if (isset($group_get[$i]['site'])) $data['site'] = mb_substr($group_get[$i]['site'], 0, 128); else $data['site']='';
 
               $data['verified'] = $group_get[$i]['verified'];
               if (isset($group_get[$i]['market'])) $data['market'] = $group_get[$i]['market']['enabled'];
 
               $data['is_closed'] = $group_get[$i]['is_closed'];
 
-              if (isset($group_get[$i]['public_date_label'])) $data['public_date_label'] = substr($group_get[$i]['start_date'], 0, 32);
+              if (isset($group_get[$i]['public_date_label'])) $data['public_date_label'] = mb_substr($group_get[$i]['start_date'], 0, 32);
 
-              if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['start_date'])) $data['start_date'] = substr($group_get[$i]['start_date'], 0, 32);
+              if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['start_date'])) $data['start_date'] = mb_substr($group_get[$i]['start_date'], 0, 32);
 
-              if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['finish_date'])) $data['finish_date'] = substr($group_get[$i]['finish_date'], 0, 32);
+              if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['finish_date'])) $data['finish_date'] = mb_substr($group_get[$i]['finish_date'], 0, 32);
 
               $vk_group->updateOrCreate(['group_id' => $group_get[$i]['id']], $data);
             }

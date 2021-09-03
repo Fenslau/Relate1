@@ -10,6 +10,10 @@
     line-height: 0.75rem;
 }
 
+.lh-md {
+    line-height: 1rem;
+}
+
 .lh-m {
     line-height: 1.2rem;
 }
@@ -123,4 +127,23 @@
 .table td, .table th, .table thead th {
     vertical-align: middle;
   }
+
+td.ava-group {
+      padding: 0;
+      position: relative;
+      height: 43px;
+}
+
+img.ava-group {
+    max-height: 40px;
+    max-width: 40px;
+}
+
+.group-name {
+  max-width: 13rem;
+}
+
+#progress-text {
+  min-height: 1.5rem;
+}
 

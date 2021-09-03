@@ -16,8 +16,8 @@ class CreateVisitorsTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
             $table->integer('vkid');
-            $table->string('firstname', 64);
-            $table->string('lastname', 64);
+            $table->string('firstname', 64)->nullable();
+            $table->string('lastname', 64)->nullable();
             $table->string('city', 64)->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();

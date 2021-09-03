@@ -12,7 +12,7 @@ class TarifController extends Controller
       $lifetime = $billPayments->getLifetimeByDay(1);
       $billId = $billPayments->generateId();
       $fields = [
-        'amount' => 1, //$request->amount,
+        'amount' => $request->amount,
         'currency' => 'RUB',
         'comment' => $request->comment,
         'expirationDateTime' => $lifetime,

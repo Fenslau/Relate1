@@ -15,7 +15,7 @@ class CreateDownloadsTable extends Migration
     {
         Schema::create('downloads', function (Blueprint $table) {
             $table->id();
-            $table->integer('vkid');
+            $table->string('vkid', 16);
             $table->tinyInteger('download');
             $table->timestamps();
         });

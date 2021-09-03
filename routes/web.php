@@ -16,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\MainController@main')
 ->name('home');
 
+Route::post('/', 'App\Http\Controllers\MainController@search')
+->name('search');
+
 Route::get('/download/{filename}', 'App\Http\Controllers\DownloadController@download')
 ->name('download');
+
+Route::post('/progress', 'App\Http\Controllers\ProgressController@getProgress')
+->name('progress');
 
 Route::get('/stat', function () {
     return view('stat');

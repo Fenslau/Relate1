@@ -11,7 +11,7 @@ class DownloadController extends Controller
 
         $filename .= '.xlsx';
               $file_extension = strtolower(substr(strrchr($filename,"."),1));
-
+			        $filename=str_replace('\\', '/', $filename);
               if ( !file_exists( $filename ) ) return back()->with('warning', 'ОШИБКА: данного файла не существует.');
 
               switch( $file_extension ) {

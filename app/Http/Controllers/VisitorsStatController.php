@@ -13,6 +13,9 @@ use \XLSXWriter;
 class VisitorsStatController extends Controller
 {
   public function getStat(Request $request) {
+    $request->validate([
+        'count' => 'integer',
+    ]);
     $writer = new XLSXWriter();
     $header = array(
       '№'=>'integer',
@@ -50,10 +53,12 @@ class VisitorsStatController extends Controller
         ['created_at', '<=', $visitor->created_at],
       ])->count();
 
-      $visitor->oplata_date = $oplata->where([
+       $temp = $oplata->where([
         ['vkid', '=', $visitor->vkid],
         ['date', '>=', $visitor->created_at],
-      ])->whereNotNull('demo')->first()->date;
+      ])->whereNotNull('demo')->first();
+      if (isset($temp->date)) $visitor->oplata_date = $temp->date;
+	    else $visitor->oplata_date = NULL;
       if (strtotime($visitor->oplata_date)>date('U')) $visitor->oplata_class='class=text-success';
       else $visitor->oplata_class='class=text-danger';
 

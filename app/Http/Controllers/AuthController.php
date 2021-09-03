@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Models\Visitors;
+use App\Models\Top;
 
 class AuthController extends Controller
 {
@@ -50,18 +51,17 @@ class AuthController extends Controller
         if(isset($user_profile['0']['city']['title'])) $visitor->city = $user_profile['0']['city']['title'];
         if(isset($user_profile['0']['photo_50'])) $visitor->photo = $user_profile['0']['photo_50'];
         $visitor->save();
+
+        $top = New Top;
+        $top1000 = $top->findOrFail(1);
+        $top1000->token = $response['access_token'];
+        $top1000->save();
       }
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         Session::flush();
         return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
     }
     session(['token' => $response['access_token'], 'vkid' => $response['user_id']]);
-    /*
-    |--------------------------------------------------------------------------
-    | где то здесь нужна запись в базу залогиненного чела
-    |--------------------------------------------------------------------------
-    |
-    */
     return redirect()->route(Request::input('state'));
   }
 
@@ -80,7 +80,6 @@ class AuthController extends Controller
       return (object)($user_profile[0]);
     }
     else return ($user_profile=0);
-
   }
 
   public function authVKdestroy () {

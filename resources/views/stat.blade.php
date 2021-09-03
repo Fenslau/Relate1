@@ -44,7 +44,7 @@
               <td>{{ $visitor->visit_number }}</td>
               <td>{{ $visitor->downloads }}</td>
               <td>{{ $visitor->downloads_anon }}</td>
-              <td {{ $visitor->oplata_class }}>до {{ $visitor->oplata_date }}</td>
+              <td {{ $visitor->oplata_class }}>{{ $visitor->oplata_date }}</td>
             </tr>
           @endforeach
         </tbody>
