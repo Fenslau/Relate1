@@ -19,6 +19,9 @@ Route::get('/', 'App\Http\Controllers\MainController@main')
 Route::post('/', 'App\Http\Controllers\MainController@search')
 ->name('search');
 
+Route::post('/groupsearch', 'App\Http\Controllers\GroupSearchController@search')
+->name('open-wall-search');
+
 Route::get('/download/{filename}', 'App\Http\Controllers\DownloadController@download')
 ->name('download');
 

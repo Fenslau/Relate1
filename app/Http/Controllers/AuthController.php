@@ -53,7 +53,7 @@ class AuthController extends Controller
         $visitor->save();
 
         $top = New Top;
-        $top1000 = $top->findOrFail(1);
+        $top1000 = $top->find(1);
         $top1000->token = $response['access_token'];
         $top1000->save();
       }

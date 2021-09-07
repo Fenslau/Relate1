@@ -42,28 +42,18 @@ class Top1000date extends Command
     public function handle()
     {
       $top = New Top();
-      $top1000 = $top->findOrFail(1);
+      $top1000 = $top->find(1);
       if (!empty($top1000->top1000)) {
         $group_ids_all = explode(',', $top1000->top1000);
         $token = $top1000->token;
 
-        $writer = new XLSXWriter();
-        if ( $xlsx = SimpleXLSX::parse('public/temp/top1000.xlsx') AND count( $xlsx->rows()) == count($group_ids_all)+1 ) {
-          $items = array();
-          $iter = TRUE;
-          foreach( $xlsx->rows() as $row )
-              if ($iter) $iter = false;
-              else $items[] = $row;
+        $group = new Groups();
 
-          $items = Groups::getLastPostDate($items, $token);
+        $group->read('public/temp/top1000.xlsx');
 
-          foreach ($items as $item) {
-            $writer->writeSheetRow('Sheet1', [strtotime($item[24])]);
-          }
+        $group->getLastPostDate($token);
 
-        } else echo SimpleXLSX::parseError()."\n";
-
-        ex: $writer->writeToFile("public/temp/top1000date.xlsx");
+        $group->write("public/temp/top1000.xlsx");
     }
   }
 

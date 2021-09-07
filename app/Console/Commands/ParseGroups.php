@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Top;
 use App\Models\VkGroups;
 use \VK\Client\VKApiClient;
+use \VK\Exceptions\VKClientException;
 
 class ParseGroups extends Command
 {
@@ -43,7 +44,7 @@ class ParseGroups extends Command
 
       $top = New Top();
 
-      $top1000 = $top->findOrFail(1);
+      $top1000 = $top->find(1);
       $i_count=1;
       if(empty($top1000->current_group)) $top1000->current_group = 0;
       for ($j=$top1000->current_group; $j<413408; $j++) {
@@ -54,25 +55,31 @@ class ParseGroups extends Command
         $i_count=500*($j+1);
 
         $vk = new VKApiClient();
-        $access_token = env('ACCESS_TOKEN');
-        $group_get = $vk->groups()->getById($access_token, array(
-            'group_ids'		 => $group_ids,
-            'fields'    	 => 'status,description,public_date_label,start_date,finish_date,contacts,site,verified,wall,city,market,members_count',
-            'access_token' => env('access_token'),
-            'lang'   		   => 'ru',
-            'v' 			     => '5.95'
-        ));
-
+retry:  $access_token = env('ACCESS_TOKEN');
+        try {
+          $group_get = $vk->groups()->getById($access_token, array(
+              'group_ids'		 => $group_ids,
+              'fields'    	 => 'status,description,public_date_label,start_date,finish_date,contacts,site,verified,wall,city,market,members_count',
+              'access_token' => env('access_token'),
+              'lang'   		   => 'ru',
+              'v' 			     => '5.95'
+          ));
+        } catch (\VK\TransportClient\TransportRequestException $exception) {
+            echo $exception->getMessage()."\n";
+            sleep(60);
+            goto retry;
+        }
+        $data_500 = array();
+		$vk_group = New VkGroups();
         for ($i=0; $i<=499; $i++) {
         $data=array();
         if (!isset($group_get[$i]['deactivated'])) {
 
 
           if (isset($group_get[$i]['members_count']) AND $group_get[$i]['members_count'] > 99) {
-              $vk_group = New VkGroups();
 
               $data['group_id'] = $group_get[$i]['id'];
-              $data['name'] = strip_tags($group_get[$i]['name']);
+              if (isset($group_get[$i]['name'])) $data['name'] = strip_tags($group_get[$i]['name']); else $data['name'] = '';
               $tags = '';
               $tag_desc=$tag_status=0;
               if (isset($group_get[$i]['description'])) {
@@ -96,27 +103,31 @@ class ParseGroups extends Command
                   $data['contacts'] .= "\n";
                 }
               }
-              $data['members_count'] = $group_get[$i]['members_count'];
-              $data['type'] = $group_get[$i]['type'];
+              if (isset($group_get[$i]['members_count'])) $data['members_count'] = $group_get[$i]['members_count']; else $data['members_count'] - '';
+              if (isset($group_get[$i]['type'])) $data['type'] = $group_get[$i]['type']; else $data['type'] = 'group';
 
               $data['wall'] = $group_get[$i]['wall'];
               if (isset($group_get[$i]['site'])) $data['site'] = mb_substr($group_get[$i]['site'], 0, 128); else $data['site']='';
 
-              $data['verified'] = $group_get[$i]['verified'];
-              if (isset($group_get[$i]['market'])) $data['market'] = $group_get[$i]['market']['enabled'];
+              if (isset($group_get[$i]['verified'])) $data['verified'] = $group_get[$i]['verified']; else $data['verified'] = 0;
+              if (isset($group_get[$i]['market'])) $data['market'] = $group_get[$i]['market']['enabled']; else $data['market'] = 0;
 
-              $data['is_closed'] = $group_get[$i]['is_closed'];
+              if (isset($group_get[$i]['is_closed'])) $data['is_closed'] = $group_get[$i]['is_closed']; else $data['is_closed'] = 1;
 
               if (isset($group_get[$i]['public_date_label'])) $data['public_date_label'] = mb_substr($group_get[$i]['start_date'], 0, 32);
+			  else $data['public_date_label'] = '';
 
               if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['start_date'])) $data['start_date'] = mb_substr($group_get[$i]['start_date'], 0, 32);
+			  else $data['start_date'] = '';
 
               if ($group_get[$i]['type'] == 'event' AND isset($group_get[$i]['finish_date'])) $data['finish_date'] = mb_substr($group_get[$i]['finish_date'], 0, 32);
+			  else $data['finish_date'] = '';
 
-              $vk_group->updateOrCreate(['group_id' => $group_get[$i]['id']], $data);
+              $data_500[] = $data;
             }
           }
         }
+        $vk_group->upsert($data_500, ['group_name'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
       $top1000->current_group=$j;
       $top1000->save();
       }

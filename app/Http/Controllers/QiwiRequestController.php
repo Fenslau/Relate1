@@ -32,35 +32,38 @@ $notificationData = [
     if ($billPayments->checkNotificationSignature($validSignatureFromNotificationServer, $notificationData, $merchantSecret) === TRUE) {
   		$vkid = $data['bill']['customer']['account'];
       $oplata = new Oplata();
-      $result = $oplata->where('vkid', $vkid)->first()->toArray();
+      $result = $oplata->where('vkid', $vkid)->orderBy('id', 'desc')->first()->toArray();
       $project_limit = $rules_limit = $old_post_limit = 0;
   		$demo = 1;
-      switch($data['bill']['amount']['value']) {
-    	case '1.00': if (!empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+1296);
-    					else $date = (date ('U')+1296); break;
-    	case '194.00': if (!empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+259200);
-    					else $date = (date ('U')+259200); break;
-    	case '538.00': if (!empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+2764800);
-    					else $date = (date ('U')+2764800); break;
-    	case '1273.00': if (!empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+8380800);
-    					else $date = (date ('U')+8380800); break;
+		if (!empty($result['date'])) $date = strtotime($result['date']);
 
-    	case '342.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+60*60*24*7);
-    					else $date = (date ('U')+60*60*24*7);
+      switch($data['bill']['amount']['value']) {
+    	case '1.00': if (!empty($date) AND $date > date ('U')) $date += 1296;
+    					else $date = date('U')+1296; break;
+    	case '194.00': if (!empty($date) AND $date > date ('U')) $date += 259200;
+    					else $date = date('U')+259200; break;
+    	case '538.00': if (!empty($date) AND $date > date ('U')) $date += 2764800;
+    					else $date = date('U')+2764800; break;
+    	case '1273.00': if (!empty($date) AND $date > date ('U')) $date += 8380800;
+    					else $date = date('U')+8380800; break;
+
+    	case '342.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
+    					else $date = date ('U')+(60*60*24*7);
     					$project_limit = 1;
     					$rules_limit = 2;
     					$old_post_limit = 100;
     					$demo = 'streaming1';
     					break;
-    	case '539.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+60*60*24*7);
-    					else $date = (date ('U')+60*60*24*7);
+    	case '539.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
+    					else $date = date ('U')+(60*60*24*7);
     					$project_limit = 2;
     					$rules_limit = 5;
     					$old_post_limit = 500;
     					$demo = 'streaming2';
+						print_r ($result['demo']);
     					break;
-    	case '979.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+60*60*24*30);
-    					else $date = (date ('U')+60*60*24*30);
+    	case '979.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*30);
+    					else $date = date ('U')+(60*60*24*30);
     					$project_limit = 2;
     					$rules_limit = 5;
     					$old_post_limit = 2000;
@@ -69,15 +72,15 @@ $notificationData = [
 
 
 
-    	default: if (!empty($result['date']) AND $result['date'] > date ('U')) $date = ($result['date']+86400);
-    					else $date = (date ('U')+86400); break;
+    	default: if (!empty($date) AND $date > date ('U')) $date += 86400;
+    					else $date = date ('U')+86400; break;
     	}
 
       $result = new Oplata();
 
         $result->vkid = $vkid;
-        $result->date = $date;
-        $result->billId = $data['bill']['billId'];
+        $result->date = date('Y-m-d H:i:s', $date);
+        $result->bill_id = $data['bill']['billId'];
         $result->project_limit = $project_limit;
         $result->rules_limit = $rules_limit;
         $result->old_post_limit = $old_post_limit;

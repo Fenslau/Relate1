@@ -44,58 +44,23 @@ class Top1000 extends Command
     public function handle()
     {
       $top = New Top();
-      $top1000 = $top->findOrFail(1);
+      $top1000 = $top->find(1);
       if (!empty($top1000->top1000)) {
         $group_ids_all = explode(',', $top1000->top1000);
         $token = $top1000->token;
+    		$group_date = new Groups();
+    		$group_date->read('public/temp/top1000.xlsx');
+        $group = new Groups();
+        $group->get1000Groups($group_ids_all, $token);
 
-        if ( $xlsx = SimpleXLSX::parse('public/temp/top1000date.xlsx') AND count( $xlsx->rows()) == count($group_ids_all) ) {
-        	foreach( $xlsx->rows() as $r ) $date[]=$r;
-        } else echo SimpleXLSX::parseError()."\n";
+        $group->getStats($token);
 
+		foreach ($group->groups as &$row) {
+			$id = array_search($row['id'], array_column($group_date->groups, 'id'));
+			if (!empty($group_date->groups[$id]['date'])) $row['date'] = $group_date->groups[$id]['date'];
+		}
 
-        $writer = new XLSXWriter();
-        														$header = array(
-        														  '№'=>'integer',
-        														  'id группы'=>'integer',
-        														  'Название'=>'string',
-        														  'Подписчики'=>'integer',
-        														  'Прирост'=>'integer',
-        														  'Охват'=>'integer',
-        														  '(отношение полного охвата к охвату подписчиков)'=>'string',
-        														  'Охват подписч.'=>'integer',
-        														  '(% от полного охвата)'=>'string',
-        														  'Жен'=>'integer',
-        														  '(% от посетителей)'=>'string',
-        														  'Муж'=>'integer',
-        														  '(% от посетителей) '=>'string',
-        														  'Посетители'=>'integer',
-        														  '(кол-во просмотров на посетителя)'=>'string',
-        														  'Старше 18 лет'=>'integer',
-        														  '(% от посетителей )'=>'string',
-        														  'Из города'=>'string',
-        														  'количество'=>'integer',
-        														  '( % от посетителей)'=>'string',
-        														  'Стена'=>'string',
-        														  'стена'=>'string',
-        														  'Тип'=>'string',
-        														  'сообщества'=>'string',
-        														  'Дата'=>'string',
-        														  'Аватарка'=>'string',
-        														);
-        														$writer->writeSheetHeader('Sheet1', $header );
-        $vk = new VKApiClient();
-        $group = Groups::get1000Groups($group_ids_all, $token);
-
-        $items = Groups::getStats($group, $token);
-
-        for ($i=0; $i < count($items); $i++) {
-
-            if (!empty($date[$i][0]) AND is_numeric($date[$i][0])) $items[$i]['date'] = date('d.m.Y', $date[$i][0]); else $items[$i]['date'] = '';
-        		$writer->writeSheetRow('Sheet1', $items[$i]);
-        }
-
-        $writer->writeToFile("public/temp/top1000.xlsx");
+        $group->write('public/temp/top1000.xlsx');
       ex:
     }
   }

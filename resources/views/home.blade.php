@@ -9,10 +9,13 @@
 
     @if(Session::has('vkid'))
     <script type="text/javascript">
-      var vkid={{ session('vkid') }}
+      var vkid={{ session('vkid') }};
+      var url='{{ route('home') }}';
+      var process1='simple_search';
     </script>
+
     <div class="m-3 p-2 border border-primary">
-      <form class="needs-validation" novalidate id="search-submit" action="{{ route('search') }}" method="post">
+      <form class="needs-validation" id="search-submit" action="{{ route('search') }}" method="post">
         @csrf
           <div class="form-inline">
             <label class="" for="city">Город</label>
@@ -51,9 +54,7 @@
       <div class="mt-2 progress">
         <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
       </div>
-      <div id="progress-text" class="px-2 mt-2 text-white">
-
-      </div>
+      <div id="progress-text" class="px-2 mt-2 bg-secondary text-white"></div>
     </div>
     @else
     <div class="w-100 alert alert-warning">
@@ -115,7 +116,7 @@
               <tr class="lh-md text-center">
                 <td>{{ $item['num'] }}</td>
                 <td>{{ $item['id'] }}</td>
-                <td class="ava-group"><img class="ava-group" src="{{ $item['photo_50'] }}" /></td>
+                <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_50'] }}" /></td>
                 <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
                 <td>{{ $item['members_count'] }}</td>
                 <td>

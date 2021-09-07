@@ -146,4 +146,7 @@ img.ava-group {
 #progress-text {
   min-height: 1.5rem;
 }
+#progress-text:empty {
+    background-color: white!important;
+}
 

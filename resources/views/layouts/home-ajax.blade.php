@@ -2,6 +2,10 @@
   <div class="w-100 alert alert-success">
     {!! $info['found'] !!}
   </div>
+@else
+  <div class="w-100 alert alert-warning">
+    По вашему запросу не нашлось ни одной групы. Может быть вы допустили в нём ошибку?
+  </div>
 @endisset
 @isset ($info['demo'])
   <div class="w-100 alert alert-warning">
@@ -49,7 +53,7 @@
         <tr class="lh-md text-center">
           <td>{{ $item['num'] }}</td>
           <td>{{ $item['id'] }}</td>
-          <td class="ava-group"><img class="ava-group" src="{{ $item['photo_50'] }}" /></td>
+          <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_50'] }}" /></td>
           <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
           <td>{{ $item['members_count'] }}</td>
           <td>

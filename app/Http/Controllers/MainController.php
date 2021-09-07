@@ -15,7 +15,7 @@ class MainController extends Controller
       $group = new Groups();
       $group->read('temp/top1000.xlsx');
 
-      if ($group->groups) {
+      if (count($group->groups)>0) {
         return view('home', ['items' => $group->groups]);
       } else return view('home')->with('danger', 'На данный момент невозможно отобразить список топ1000 груп ВК, попробуйте через 5 минут.');
     }
@@ -45,6 +45,7 @@ class MainController extends Controller
         'count'    => 1000,
         'v'        => '5.95'
       );
+      $info = array();
       $user = new VKUser(session('vkid'));
       if ($user->tarif->demo === FALSE) {
         $params['count']=10;
@@ -63,7 +64,11 @@ class MainController extends Controller
 
       $group->get1000Groups($our_groups, session('token'));
 
-      } else return back()->with('warning', 'По вашему запросу не нашлось ни одной групы. Может быть вы допустили в нём ошибку?');
+    } else {
+      $returnHTML = view('home-ajax', ['info' => $info])->render();
+      return response()->json( array('success' => true, 'html'=>$returnHTML) );
+
+    }
 
       if ($request->stat) $group->getStats(session('token'));
 
@@ -71,7 +76,7 @@ class MainController extends Controller
 
       $group->write('storage/simple_search/'.session('vkid').'_simple_search.xlsx');
 
-      $returnHTML = view('home-ajax', ['items' => $group->groups, 'info' => $info])->render();
+      $returnHTML = view('layouts.home-ajax', ['items' => $group->groups, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
 
   //    return view('home', ['items' => $group->groups, 'info' => $info]);

@@ -17,7 +17,7 @@ class VKUser {
   public function tarif() {
       $oplata = new Oplata();
       $tarif = $oplata->where('vkid', $this->vkid)->first();
-      if (isset($tarif->date) AND $tarif->date > date('U'))
+      if (isset($tarif->date) AND strtotime($tarif->date) > date('U'))
       $tarif=$tarif;
       else return FALSE;
       return $tarif;

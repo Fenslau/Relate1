@@ -45,7 +45,7 @@ class HelperHour extends Command
         $group_ids_all = $vk->orderBy('members_count', 'desc')->take(1000)->pluck('group_id')->toArray();
 
         $group_ids_all = implode(',', $group_ids_all);
-        $top1000 = $top->findOrFail(1);
+        $top1000 = $top->find(1);
         $top1000->top1000 = $group_ids_all;
         $top1000->save();
     }

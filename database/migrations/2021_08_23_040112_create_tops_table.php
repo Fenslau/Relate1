@@ -16,7 +16,7 @@ class CreateTopsTable extends Migration
         Schema::create('tops', function (Blueprint $table) {
             $table->id();
             $table->string('token', 128)->nullable();
-            $table->text('top1000');
+            $table->text('top1000')->nullable();
             $table->integer('current_group')->nullable();
             $table->timestamps();
         });

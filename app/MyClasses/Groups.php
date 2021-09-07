@@ -4,6 +4,7 @@ namespace App\MyClasses;
 use \VK\Client\VKApiClient;
 use \XLSXWriter;
 use \SimpleXLSX;
+use \App\MyClasses\GetProgress;
 use App\Models\Progress;
 
 class Groups {
@@ -55,6 +56,7 @@ class Groups {
     } else return FALSE;
   }
   public function write($filename) {
+	$progress = new GetProgress(session('vkid'), 'simple_search', 'Записывается файл Excel', count($this->groups), 1);
     $writer = new XLSXWriter();
 														$header = array(
 														  '№'=>'integer',
@@ -111,16 +113,18 @@ class Groups {
         $item['can_post'] = $row['can_post'];
         $item['is_closed'] = $row['is_closed'];
         $item['type'] = $row['type'];
-        if (!empty($row['date'])) $item['date'] = $row['date']; else $row['date'] = '';
+        if (!empty($row['date'])) $item['date'] = $row['date']; else $item['date'] = '';
         $item['photo_50'] = $row['photo_50'];
 
         $writer->writeSheetRow('Sheet1', $item);
       }
       $writer->writeToFile($filename);
+//	$progress->del();
   }
 
   public function get1000Groups($group_ids, $token) {
     if (empty($group_ids)) return FALSE;
+	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собирается общая информация по группам', 1, 1);
   $group_ids1 = implode(',', array_slice($group_ids, 0, 500));
   $group_ids2 = implode(',', array_slice($group_ids, 500, 500));
   $vk = new VKApiClient();
@@ -187,21 +191,16 @@ class Groups {
       if ($item['is_closed'] == '1') $item['is_closed'] = 'закрытое';
       if ($item['is_closed'] == '2') $item['is_closed'] = 'частное';
     }
+//	$progress->del();
   }
 
 
   public function getStats($token) {
     $vk = new VKApiClient();
     $group_ids_all = array_column($this->groups, 'id');
-    $count_of_groups = count($group_ids_all);
-    $progress = new Progress();
-    $data['info'] = 'Собирается статистика по группам';
-    $data['width'] = 0;
+	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собирается статистика по группам', count($group_ids_all), 25);
     for ($j=1; $j<=40; $j++) {
-      $count_25 = intdiv ($count_of_groups, 25);
-      if ($count_25) $data['width'] += round((100/$count_25),0); else $data['width'] = 100;
-      $progress->updateOrCreate(['vkid' => session('vkid'), 'process' => 'simple_search'], $data);
-
+		$progress->step();
         $code_1 = 'return[';
 
         for ($i=0; $i<25; $i++) {
@@ -274,23 +273,18 @@ class Groups {
       }
     }
   ex:
-  $progress->where(['vkid' => session('vkid'), 'process' => 'simple_search'])->delete();
+ // $progress->del();
   }
 
 
   public function getLastPostDate($token) {
     $vk = new VKApiClient();
     $group_ids_all = array_column($this->groups, 'id');
-    $vk = new VKApiClient();
-    $group_ids_all = array_column($this->groups, 'id');
-    $count_of_groups = count($group_ids_all);
-    $progress = new Progress();
-    $data['info'] = 'Собираются даты последних постов';
-    $data['width'] = 0;
+
+	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собираются даты последних постов', count($group_ids_all), 25);
+
     for ($j=1; $j<=40; $j++) {
-      $count_25 = intdiv ($count_of_groups, 25);
-      if ($count_25) $data['width'] += round((100/$count_25),0); else $data['width'] = 100;
-      $progress->updateOrCreate(['vkid' => session('vkid'), 'process' => 'simple_search'], $data);
+		$progress->step();
           $code_2 = 'return[';
 
           for ($i=0; $i<25; $i++) {
@@ -307,7 +301,7 @@ class Groups {
           'code' 			    => $code_2,
           'v' 			      => '5.95'
         ));
-      } catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+      } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         echo $exception->getMessage()."\n";
       }
 
@@ -316,20 +310,14 @@ class Groups {
           $k=($j-1)*25+$i;
             if (!empty($this->groups[$k]['id'])) {
 
-              if (isset($wall1[$i]['items'][1]['date'])) {
+              if (!empty($wall1[$i]['items'][1]['date'])) {
                   $this->groups[$k]['date'] = date('d.m.Y', max($wall1[$i]['items'][1]['date'], $wall1[$i]['items'][0]['date']));
-               }
-            }
-            if (!empty($this->groups[$k]['1'])) {
-
-              if (isset($wall1[$i]['items'][1]['date'])) {
-                  $this->groups[$k]['24'] = date('d.m.Y', max($wall1[$i]['items'][1]['date'], $wall1[$i]['items'][0]['date']));
                }
             }
           }
       }
   ex:
-  $progress->where(['vkid' => session('vkid'), 'process' => 'simple_search'])->delete();
+ // $progress->del();
   }
 
 }
