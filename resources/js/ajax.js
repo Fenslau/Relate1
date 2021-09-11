@@ -34,6 +34,7 @@ $(document).ready(function () {
                 var elem2 = document.getElementById("progress-text");
 				var width_old = -1;
                 var width = 0;
+                var info = '';
                 var id = setInterval(frame, 500);
                async function frame() {
 
@@ -51,13 +52,14 @@ $(document).ready(function () {
                      }),
                      response = await answer.json();
 					 width = response.width;
+           info = response.info;
 					 if (width >= width_old || width == 0) {
 						 elem.style.width = response.width + '%';
 						 elem.innerHTML = Math.floor(response.width) * 1  + '%';
 						 elem2.innerHTML = response.info;
                      }
 					 width_old = response.width;
-					 if (width == 0) zero_answer++; if (zero_answer > 10) {
+					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
                         clearInterval(id);
                       }
                }

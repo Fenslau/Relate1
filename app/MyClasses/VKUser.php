@@ -11,17 +11,22 @@ class VKUser {
 
     public function __construct($vkid) {
       $this->vkid = $vkid;
-      $this->tarif=$this->tarif();
+      $this->tarif();
     }
 
   public function tarif() {
       $oplata = new Oplata();
-      $tarif = $oplata->where('vkid', $this->vkid)->first();
-      if (isset($tarif->date) AND strtotime($tarif->date) > date('U'))
-      $tarif=$tarif;
-      else return FALSE;
-      return $tarif;
-    }
-  }
+      $tarif = $oplata->where('vkid', $this->vkid)->orderBy('id', 'desc')->first();
+      if (isset($tarif->date) AND strtotime($tarif->date) > date('U')) {
+        $this->demo = $tarif->demo;
+        $this->date = $tarif->date;
+      } else {
 
- ?>
+        $this->demo = NULL;
+        $this->date = NULL;
+
+
+      }
+  }
+}
+?>

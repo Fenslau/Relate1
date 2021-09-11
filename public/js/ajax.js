@@ -895,6 +895,7 @@ $(document).ready(function () {
           var elem2 = document.getElementById("progress-text");
           var width_old = -1;
           var width = 0;
+          var info = '';
           var id = setInterval(frame, 500);
 
           function frame() {
@@ -930,6 +931,7 @@ $(document).ready(function () {
                     case 6:
                       response = _context.sent;
                       width = response.width;
+                      info = response.info;
 
                       if (width >= width_old || width == 0) {
                         elem.style.width = response.width + '%';
@@ -938,13 +940,13 @@ $(document).ready(function () {
                       }
 
                       width_old = response.width;
-                      if (width == 0) zero_answer++;
+                      if (width == 0 && info == '') zero_answer++;
 
                       if (zero_answer > 10) {
                         clearInterval(id);
                       }
 
-                    case 12:
+                    case 13:
                     case "end":
                       return _context.stop();
                   }

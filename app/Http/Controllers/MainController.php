@@ -47,7 +47,7 @@ class MainController extends Controller
       );
       $info = array();
       $user = new VKUser(session('vkid'));
-      if ($user->tarif->demo === FALSE) {
+      if ($user->demo === FALSE) {
         $params['count']=10;
         $info['demo']=TRUE;
       }
