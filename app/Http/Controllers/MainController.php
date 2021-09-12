@@ -47,7 +47,7 @@ class MainController extends Controller
       );
       $info = array();
       $user = new VKUser(session('vkid'));
-      if ($user->demo === FALSE) {
+      if ($user->demo === NULL) {
         $params['count']=10;
         $info['demo']=TRUE;
       }
@@ -65,7 +65,7 @@ class MainController extends Controller
       $group->get1000Groups($our_groups, session('token'));
 
     } else {
-      $returnHTML = view('home-ajax', ['info' => $info])->render();
+      $returnHTML = view('layouts.home-ajax', ['info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
 
     }

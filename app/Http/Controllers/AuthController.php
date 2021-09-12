@@ -53,9 +53,14 @@ class AuthController extends Controller
         $visitor->save();
 
         $top = New Top;
-        $top1000 = $top->find(1);
-        $top1000->token = $response['access_token'];
-        $top1000->save();
+          if ($top1000 = $top->find(1)) {
+      			$top1000->token = $response['access_token'];
+      			$top1000->save();
+      		} else {
+      			$top->token = $response['access_token'];
+      			$top->save();
+      		}
+
       }
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         Session::flush();

@@ -21,7 +21,7 @@ class GroupSearchController extends Controller
     if (!empty($request->city)) $where_parsed[] = $db->parse("city LIKE ?s", "$request->city%");
     if (!empty($request->name)) $where_parsed[] = $db->parse("name LIKE ?s", "%$request->roup_name%");
     if (!empty($request->members_count_from) AND is_numeric($request->members_count_from)) $where_parsed[] = $db->parse("members_count >= ?i", $request->members_count_from);
-    if (!empty($request->members_count_to) AND is_numeric($request->members_count_to)) $request->where_parsed[] = $db->parse("members_count <= ?i", $request->members_count_to);
+    if (!empty($request->members_count_to) AND is_numeric($request->members_count_to)) $where_parsed[] = $db->parse("members_count <= ?i", $request->members_count_to);
     if (!empty($request->comments) AND !empty($request->wall)) $where_parsed[] = $db->parse("wall BETWEEN 1 AND 2");
     else {
     	if (!empty($request->wall)) $where_parsed[] = $db->parse("wall = 1");
@@ -36,14 +36,14 @@ class GroupSearchController extends Controller
 
     $info = array();
     $user = new VKUser(session('vkid'));
-    if ($user->demo === FALSE) {
+    if ($user->demo === NULL) {
       $limit=10;
       $info['demo']=TRUE;
     } else $limit = 100000;
 
     $result = $db->query("SELECT * FROM vk_groups ?p ORDER BY members_count DESC LIMIT 0, ?i", $where, $limit);
 
-
+    unset($progress);
     $progress = new GetProgress(session('vkid'), 'open_wall_search', 'Записывается файл Excel', $result->num_rows, 1);
     $writer = new XLSXWriter();
 														$header = array(
