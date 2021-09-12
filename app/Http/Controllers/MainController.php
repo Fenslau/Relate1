@@ -54,7 +54,7 @@ class MainController extends Controller
       $info['search']=TRUE;
       $groups = $vk->groups()->search(session('token'), $params);
 
-      if (min($params['count'], $groups['count'])>0) {
+      if (min($params['count'], $groups['count']) > 0) {
         $info['found']='Всего по вашему запросу <b>'.$request->group_name.'</b> нашлось <b> '.num::declension ($groups['count'], (array('группа</b>', 'группы</b>', 'групп</b>')));
         if (!empty($city['id'])) $info['found'] .= ' из города <b>'.$city['title'].'</b>';
         $our_groups = array_slice($groups['items'], 0, $params['count']);

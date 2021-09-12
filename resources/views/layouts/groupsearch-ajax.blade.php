@@ -60,22 +60,22 @@
             @endforeach
           </tbody>
       </table>
-      <script type="text/javascript">
-        $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        $(document).ready(function () {
-          $('#new-search').on('click', function (e) {
-            e.preventDefault();
-            $('#table-search').addClass('d-none');
-            $('#new-search').addClass('d-none');
-            $('#js-load').removeClass('d-none');
-            $('.search-form').removeClass('d-none');
-          });
-        });
-      </script>
     </div>
   </div>
   @endisset
 @endisset
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  $(document).ready(function () {
+    $('#new-search').on('click', function (e) {
+      e.preventDefault();
+      $('#table-search').addClass('d-none');
+      $('#new-search').addClass('d-none');
+      $('#js-load').removeClass('d-none');
+      $('.search-form').removeClass('d-none');
+    });
+  });
+</script>

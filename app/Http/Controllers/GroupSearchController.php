@@ -19,7 +19,7 @@ class GroupSearchController extends Controller
 
     $where_parsed = array();
     if (!empty($request->city)) $where_parsed[] = $db->parse("city LIKE ?s", "$request->city%");
-    if (!empty($request->name)) $where_parsed[] = $db->parse("name LIKE ?s", "%$request->roup_name%");
+    if (!empty($request->name)) $where_parsed[] = $db->parse("name LIKE ?s", "%".$request->name."%");
     if (!empty($request->members_count_from) AND is_numeric($request->members_count_from)) $where_parsed[] = $db->parse("members_count >= ?i", $request->members_count_from);
     if (!empty($request->members_count_to) AND is_numeric($request->members_count_to)) $where_parsed[] = $db->parse("members_count <= ?i", $request->members_count_to);
     if (!empty($request->comments) AND !empty($request->wall)) $where_parsed[] = $db->parse("wall BETWEEN 1 AND 2");
