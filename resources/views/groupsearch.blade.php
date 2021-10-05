@@ -5,38 +5,11 @@
 @section('content')
 
 <div class="container">
-  <form class="" id="search-submit" action="{{ route('open-wall-search') }}" method="post">
+  <form class="" id="search-submit" action="{{ route('groupsearch') }}" method="post">
     @csrf
     <h2 class="m-3 text-center text-uppercase" >Поиск групп вконтакте</h2>
-    <div class="row">
-      <div class="col-md-5 align-self-center">
-        <div class="mb-3 form-inline">
-          <div class="ml-auto p-2">
-            <a href="{{ route('home') }}" type="button" class="btn btn-sm btn-secondary text-white">На&nbsp;главную</a>
-          </div>
+    @include('inc.buttons-and-progress', ['link' => 'groupsearch', 'button' => 'Найти группы'])
 
-          <button id="js-load" disabled class="mr-auto btn btn-sm btn-primary vk-top-bg" type="submit" name="submit"><i class="fa fa-search" aria-hidden="true"></i><span class="spinner-border spinner-border-sm text-light d-none" role="status" aria-hidden="true"></span> Найти группы</button>
-          <button id="new-search" class="d-none mr-auto btn btn-sm btn-primary vk-top-bg" type="submit" name="new-search"><i class="fa fa-search" aria-hidden="true"></i><span class="spinner-border spinner-border-sm text-light d-none" role="status" aria-hidden="true"></span> Новый поиск</button>
-        </div>
-      </div>
-      <div class="col-md-7">
-        @if(Session::has('vkid'))
-        <script type="text/javascript">
-          var vkid={{ session('vkid') }};
-          var url='{{ route('groupsearch') }}';
-          var process1='open_wall_search';
-        </script>
-          <div class="mt-2 progress">
-            <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-          </div>
-          <div id="progress-text" class="px-2 mt-2 bg-secondary text-white"></div>
-        @else
-          <div class="w-100 alert alert-warning">
-            <strong>Зарегистрируйтесь или авторизуйтесь через ВК, чтобы протестировать возможности в демо-режиме или получить полный доступ к ресурсам сайта.</strong>
-          </div>
-        @endif
-      </div>
-    </div>
     <div class="search-form row pb-5">
       <div class="col-md-8 ">
 
@@ -126,7 +99,7 @@
 
 
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left p-3 m-0">
+        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
           1
         </div>
         <div class="font-weight-light mb-3">
@@ -134,7 +107,7 @@
           Определите ключевое слово и введите его в поле «Название группы», если в названиях групп присутствует название города, то укажите его здесь. Если вам требуется найти группы Вк, указавшие в настройках профиля название города, то введите его в поле «Город», во всех других случаях оставьте это поле пустым.
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left p-3 m-0">
+        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
           2
         </div>
         <div class="font-weight-light mb-3">
@@ -142,7 +115,7 @@
           Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать все группы по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left p-3 m-0">
+        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
           3
         </div>
         <div class="font-weight-light mb-3">

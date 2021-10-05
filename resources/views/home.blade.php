@@ -27,7 +27,7 @@
           </div>
           <div class="form-inline">
             <label class="col-form-label" for="sort">Сортировать по</label>
-            <select class="form-control form-control-sm" class="" name="sort" id="sort">
+            <select class="form-control form-control-sm" name="sort" id="sort">
               <option value="0">умолчанию (аналогично результатам поиска vk.com)</option>
               <option value="1">скорости роста</option>
               <option value="2">отношению дневной посещаемости к количеству пользователе</option>
@@ -124,9 +124,9 @@
                   <div class="text-success">+{{ $item['grouth'] }}
                   </div>
                   @elseif ($item['grouth'] < 0)
-                  <div class="text-danger">{{ $item['grouth'] }}
-                  @endif
+                  <div class="text-danger">{{ $item['grouth'] }}                  
                   </div>
+                  @endif
                 </td>
                 <td>{{ $item['reach'] }}<br /><small>{{ $item['reach_to_sub'] }}</small></td>
                 <td>{{ $item['reach_subscribers'] }}<br /><small>{{ $item['sub_to_reach'] }}</small></td>

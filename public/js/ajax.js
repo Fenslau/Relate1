@@ -866,118 +866,232 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#js-load').on('click', function (e) {
     e.preventDefault();
-    $('#table-search').removeClass('d-none');
+
+    if (typeof process1 !== 'undefined') {
+      $('#table-search').removeClass('d-none');
+
+      var _this = $(this);
+
+      if (process1 == 'simple_search' && $('#group-name').val().length < 3) {
+        var groupname = document.getElementById("group-name");
+        groupname.setAttribute('placeholder', 'Минимум 3 символа');
+      } else {
+        $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          url: url,
+          data: $('#search-submit').serialize(),
+          beforeSend: function beforeSend() {
+            // далем кнопку недоступной и отображаем спиннер
+            _this.prop('disabled', true).find('.fa-search').addClass('d-none');
+
+            _this.find('.spinner-border-sm').removeClass('d-none');
+
+            var answer = 0;
+            var zero_answer = 0;
+            var response = 0;
+            var elem = document.getElementById("progress");
+            var elem2 = document.getElementById("progress-text");
+            var width_old = -1;
+            var width = 0;
+            var info = '';
+            var id = setInterval(frame, 500);
+
+            function frame() {
+              return _frame.apply(this, arguments);
+            }
+
+            function _frame() {
+              _frame = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+                var user;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        user = {
+                          vkid: vkid,
+                          process: process1
+                        };
+                        _context.next = 3;
+                        return fetch("/progress", {
+                          method: 'POST',
+                          headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            'Content-Type': 'application/json;charset=utf-8'
+                          },
+                          body: JSON.stringify(user)
+                        });
+
+                      case 3:
+                        answer = _context.sent;
+                        _context.next = 6;
+                        return answer.json();
+
+                      case 6:
+                        response = _context.sent;
+                        width = response.width;
+                        info = response.info;
+
+                        if (width >= width_old || width == 0) {
+                          elem.style.width = response.width + '%';
+                          elem.innerHTML = Math.floor(response.width) * 1 + '%';
+                          elem2.innerHTML = response.info;
+                        }
+
+                        width_old = response.width;
+                        if (width == 0 && info == '') zero_answer++;
+
+                        if (zero_answer > 10) {
+                          clearInterval(id);
+                        }
+
+                      case 13:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+              return _frame.apply(this, arguments);
+            }
+          },
+          success: function success(data) {
+            //var data = $.parseJSON(data);
+            if (data.success == true) {
+              $('#table-search').html(data.html);
+
+              _this.prop('disabled', false).find('.fa-search').removeClass('d-none');
+
+              _this.find('.spinner-border-sm').addClass('d-none');
+
+              if (process1 == 'groupsearch' || process1 == 'getusers') {
+                $('#new-search').removeClass('d-none');
+
+                _this.addClass('d-none');
+
+                $('.search-form').addClass('d-none');
+              }
+
+              if (process1 == 'new-users') {
+                $('.alert-success:not(.w-100)').addClass('d-none');
+                $('.search-form').addClass('d-none');
+                $('#table-search .search-form').removeClass('d-none');
+              }
+            } else {
+              alert('Что-то пошло не так. Попробуйте ещё раз или сообщите нам.');
+            }
+          }
+        });
+      }
+    }
+  });
+});
+$(document).ready(function () {
+  $('.follow').on('click', function (e) {
+    e.preventDefault();
 
     var _this = $(this);
 
-    if (process1 == 'simple_search' && $('#group-name').val().length < 3) {
-      var groupname = document.getElementById("group-name");
-      groupname.setAttribute('placeholder', 'Минимум 3 символа');
-    } else {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: 'POST',
-        url: url,
-        data: $('#search-submit').serialize(),
-        beforeSend: function beforeSend() {
-          // далем кнопку недоступной и отображаем спиннер
-          _this.prop('disabled', true).find('.fa-search').addClass('d-none');
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/follow-group',
+      data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value,
+      beforeSend: function beforeSend() {
+        _this.prop('disabled', true).find('.fa-search').addClass('d-none');
 
-          _this.find('.spinner-border-sm').removeClass('d-none');
+        _this.find('.spinner-border-sm').removeClass('d-none');
 
-          var answer = 0;
-          var cloneNode = 'd';
-          var zero_answer = 0;
-          var response = 0;
-          var elem = document.getElementById("progress");
-          var elem2 = document.getElementById("progress-text");
-          var width_old = -1;
-          var width = 0;
-          var info = '';
-          var id = setInterval(frame, 500);
+        var answer = 0;
+        var zero_answer = 0;
+        var response = 0;
+        var elem = document.getElementById("progress");
+        var elem2 = document.getElementById("progress-text");
+        var width_old = -1;
+        var width = 0;
+        var info = '';
+        var id = setInterval(frame, 500);
 
-          function frame() {
-            return _frame.apply(this, arguments);
-          }
-
-          function _frame() {
-            _frame = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-              var user;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      user = {
-                        vkid: vkid,
-                        process: process1
-                      };
-                      _context.next = 3;
-                      return fetch("/progress", {
-                        method: 'POST',
-                        headers: {
-                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                          'Content-Type': 'application/json;charset=utf-8'
-                        },
-                        body: JSON.stringify(user)
-                      });
-
-                    case 3:
-                      answer = _context.sent;
-                      _context.next = 6;
-                      return answer.json();
-
-                    case 6:
-                      response = _context.sent;
-                      width = response.width;
-                      info = response.info;
-
-                      if (width >= width_old || width == 0) {
-                        elem.style.width = response.width + '%';
-                        elem.innerHTML = Math.floor(response.width) * 1 + '%';
-                        elem2.innerHTML = response.info;
-                      }
-
-                      width_old = response.width;
-                      if (width == 0 && info == '') zero_answer++;
-
-                      if (zero_answer > 10) {
-                        clearInterval(id);
-                      }
-
-                    case 13:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee);
-            }));
-            return _frame.apply(this, arguments);
-          }
-        },
-        success: function success(data) {
-          //var data = $.parseJSON(data);
-          if (data.success == true) {
-            $('#table-search').html(data.html);
-
-            _this.prop('disabled', false).find('.fa-search').removeClass('d-none');
-
-            _this.find('.spinner-border-sm').addClass('d-none');
-
-            if (process1 == 'open_wall_search') {
-              $('#new-search').removeClass('d-none');
-
-              _this.addClass('d-none');
-
-              $('.search-form').addClass('d-none');
-            }
-          } else {
-            alert('Что-то пошло не так. Попробуйте ещё раз или сообщите нам.');
-          }
+        function frame() {
+          return _frame2.apply(this, arguments);
         }
-      });
-    }
+
+        function _frame2() {
+          _frame2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+            var user;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    user = {
+                      vkid: vkid,
+                      process: process1
+                    };
+                    _context2.next = 3;
+                    return fetch("/progress", {
+                      method: 'POST',
+                      headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'Content-Type': 'application/json;charset=utf-8'
+                      },
+                      body: JSON.stringify(user)
+                    });
+
+                  case 3:
+                    answer = _context2.sent;
+                    _context2.next = 6;
+                    return answer.json();
+
+                  case 6:
+                    response = _context2.sent;
+                    width = response.width;
+                    info = response.info;
+
+                    if (width >= width_old || width == 0) {
+                      elem.style.width = response.width + '%';
+                      elem.innerHTML = Math.floor(response.width) * 1 + '%';
+                      elem2.innerHTML = response.info;
+                    }
+
+                    width_old = response.width;
+                    if (width == 0 && info == '') zero_answer++;
+
+                    if (zero_answer > 10) {
+                      clearInterval(id);
+                    }
+
+                  case 13:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2);
+          }));
+          return _frame2.apply(this, arguments);
+        }
+      },
+      success: function success(data) {
+        //var data = $.parseJSON(data);
+        if (data.success == true) {
+          $('#table-search').html(data.html);
+
+          _this.prop('disabled', false).find('.fa-search').removeClass('d-none');
+
+          _this.find('.spinner-border-sm').addClass('d-none');
+
+          $('#new-search').removeClass('d-none');
+          $('#table-search').removeClass('d-none');
+          $('#js-load').addClass('d-none');
+          $('.search-form').addClass('d-none');
+        } else {
+          alert('Что-то пошло не так. Попробуйте ещё раз или сообщите нам.');
+        }
+      }
+    });
   });
 });
 })();

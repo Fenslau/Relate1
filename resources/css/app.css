@@ -1,149 +1,123 @@
-.vk-top-bg {
-    background-color: #004aad;
-}
-
-.vk-top-color {
-    color: #004aad;
-}
-
-.lh-sm {
-    line-height: 0.75rem;
-}
-
-.lh-md {
-    line-height: 1rem;
-}
-
-.lh-m {
-    line-height: 1.2rem;
-}
-
-.service {
-    width: min-content;
-}
-
-.tarif {
-    width: 180px;
-    min-height: 425px;
-    border-radius: 10px;
-    background-color: #edf3fc;
-    margin: 3em 1em;
-    position: relative;
-}
-
-.tarif ul {
-    padding-left: 1em;
-}
-
-.tarif li {
-    margin-bottom: 0.5em;
-    padding: 0;
-}
-
-.post {
-    background-color: #939daf;
-}
-
-.popular {
-    transform: scale(1.1);
-}
-
-.popular-label {
-    position: absolute;
-    border-radius: 10px;
-    top: -10px;
-    background-color: #004aad;
-    color: white;
-    padding: 3px 15px;
-}
-
-.tarif-name {
-    color: #004aad;
-    font-size: 18px;
-    margin: 1em 0 0;
-    font-weight: bold;
-    line-height: 0.7;
-    min-height: 25px;
-}
-
-.popular .tarif-name {
-    margin: 2em 0 0;
-    transform: scale(1.1);
-}
-
-.popular .kupit {
-    background-color: #ee3ec9;
-    transform: scale(1.1);
-}
-
-.popular .price {
-    transform: scale(1.1);
-    font-weight: 600;
-    margin-top: 0.3em;
-}
-
-.tar_text {
-    max-width: 70%;
-}
-
-.tarif-text {
-    text-align: left;
-    padding: 1em 0.7em;
-    font-size: 12px;
-}
-
-.kupit {
-    color: white;
-    padding: 5px 10px;
-    background-color: #004aad;
-    margin: 1em 1em 0;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font: inherit;
-    display: block;
-    width: -webkit-fill-available;
-}
-
-.price {
-    color: #004aad;
-    font-size: 28px;
-    margin-bottom: 0.5em;
-}
-
-.tarif-bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin-bottom: 0.5em;
-}
-
-.popular .tarif-bottom {
-    margin-bottom: 0;
-}
-
-.table td, .table th, .table thead th {
-    vertical-align: middle;
-  }
-
-td.ava-group {
-      padding: 0;
-      position: relative;
-      height: 43px;
-}
-
-img.ava-group {
-    max-height: 40px;
-    max-width: 40px;
-}
-
-.group-name {
-  max-width: 13rem;
-}
-
 #progress-text {
-  min-height: 1.5rem;
+	min-height: 1.5rem;
 }
 #progress-text:empty {
-    background-color: white!important;
+	background-color: white !important;
+}
+.group-name {
+	max-width: 13rem;
+}
+.kupit {
+	background-color: #004aad;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	cursor: pointer;
+	display: block;
+	font: inherit;
+	margin: 1em 1em 0;
+	padding: 5px 10px;
+	width: -webkit-fill-available;
+}
+.lh-m {
+	line-height: 1.2rem;
+}
+.lh-md {
+	line-height: 1rem;
+}
+.lh-sm {
+	line-height: 0.75rem;
+}
+.popular {
+	transform: scale(1.1);
+}
+.popular .kupit {
+	background-color: #ee3ec9;
+	transform: scale(1.1);
+}
+.popular .price {
+	font-weight: 600;
+	margin-top: 0.3em;
+	transform: scale(1.1);
+}
+.popular .tarif-bottom {
+	margin-bottom: 0;
+}
+.popular .tarif-name {
+	margin: 2em 0 0;
+	transform: scale(1.1);
+}
+.popular-label {
+	background-color: #004aad;
+	border-radius: 10px;
+	color: white;
+	padding: 3px 15px;
+	position: absolute;
+	top: -10px;
+}
+.price {
+	color: #004aad;
+	font-size: 28px;
+	margin-bottom: 0.5em;
+}
+.service {
+	width: min-content;
+}
+.table td, .table th, .table thead th {
+	vertical-align: middle;
+}
+.tar_text {
+	max-width: 70%;
+}
+.tarif {
+	background-color: #edf3fc;
+	border-radius: 10px;
+	margin: 3em 1em;
+	min-height: 425px;
+	position: relative;
+	width: 180px;
+}
+.tarif li {
+	margin-bottom: 0.5em;
+	padding: 0;
+}
+.tarif.post {
+	background-color: #939daf;
+}
+.tarif ul {
+	padding-left: 1em;
+}
+.tarif-bottom {
+	bottom: 0;
+	margin-bottom: 0.5em;
+	position: absolute;
+	width: 100%;
+}
+.tarif-name {
+	color: #004aad;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 0.7;
+	margin: 1em 0 0;
+	min-height: 25px;
+}
+.tarif-text {
+	font-size: 12px;
+	padding: 1em 0.7em;
+	text-align: left;
+}
+.vk-top-bg {
+	background-color: #004aad;
+}
+.vk-top-color {
+	color: #004aad;
+}
+img.ava-group {
+	max-height: 40px;
+	max-width: 40px;
+}
+td.ava-group {
+	height: 43px;
+	padding: 0;
+	position: relative;
 }

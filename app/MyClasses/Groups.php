@@ -136,7 +136,7 @@ class Groups {
     );
     try {
       $this->groups = $vk->groups()->getById($token, $params);
-    } catch (\VK\Exceptions\Api\VKApiException $exception) {
+    } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
       echo $exception->getMessage()."\n";
       die;
     }
@@ -144,7 +144,7 @@ class Groups {
       $params['group_ids'] = $group_ids2;
       try {
       $this->groups = array_merge($this->groups, $vk->groups()->getById($token, $params));
-      } catch (\VK\Exceptions\Api\VKApiException $exception) {
+      } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         echo $exception->getMessage()."\n";
         die;
       }
@@ -191,7 +191,6 @@ class Groups {
       if ($item['is_closed'] == '1') $item['is_closed'] = 'закрытое';
       if ($item['is_closed'] == '2') $item['is_closed'] = 'частное';
     }
-//	$progress->del();
   }
 
 
@@ -217,8 +216,9 @@ class Groups {
         'access_token'  => $token,
         'v' 			      => '5.95'
       ));
-    } catch (\VK\Exceptions\Api\VKApiException $exception) {
+    } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
       echo $exception->getMessage()."\n";
+      die;
     }
 
       for ($i=0; $i<25; $i++) {
@@ -273,7 +273,6 @@ class Groups {
       }
     }
   ex:
- // $progress->del();
   }
 
 
@@ -303,9 +302,9 @@ class Groups {
         ));
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         echo $exception->getMessage()."\n";
+        die;
       }
 
-      //if (isset($wall1['error']['error_code']) AND ($wall1['error']['error_code'] == 29 or $wall1['error']['error_code'] == 5)) goto ex;
         for ($i=0; $i<25; $i++) {
           $k=($j-1)*25+$i;
             if (!empty($this->groups[$k]['id'])) {
@@ -317,7 +316,6 @@ class Groups {
           }
       }
   ex:
- // $progress->del();
   }
 
 }

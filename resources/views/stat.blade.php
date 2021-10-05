@@ -14,7 +14,7 @@
     </form>
 @isset ($visitors)
 <div class="d-flex align-self-center"><a href="temp/stat.xlsx">Скачать данные в формате Excel</a></div>
-    <table class="table table-striped table-hover table-sm table-responsive">
+    <table class="d-table table table-striped table-hover table-sm table-responsive">
         <thead class="thead-dark">
           <tr class="text-center">
             <th scope="col">№</th>

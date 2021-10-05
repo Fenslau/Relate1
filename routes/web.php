@@ -20,7 +20,10 @@ Route::post('/', 'App\Http\Controllers\MainController@search')
 ->name('search');
 
 Route::post('/groupsearch', 'App\Http\Controllers\GroupSearchController@search')
-->name('open-wall-search');
+->name('groupsearch');
+
+Route::post('/auditoria', 'App\Http\Controllers\AuditoriaSearchController@search')
+->name('auditoria');
 
 Route::get('/download/{filename}', 'App\Http\Controllers\DownloadController@download')
 ->name('download');
@@ -51,9 +54,20 @@ Route::get('/getusers', function () {
     return view('getusers');
 })->name('getusers');
 
-Route::get('/new-users', function () {
-    return view('new-users');
-})->name('new-users');
+Route::post('/getusers', 'App\Http\Controllers\GetUsersController@main')
+->name('getusers');
+
+Route::get('/new-users', 'App\Http\Controllers\NewUsersController@main')
+->name('new-users');
+
+Route::post('/new-users', 'App\Http\Controllers\NewUsersController@add')
+->name('new-users');
+
+Route::post('/follow-group', 'App\Http\Controllers\NewUsersController@follow')
+->name('follow-group');
+
+Route::post('/del-follow-group', 'App\Http\Controllers\NewUsersController@del')
+->name('del-follow-group');
 
 Route::get('/stream', function () {
     return view('stream');
