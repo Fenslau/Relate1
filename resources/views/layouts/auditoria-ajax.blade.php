@@ -1,5 +1,5 @@
 
-  <div class="container">
+  <div class="container-xl">
     <div class="row">
       @isset ($info['found'])
         <div class="w-100 alert alert-success">

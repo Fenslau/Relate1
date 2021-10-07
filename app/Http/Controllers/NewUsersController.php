@@ -12,6 +12,7 @@ use \App\MyClasses\GetProgress;
 use \App\MyClasses\GetUsers;
 use \App\MyClasses\VKUser;
 use \App\MyClasses\num;
+use \App\MyClasses\GetAge;
 use \App\MyClasses\ListNewGroups;
 
 class NewUsersController extends Controller
@@ -53,7 +54,7 @@ class NewUsersController extends Controller
 
 
       if (empty($group_get[0]['members_count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
-      elseif ($group_get[0]['members_count'] > 500000) $info['warning'] = 'Слишком большая группа';
+      elseif ($group_get[0]['members_count'] > 500000) $info['warning'] = 'Слишком большая группа, допускается отслеживать группы, не более 500 000 подписчиков';
       if (isset($info['warning'])) {
         $returnHTML = view('layouts.new-users-ajax', ['items' => $items, 'info' => $info])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
@@ -67,7 +68,9 @@ class NewUsersController extends Controller
 
           if ($users_array) {
             $data['uid1'] = $users_array;
+            \Debugbar::disable();
             $new_group->updateOrCreate(['vkid' => session('vkid'), 'group_id' => $group_get[0]['id']], $data);
+            \Debugbar::enable();
             $info['found'] = 'Группа <b>'.$group_get[0]['name'].'</b> добавлена для отслеживания подписчиков.';
           }
           else {
@@ -82,12 +85,6 @@ class NewUsersController extends Controller
       }
     }
 
-    private function getAge($y, $m, $d) {
-        if($m > date('m') || $m == date('m') && $d > date('d'))
-          return (date('Y') - $y - 1);
-        else
-          return (date('Y') - $y);
-    }
 
     public function follow(Request $request) {
         $info = array();
@@ -111,7 +108,9 @@ class NewUsersController extends Controller
         $list_users_old = explode(',', $list_users1['uid1']);
         $list_users_new = explode(',', $list_users2);
         $list_users1->uid1 = $list_users2;
+        \Debugbar::disable();
         $list_users1->save();
+        \Debugbar::enable();
 
 
         $new_users = array_diff($list_users_new, $list_users_old);
@@ -168,7 +167,7 @@ class NewUsersController extends Controller
         						if (isset($item['bdate'])) {
         									if (count(explode(".", $item['bdate'])) == 3)	{
         										$age = explode(".", $item['bdate']);
-        										$item['bdate'] = $this->getAge($age[2], $age[1], $age[0]);
+        										$item['bdate'] = GetAge::age($age[2], $age[1], $age[0]);
         									} else $item['bdate'] = '';
 
         						} else $item['bdate'] = '';
@@ -213,7 +212,7 @@ class NewUsersController extends Controller
                 if (isset($item['bdate'])) {
                       if (count(explode(".", $item['bdate'])) == 3)	{
                         $age = explode(".", $item['bdate']);
-                        $item['bdate'] = $this->getAge($age[2], $age[1], $age[0]);
+                        $item['bdate'] = GetAge::age($age[2], $age[1], $age[0]);
                       } else $item['bdate'] = '';
 
                 } else $item['bdate'] = '';

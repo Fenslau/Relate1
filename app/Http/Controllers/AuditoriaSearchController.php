@@ -40,7 +40,7 @@ class AuditoriaSearchController extends Controller
     }
 
     if (empty($list_users['count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
-    elseif ($list_users['count'] > 31000) $info['warning'] = 'Слишком большая группа';
+    elseif ($list_users['count'] > 31000) $info['warning'] = 'Слишком большая группа, допускаются группы, не более 31 000 подписчиков';
     if (isset($info['warning']) OR $info['found'] === NULL) {
       $returnHTML = view('layouts.auditoria-ajax', ['items' => $items, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );

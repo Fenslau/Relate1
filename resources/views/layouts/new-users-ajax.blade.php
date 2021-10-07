@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-lg">
   <div class="row">
 
     @isset ($info['found'])
