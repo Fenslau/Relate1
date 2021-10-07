@@ -64,34 +64,34 @@ class GetUsers {
                 $header = array();
                         $header['id']='integer';
                         $header['Ссылка']='string';
-                  if (strpos($fields, 'domain'))	  $header['"короткий" адрес']='string';
+                  if (strpos($fields, 'domain') !== FALSE)	  $header['"короткий" адрес']='string';
                         $header['Имя']='string';
                         $header['Фамилия']='string';
                         $header['открытый профиль?']='string';
-                  if (strpos($fields, 'sex'))		  $header['Пол']='string';
-                  if (strpos($fields, 'bdate'))	  $header['Возраст']='string';
+                  if (strpos($fields, 'sex') !== FALSE)		  $header['Пол']='string';
+                  if (strpos($fields, 'bdate') !== FALSE)	  $header['Возраст']='string';
                   if(!empty($request->bday))  $header['День рождения скоро']='string';
-                  if (strpos($fields, 'city'))	 $header['Город']='string';
-                  if (strpos($fields, 'country'))	 $header['Страна']='string';
-                  if (strpos($fields, 'site'))	 $header['Сайт']='string';
-                  if (strpos($fields, 'contacts')) {
+                  if (strpos($fields, 'city') !== FALSE)	 $header['Город']='string';
+                  if (strpos($fields, 'country') !== FALSE)	 $header['Страна']='string';
+                  if (strpos($fields, 'site') !== FALSE)	 $header['Сайт']='string';
+                  if (strpos($fields, 'contacts') !== FALSE) {
                       $header['Мобильный']='string';
                       $header['Телефон']='string';
                   }
-                  if (strpos($fields, 'online'))	{
+                  if (strpos($fields, 'online') !== FALSE)	{
                       $header['Сейчас онлайн']='string';
                       $header['Мобильный онлайн']='string';
                   }
-                  if (strpos($fields, 'can_post'))	$header['Можно постить на стену?']='string';
-                  if (strpos($fields, 'can_see_all_posts'))	$header['Можно видеть посты на стене?']='string';
-                  if (strpos($fields, 'can_write_private_message'))	$header['Можно писать в ЛС?']='string';
-                  if (strpos($fields, 'last_seen')) {
+                  if (strpos($fields, 'can_post') !== FALSE)	$header['Можно постить на стену?']='string';
+                  if (strpos($fields, 'can_see_all_posts') !== FALSE)	$header['Можно видеть посты на стене?']='string';
+                  if (strpos($fields, 'can_write_private_message') !== FALSE)	$header['Можно писать в ЛС?']='string';
+                  if (strpos($fields, 'last_seen') !== FALSE) {
                       $header['Дата прошлого визита']='string';
                       $header['Устройство входа']='string';
                   }
-                  if (strpos($fields, 'relation'))	$header['Отношения']='string';
+                  if (strpos($fields, 'relation') !== FALSE)	$header['Отношения']='string';
                   if(!empty($request->half2))	$header['Вторая половина']='string';
-                  if (strpos($fields, 'connections'))	{
+                  if (strpos($fields, 'connections') !== FALSE)	{
                         $header['instagram']='string';
                         $header['twitter']='string';
                         $header['skype']='string';

@@ -1,5 +1,5 @@
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       @isset ($info['found'])
         <div class="w-100 alert alert-success">
@@ -17,7 +17,7 @@
       @endisset
       @isset ($info['demo'])
         <div class="w-100 alert alert-warning">
-          Демо-поиск: максимум <b>100</b> подписчиков; В <a href="{{ route('tarifs') }}">полной версии</a> за раз можно собрать до 1 000 000 подписчиков.
+          Демо-поиск: максимум <b>100</b> подписчиков; В <a href="{{ route('tarifs') }}">полной версии</a> за раз можно собрать до 1 000 000 подписчиков, и даже больше
         </div>
       @endisset
 
@@ -77,7 +77,14 @@
                   <td>{{ @$item['online'] }}</td>
                   <td>{{ @$item['can_post'] }}</td>
                   <td>{{ @$item['can_write_private_message'] }}</td>
-                  <td>{{ @$item['last_seen'] }}</td>
+                  <td>
+                    @if (date('U')- strtotime($item['last_seen']) > 5184000)
+                      <div class="text-danger">{{ $item['last_seen'] }}</div>
+                    @elseif (date('U')- strtotime($item['last_seen']) < 172800)
+                        <div class="text-success">{{ $item['last_seen'] }}</div>
+                    @else {{ $item['last_seen'] }}
+                    @endif
+                  </td>
                   <td>{{ @$item['platform'] }}</td>
                   @endisset
                   @isset ($request->contacts)

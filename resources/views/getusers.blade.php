@@ -49,7 +49,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="site"><h3 class="h5 font-weight-bold text-uppercase">Сайт</h3></label>
+            <label for="site"><h3 class="h5 font-weight-bold text-uppercase">Сайт</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан сайт</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control" id="site" type="checkbox" name="site" value="site">
@@ -58,7 +58,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="contacts"><h3 class="h5 font-weight-bold text-uppercase">Контакты</h3></label>
+            <label for="contacts"><h3 class="h5 font-weight-bold text-uppercase">Контакты</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указано что-нибудь в контактах (обычно это телефон)</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control" id="contacts" type="checkbox" name="contacts" value="contacts">
@@ -67,7 +67,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="social"><h3 class="h5 font-weight-bold text-uppercase">Профили соц-сетей</h3></label>
+            <label for="social"><h3 class="h5 font-weight-bold text-uppercase">Профили соц-сетей</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан хотя-бы один профиль из соц-сетей</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control" id="social" type="checkbox" name="social" value="social">
@@ -76,7 +76,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="relation"><h3 class="h5 font-weight-bold text-uppercase">Отношения</h3></label>
+            <label for="relation"><h3 class="h5 font-weight-bold text-uppercase">Отношения</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, которые указали, что состоят с кем-то в отношениях</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control" id="relation" type="checkbox" name="relation" value="relation">
