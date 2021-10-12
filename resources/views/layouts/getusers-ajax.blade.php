@@ -64,7 +64,7 @@
 
             <tbody>
               @foreach ($items as $item)
-              @break ($loop->iteration > 1000)
+              @break ($loop->iteration > 1000 || $item == 'access vk')
                 <tr class="lh-md text-center">
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $item['id'] }}</td>

@@ -1,5 +1,5 @@
 @if (!empty($items_groups))
-  <div class="search-form pb-2 table-responsive">
+  <div class="search-form pb-5 table-responsive">
     <form class="follow-form" action="{{ route('del-follow-group') }}" method="post">
       <table class="d-table table table-striped table-bordered table-hover table-sm table-responsive">
         @csrf

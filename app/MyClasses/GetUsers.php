@@ -104,8 +104,8 @@ class GetUsers {
   $user = new VKUser(session('vkid'));
   if ($user->demo === NULL) {
     //$limit=10;
-    $info['demo']=TRUE;
-  } else $info['demo']=NULL;
+    $info['demo'] = TRUE;
+  } else $info['demo'] = NULL;
 
   foreach ($groupids as $groupid) {
     $sheet=(intdiv(($count-1), 1000000)+1);
@@ -115,13 +115,22 @@ class GetUsers {
           'group_id'		 => $groupid,
           'v' 			     => '5.101'
       ));
-    } catch (\VK\Exceptions\Api\VKApiRateLimitException $exception) {
+    }
+    catch (\VK\Exceptions\Api\VKApiAccessException $exception) {
+        $items_users[1001] = 'access vk';
+        if ($mode == 'getusers') {
+          goto ex;
+        }
+        return $items_users;
+    }
+    catch (\VK\Exceptions\Api\VKApiRateLimitException $exception) {
+          $items_users[1001] = 'limit vk';
           if ($mode == 'getusers') {
-            $items_users[1001] = 'limit vk';
             goto ex;
           }
-          return FALSE;
+          return $items_users;
     }
+
       if (empty($list_users['count']))
         if ($mode != 'getusers') return FALSE;
         else continue;
@@ -136,7 +145,7 @@ class GetUsers {
     for ($j=0; $j <= $count_25000; $j++) {
 
         $code_1 = 'return[';
-          for ($k=0; $k<25; $k++) {
+          for ($k=0; $k<($per_time/1000); $k++) {
           if (!empty($groupid)) $code_1 = $code_1.'API.groups.getMembers({"group_id":'.$groupid.',"fields":"'.$fields.'","v":5.95,"offset":'.($j*$per_time+1000*$k).'}),';
           }
         $code_1 = $code_1.'];';
@@ -149,11 +158,11 @@ class GetUsers {
             'v' 			      => '5.126'
           ));
         } catch (\VK\Exceptions\Api\VKApiRateLimitException $exception) {
+              $items_users[1001] = 'limit vk';
               if ($mode == 'getusers') {
-                $items_users[1001] = 'limit vk';
                 goto ex;
               }
-              else return FALSE;
+              else return $items_users;
         }
 
             if (!empty($list_users)) foreach ($list_users as $exec) {
@@ -284,7 +293,10 @@ class GetUsers {
                   }
 
               }
-            }
+            } elseif ($mode == 'getusers') {
+                $items_users[1001] = 'limit vk';
+                goto ex;
+              }
           $progress->step();
       }
     }
@@ -293,10 +305,7 @@ class GetUsers {
       $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
       return $items_users;
     }
-    if ($mode == 'auditoria') {
-      return explode(',', substr($users_all, 0, -1));
-    }
-    if ($mode == 'new-users') {
+    if ($mode == 'auditoria' OR $mode == 'new-users') {
       return substr($users_all, 0, -1);
     }
   }

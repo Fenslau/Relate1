@@ -35,7 +35,7 @@ class NewUsersController extends Controller
       $user = new VKUser(session('vkid'));
       if ($user->demo === NULL) {
         $limit=1;
-        $info['demo']=TRUE;
+        $info['demo'] = TRUE;
       } else $limit = 10;
 
       $get_users = new GetUsers();
@@ -66,6 +66,13 @@ class NewUsersController extends Controller
         	$data['name'] = $group_get[0]['name'];
           $users_array = $get_users->fromGroup($groupid, null, 'new-users');
 
+          if (isset($users_array[1001]) AND is_array($users_array)) {
+            if ($users_array[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+            if ($users_array[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
+            $info['found'] = NULL;
+            goto ex;
+          }
+
           if ($users_array) {
             $data['uid1'] = $users_array;
             \Debugbar::disable();
@@ -73,10 +80,8 @@ class NewUsersController extends Controller
             \Debugbar::enable();
             $info['found'] = 'Группа <b>'.$group_get[0]['name'].'</b> добавлена для отслеживания подписчиков.';
           }
-          else {
-            $info['found'] = NULL;
-            $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов.';
-          }
+
+          ex:
           $list_new_groups = new ListNewGroups();
           $items = $list_new_groups->getFollowList();
 
@@ -97,11 +102,11 @@ class NewUsersController extends Controller
         $list_users1 = $new_users->where('vkid', $vkid)->where('group_id', $request->id)->first();
         $list_users2 = $get_users->fromGroup($request->id, null, 'new-users');
 
-        if ($list_users2 === FALSE) {
+        if (isset($list_users2[1001]) AND is_array($list_users2)) {
+          if ($list_users2[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+          if ($list_users2[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
           $info['found'] = NULL;
-          $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов.';
-          $returnHTML = view('layouts.new-users-ajax', ['info' => $info])->render();
-          return response()->json( array('success' => true, 'html'=>$returnHTML) );
+          goto ex;
         }
 
         $progress = new GetProgress ($vkid, 'new-users', 'Идёт вычисление новых подписчиков', 1, 1);
@@ -238,7 +243,7 @@ class NewUsersController extends Controller
           }
       				$writer->writeToFile("storage/new-users/{$vkid}_{$request->id}.xlsx");
 				}
-
+        ex:
         $returnHTML = view('layouts.new-users-ajax', ['items_new' => $items_new, 'items_old' => $items_old, 'info' => $info])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }

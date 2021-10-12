@@ -42,6 +42,7 @@ class GetUsersController extends Controller
         if (!empty($items) AND count($items) >= 1000) $info['found'] = 'Нашлось более 1000 подписчиков';
         if (!empty($items)) $info['found'] .= ' Полный их список находится в файле Excel';
         else $info['warning'] = 'Невозможно определить подписчиков группы, соответствующих заданным критериям';
+
         if (!empty($items[1001]) AND $items[1001] == 'limit vk') {
           $info['warning'] = 'При сборе подписчиков группы был достигнут лимит, который устанавливает ВК. Посмотрите файл Excel. Если вы собирали из нескольких групп, попробуйте через несколько часов продолжить с той группы, где остановились.';
           if (count($items) < 2) {
@@ -49,6 +50,10 @@ class GetUsersController extends Controller
             $info['found'] = NULL;
             $info['warning'] = 'При сборе подписчиков группы был достигнут лимит, который устанавливает ВК. Попробуйте через несколько часов';
           }
+        }
+        if (!empty($items[1001]) AND $items[1001] == 'access vk') {
+          $info['found'] = NULL;
+          $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
         }
       }
 
