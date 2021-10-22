@@ -66,7 +66,7 @@ class AuditoriaSearchController extends Controller
 			$new_users1=array_slice($list_users,($j*25), 25);
 
 					$code_1 = 'return[';
-					for ($i=0; $i<25; $i++) {												//цикл наполнения статистики
+					for ($i=0; $i<25; $i++) {
 						if (isset($new_users1[$i])) $code_1 = $code_1.'API.users.getSubscriptions({"user_id":'.$new_users1[$i].',"v":5.101,"extended":1,"fields":"members_count","count":200}),';
 					}
 					$code_1 = $code_1.'];';
@@ -118,7 +118,7 @@ class AuditoriaSearchController extends Controller
     ));
 
     $user = new VKUser(session('vkid'));
-    if ($user->demo === NULL) {
+    if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
       $limit=10;
       $info['demo']=TRUE;
     } else $limit = 500;
@@ -167,7 +167,7 @@ class AuditoriaSearchController extends Controller
                                 $items[] = $item;
 
                             }
-    $info['found'] = 'Нашлось <b>'.num::declension (count($items), (array('группа</b>,', 'группы</b>,', 'групп</b>,'))).' где сидит аудитория, похожая на подписчиков исходной группы';
+    $info['found'] = 'Нашлось <b>'.num::declension (count($items), (array('</b>группа,', '</b>группы,', '</b>групп,'))).' где сидит аудитория, похожая на подписчиков исходной группы';
     $writer->writeToFile('storage/auditoria/'.session('vkid').'_auditoria.xlsx');
 ex:
 //    return view('auditoria', ['items' => $items, 'info' => $info]);

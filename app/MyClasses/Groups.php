@@ -9,7 +9,6 @@ use App\Models\Progress;
 
 class Groups {
 
-  //protected $group = array();
   public function __construct() {
   $this->groups=array();
   }
@@ -119,7 +118,6 @@ class Groups {
         $writer->writeSheetRow('Sheet1', $item);
       }
       $writer->writeToFile($filename);
-//	$progress->del();
   }
 
   public function get1000Groups($group_ids, $token) {
@@ -140,11 +138,19 @@ class Groups {
       echo $exception->getMessage()."\n";
       die;
     }
+    catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+      echo $exception->getMessage()."\n";
+      die;
+    }
     if (!empty($group_ids2)) {
       $params['group_ids'] = $group_ids2;
       try {
       $this->groups = array_merge($this->groups, $vk->groups()->getById($token, $params));
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+        echo $exception->getMessage()."\n";
+        die;
+      }
+      catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
         echo $exception->getMessage()."\n";
         die;
       }
@@ -207,16 +213,19 @@ class Groups {
           if (!empty($group_ids_all[$k])) $code_1 = $code_1.'API.stats.get({"group_id":'.$group_ids_all[$k].',"v":5.95,"intervals_count":1}),';
           else break;
         }
-        $code_1 = $code_1.'];';
+        $code_1 .= '];';
         if ($code_1 == 'return[];') break;
     retrys:
     try {
       $stat1 = $vk->getRequest()->post('execute', $token, array(
         'code' 			    => $code_1,
-        'access_token'  => $token,
         'v' 			      => '5.95'
       ));
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+      echo $exception->getMessage()."\n";
+      die;
+    }
+    catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
       echo $exception->getMessage()."\n";
       die;
     }
@@ -291,7 +300,7 @@ class Groups {
             if (isset($group_ids_all[$k])) $code_2 = $code_2.'API.wall.get({"owner_id":-'.$group_ids_all[$k].',"v":5.95,"count":2}),';
             else break;
           }
-          $code_2 = $code_2.'];';
+          $code_2 .= '];';
           if ($code_2 == 'return[];') break;
       retrys:
 
@@ -301,6 +310,10 @@ class Groups {
           'v' 			      => '5.95'
         ));
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+        echo $exception->getMessage()."\n";
+        die;
+      }
+      catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
         echo $exception->getMessage()."\n";
         die;
       }
@@ -317,6 +330,5 @@ class Groups {
       }
   ex:
   }
-
 }
 ?>

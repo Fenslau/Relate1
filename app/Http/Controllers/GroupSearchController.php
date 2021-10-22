@@ -36,7 +36,7 @@ class GroupSearchController extends Controller
 
     $info = array();
     $user = new VKUser(session('vkid'));
-    if ($user->demo === NULL) {
+    if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
       $limit=10;
       $info['demo']=TRUE;
     } else $limit = 100000;

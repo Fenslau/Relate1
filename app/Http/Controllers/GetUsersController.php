@@ -19,7 +19,7 @@ class GetUsersController extends Controller
       $access_token = session('token');
       $vk = new VKApiClient();
       $user = new VKUser(session('vkid'));
-      if ($user->demo === NULL) {
+      if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         //$limit=10;
         $info['demo']=TRUE;
       } //else $limit = 100000;
@@ -40,7 +40,7 @@ class GetUsersController extends Controller
         $items = $get_users->fromGroup($groupid, $fields, 'getusers', $request);
         if (!empty($items) AND count($items) < 1000) $info['found'] = 'Всего нашлось <b>'.num::declension ((count($items)), array('</b> подписчик', '</b> подписчика', '</b> подписчиков'));
         if (!empty($items) AND count($items) >= 1000) $info['found'] = 'Нашлось более 1000 подписчиков';
-        if (!empty($items)) $info['found'] .= ' Полный их список находится в файле Excel';
+        if (!empty($items)) $info['found'] .= '. Полный их список находится в файле Excel';
         else $info['warning'] = 'Невозможно определить подписчиков группы, соответствующих заданным критериям';
 
         if (!empty($items[1001]) AND $items[1001] == 'limit vk') {

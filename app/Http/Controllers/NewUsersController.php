@@ -33,7 +33,7 @@ class NewUsersController extends Controller
       $vk = new VKApiClient();
 
       $user = new VKUser(session('vkid'));
-      if ($user->demo === NULL) {
+      if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         $limit=1;
         $info['demo'] = TRUE;
       } else $limit = 10;

@@ -14,9 +14,7 @@ class ListNewGroups {
       $item['updated_at'] = date('d.m.Y H:i', strtotime($item['updated_at']));
       if (file_exists("storage/new-users/{$vkid}_{$item['group_id']}.xlsx"))  $item['file'] = "{$vkid}_{$item['group_id']}";
       else $item['file'] = '';
-
     }
-
     return $all_follow_groups;
   }
 }

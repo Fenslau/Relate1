@@ -102,7 +102,7 @@ class GetUsers {
   }
 
   $user = new VKUser(session('vkid'));
-  if ($user->demo === NULL) {
+  if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
     //$limit=10;
     $info['demo'] = TRUE;
   } else $info['demo'] = NULL;
@@ -152,7 +152,6 @@ class GetUsers {
         if ($code_1 == 'return[];') break;
 
         try {
-        //  dd($code_1);
           $list_users = $vk->getRequest()->post('execute', $access_token, array(
             'code' 			    => $code_1,
             'v' 			      => '5.126'

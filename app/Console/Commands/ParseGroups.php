@@ -60,7 +60,6 @@ retry:  $access_token = env('ACCESS_TOKEN');
           $group_get = $vk->groups()->getById($access_token, array(
               'group_ids'		 => $group_ids,
               'fields'    	 => 'status,description,public_date_label,start_date,finish_date,contacts,site,verified,wall,city,market,members_count',
-              'access_token' => env('access_token'),
               'lang'   		   => 'ru',
               'v' 			     => '5.95'
           ));
@@ -70,7 +69,7 @@ retry:  $access_token = env('ACCESS_TOKEN');
             goto retry;
         }
         $data_500 = array();
-		$vk_group = New VkGroups();
+		    $vk_group = New VkGroups();
         for ($i=0; $i<=499; $i++) {
         $data=array();
         if (!isset($group_get[$i]['deactivated'])) {
@@ -128,8 +127,8 @@ retry:  $access_token = env('ACCESS_TOKEN');
           }
         }
         $vk_group->upsert($data_500, ['group_name'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
-      $top1000->current_group=$j;
-      $top1000->save();
+        $top1000->current_group=$j;
+        $top1000->save();
       }
       $top1000->current_group=0;
       $top1000->save();

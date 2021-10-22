@@ -29,15 +29,9 @@ class DownloadController extends Controller
                           default: $ctype="application/force-download";
                 }
           $dl = new Download();
-          if (!empty(session('vkid'))) {
-            $dl->vkid = session('vkid');
-            $dl->download = 1;
-            $dl->save();
-          } else {
-            $dl->vkid = 'anon';
-            $dl->download = 1;
-            $dl->save();
-          }
+          if (!empty(session('vkid'))) $dl->vkid = session('vkid'); else $dl->vkid = 'anon';
+          $dl->download = 1;
+          $dl->save();
 
 
           header("Pragma: public");

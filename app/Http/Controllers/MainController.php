@@ -47,7 +47,7 @@ class MainController extends Controller
       );
       $info = array();
       $user = new VKUser(session('vkid'));
-      if ($user->demo === NULL) {
+      if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         $params['count']=10;
         $info['demo']=TRUE;
       }

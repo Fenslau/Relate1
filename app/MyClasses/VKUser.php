@@ -13,11 +13,14 @@ class VKUser {
       $this->vkid = $vkid;
       $oplata = new Oplata();
       $tarif = $oplata->where('vkid', $this->vkid)->orderBy('id', 'desc')->first();
-      if (isset($tarif->date) AND strtotime($tarif->date) > date('U')) {
+      if (isset($tarif->date)) {
         $this->demo = $tarif->demo;
         $this->date = $tarif->date;
+        $this->old_post_limit = $tarif->old_post_limit;
+        $this->old_post_fact = $tarif->old_post_fact;
+        $this->project_limit = $tarif->project_limit;
+        $this->rules_limit = $tarif->rules_limit;
       } else {
-
         $this->demo = NULL;
         $this->date = NULL;
       }

@@ -69,9 +69,13 @@ Route::post('/follow-group', 'App\Http\Controllers\NewUsersController@follow')
 Route::post('/del-follow-group', 'App\Http\Controllers\NewUsersController@del')
 ->name('del-follow-group');
 
-Route::get('/stream', function () {
-    return view('stream');
-})->name('stream');
+Route::get('/stream', 'App\Http\Controllers\Stream\StreamController@main')
+->name('stream');
+
+Route::post('/stream/add-project', 'App\Http\Controllers\Stream\ProjectController@add')
+->name('stream-add-project');
+Route::post('/stream/del-project', 'App\Http\Controllers\Stream\ProjectController@del')
+->name('stream-del-project');
 
 Route::post('/qiwi_request', 'App\Http\Controllers\QiwiRequestController@confirm')
 ->name('qiwi-request');
