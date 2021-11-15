@@ -36,6 +36,8 @@ class GetUsers {
                   ));
                 } catch (\VK\Exceptions\Api\VKApiParamException $exception) {
                     return NULL;
+                } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+                    return 'auth vk';
                 }
 
       if (!empty($group_get[0]['id'])) return $group_get[0]['id'];
@@ -118,6 +120,13 @@ class GetUsers {
     }
     catch (\VK\Exceptions\Api\VKApiAccessException $exception) {
         $items_users[1001] = 'access vk';
+        if ($mode == 'getusers') {
+          goto ex;
+        }
+        return $items_users;
+    }
+    catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+        $items_users[1001] = 'auth vk';
         if ($mode == 'getusers') {
           goto ex;
         }

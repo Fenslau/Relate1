@@ -5,16 +5,14 @@
         <div class="w-100 alert alert-success">
           {!! $info['found'] !!}
         </div>
-      @elseif (@empty($info['warning']))
+      @elseif (@empty($info['warning']) && @empty($info['token']))
         <div class="w-100 alert alert-warning">
           По вашему запросу не нашлось ни одного подписчика. Может быть вы допустили в нём ошибку?
         </div>
       @endisset
-      @isset ($info['warning'])
-        <div class="w-100 alert alert-warning">
-          {!! $info['warning'] !!}
-        </div>
-      @endisset
+
+      @include('inc.obsolete-token')
+
       @isset ($info['demo'])
         <div class="w-100 alert alert-warning">
           Демо-поиск: максимум <b>100</b> подписчиков; В <a href="{{ route('tarifs') }}">полной версии</a> за раз можно собрать до 1 000 000 подписчиков, и даже больше

@@ -21,7 +21,9 @@
 
       <div class="col-md-6">
         <input class="my-3 form-control" id="group-name" type="text" name="group" placeholder="https://vk.com/apiclub">
+        <p class="text-center">Искать сообщества с количеством подписчиков:</p>
         <div data-toggle="tooltip" title="Это наиболее подходящие значения, рекомендованные для сбора групп с похожей аудиторией" class="form-inline justify-content-around d-flex">
+
           <label for="from">от</label>
           <input class="form-control" id="from" type="text" name="from" value="100">
           <label for="to">до</label>

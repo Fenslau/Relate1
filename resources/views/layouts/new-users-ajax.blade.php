@@ -6,16 +6,14 @@
         {!! $info['found'] !!}
       </div>
     @endisset
-    @isset ($info['warning'])
-      <div class="w-100 alert alert-warning">
-        {!! $info['warning'] !!}
-      </div>
-    @endisset
+
     @isset ($info['demo'])
       <div class="w-100 alert alert-warning">
         Демо-режим: максимум <b>1</b> группа; В <a href="{{ route('tarifs') }}">полной версии</a> можно отслеживать до 10 групп.
       </div>
     @endisset
+
+    @include('inc.obsolete-token')
 
   @include('inc.list-follow-groups')
 

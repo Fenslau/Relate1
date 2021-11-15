@@ -30,7 +30,14 @@ class MainController extends Controller
           'count'      => '1',
           'v'          => '5.95'
         );
-        $city = $vk->database()->getCities(session('token'), $params);
+        try {
+          $city = $vk->database()->getCities(session('token'), $params);
+        } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+          $info['token'] = TRUE;
+          $returnHTML = view('layouts.home-ajax', ['items' => NULL, 'info' => $info])->render();
+          return response()->json( array('success' => true, 'html'=>$returnHTML) );
+        }
+
         if (isset($city['items'][0]['id'])) {
           $city['id'] = $city['items'][0]['id'];
           $city['title'] = $city['items'][0]['title'];

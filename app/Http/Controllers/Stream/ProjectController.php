@@ -17,7 +17,7 @@ class ProjectController extends Controller
         'project_name' => 'required|min:2|max:63',
     ]);
     $user = new VKUser(session('vkid'));
-    if ($user->project_limit == 0) return back()->with('error', 'Ваш тариф не допускает создания проектов');
+    if (empty($user->project_limit)) return back()->with('error', 'Ваш тариф не допускает создания проектов');
     $projects = new Projects();
     $project = $projects->where('vkid', session('vkid'))->groupBy('project_name')->pluck('project_name')->toArray();
 

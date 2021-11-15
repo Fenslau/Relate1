@@ -41,6 +41,11 @@ class AuditoriaSearchController extends Controller
             $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
             goto ex;
           }
+          catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+              $info['found'] = NULL;
+              $info['token'] = TRUE;
+              goto ex;
+          }
     }
 
     if (empty($list_users['count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
@@ -53,6 +58,7 @@ class AuditoriaSearchController extends Controller
     $list_users = $get_users->fromGroup($groupid, null, 'auditoria');
     if (isset($list_users[1001]) AND is_array($list_users)) {
       if ($list_users[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+      if ($list_users[1001] == 'auth vk') $info['token'] = TRUE;
       if ($list_users[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
       $info['found'] = NULL;
       goto ex;

@@ -2,7 +2,7 @@
   <div class="w-100 alert alert-success">
     {!! $info['found'] !!}
   </div>
-@else
+@elseif (@empty($info['token']))
   <div class="w-100 alert alert-warning">
     По вашему запросу не нашлось ни одной групы. Может быть вы допустили в нём ошибку?
   </div>
@@ -12,6 +12,8 @@
     Демо-поиск: максимум <b>10</b> групп; для просмотра 1000 групп, оплатите полный доступ. В разделе <a href="{{ route('groupsearch') }}">"Группы с открытой стеной"</a> можно скачивать до 100 000 групп.
   </div>
 @endisset
+
+@include('inc.obsolete-token')
 
 <div class="w-100 m-0 alert alert-info">
   @isset ($info['search'])

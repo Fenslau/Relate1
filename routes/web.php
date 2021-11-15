@@ -43,14 +43,17 @@ Route::get('/tarifs', function () {
 })->name('tarifs');
 
 Route::get('/groupsearch', function () {
+    session()->flash('previous-route', Route::current()->getName());
     return view('groupsearch');
 })->name('groupsearch');
 
 Route::get('/auditoria', function () {
+    session()->flash('previous-route', Route::current()->getName());
     return view('auditoria');
 })->name('auditoria');
 
 Route::get('/getusers', function () {
+    session()->flash('previous-route', Route::current()->getName());
     return view('getusers');
 })->name('getusers');
 

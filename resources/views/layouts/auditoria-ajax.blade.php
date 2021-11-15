@@ -5,16 +5,14 @@
         <div class="w-100 alert alert-success">
           {!! $info['found'] !!}
         </div>
-      @elseif (@empty($info['warning']))
+      @elseif (@empty($info['warning']) && @empty($info['token']))
         <div class="w-100 alert alert-warning">
           По вашему запросу не нашлось ни одной группы. Может быть вы допустили в нём ошибку?
         </div>
       @endisset
-      @isset ($info['warning'])
-        <div class="w-100 alert alert-warning">
-          {!! $info['warning'] !!}
-        </div>
-      @endisset
+
+      @include('inc.obsolete-token')
+
       @isset ($info['demo'])
         <div class="w-100 alert alert-warning">
           Демо-поиск: максимум <b>10</b> групп; В <a href="{{ route('tarifs') }}">полной версии</a> за раз можно собрать до 500 групп.

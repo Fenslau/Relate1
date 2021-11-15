@@ -55,6 +55,10 @@ class GetUsersController extends Controller
           $info['found'] = NULL;
           $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
         }
+        if (!empty($items[1001]) AND $items[1001] == 'auth vk') {
+          $info['found'] = NULL;
+          $info['token'] = TRUE;
+        }
       }
 
       $returnHTML = view('layouts.getusers-ajax', ['request' => $request, 'items' => $items, 'info' => $info])->render();

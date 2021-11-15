@@ -14,10 +14,12 @@ use \App\MyClasses\VKUser;
 use \App\MyClasses\num;
 use \App\MyClasses\GetAge;
 use \App\MyClasses\ListNewGroups;
+use Illuminate\Support\Facades\Route;
 
 class NewUsersController extends Controller
 {
     public function main() {
+      session()->flash('previous-route', Route::current()->getName());
       $list_new_groups = new ListNewGroups();
       $items = $list_new_groups->getFollowList();
       return view('new-users', ['items_groups' => $items]);
@@ -26,7 +28,6 @@ class NewUsersController extends Controller
 
 
     public function add(Request $request) {
-
       $info = array();
       $items = array();
       $access_token = session('token');
@@ -41,20 +42,24 @@ class NewUsersController extends Controller
       $get_users = new GetUsers();
       $groupid = $get_users->groupId($request->group);
       if (empty($groupid)) $info['warning'] = 'Невозможно определить подписчиков группы';
-      else {
-        $group_get = $vk->groups()->getById($access_token, array(
-            'group_id'		 => $groupid,
-            'fields'    	 => 'members_count',
-            'v' 			     => '5.101'
-        ));
-      }
+        elseif ($groupid == 'auth vk') $info['token'] = TRUE;
+          else try {
+
+            $group_get = $vk->groups()->getById($access_token, array(
+                'group_id'		 => $groupid,
+                'fields'    	 => 'members_count',
+                'v' 			     => '5.101'
+            ));
+          } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+              $info['token'] = TRUE;
+          }
       $new_group = new NewUsers();
       $check_limit = $new_group->where('vkid', session('vkid'))->count();
       if ($check_limit >= $limit) $info['warning'] = 'Вы уже достигли лимита по количеству отслеживаемых групп';
 
 
-      if (empty($group_get[0]['members_count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
-      elseif ($group_get[0]['members_count'] > 500000) $info['warning'] = 'Слишком большая группа, допускается отслеживать группы, не более 500 000 подписчиков';
+      if (empty ($info['warning']) AND empty($group_get[0]['members_count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
+      elseif (empty ($info['warning']) AND $group_get[0]['members_count'] > 500000) $info['warning'] = 'Слишком большая группа, допускается отслеживать группы, не более 500 000 подписчиков';
       if (isset($info['warning'])) {
         $returnHTML = view('layouts.new-users-ajax', ['items' => $items, 'info' => $info])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
@@ -68,6 +73,7 @@ class NewUsersController extends Controller
 
           if (isset($users_array[1001]) AND is_array($users_array)) {
             if ($users_array[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+            if ($list_users[1001] == 'auth vk')  $info['token'] = TRUE;
             if ($users_array[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
             $info['found'] = NULL;
             goto ex;
@@ -104,6 +110,7 @@ class NewUsersController extends Controller
 
         if (isset($list_users2[1001]) AND is_array($list_users2)) {
           if ($list_users2[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+          if ($list_users2[1001] == 'auth vk') $info['token'] = TRUE;
           if ($list_users2[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
           $info['found'] = NULL;
           goto ex;

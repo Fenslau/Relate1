@@ -170,3 +170,13 @@ $(document).ready(function () {
 
   });
 });
+
+$(document).ready(function () {
+    $.ajaxSetup({
+        statusCode: {
+            419: function(){
+                    location.reload();
+                }
+        }
+    });
+});
