@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\Top1000::class,
         Commands\Top1000date::class,
         Commands\HelperHour::class,
+        Commands\Stream::class,
     ];
 
     /**
@@ -27,6 +28,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+      //  $schedule->command('Stream:get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Stream.log');
+
         $schedule->command('Parse:Groups')->monthlyOn(4, '15:00')->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
 
         $schedule->command('Top1000:get')->everyTenMinutes()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000.log');

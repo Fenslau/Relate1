@@ -13,6 +13,7 @@
         "mk-j/php_xlsxwriter": "^0.38.0",
         "qiwi/bill-payments-php-sdk": "^0.2.2",
         "shuchkin/simplexlsx": "^0.8.26",
+        "textalk/websocket": "^1.5",
         "vkcom/vk-php-sdk": "^5.101"
     },
     "require-dev": {
