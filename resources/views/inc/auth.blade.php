@@ -6,7 +6,7 @@
       @if(Session::has('token'))
         <form action="{{ route('auth-vk-destroy') }}" method="get">
           <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
-          <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-sign-out fa-flip-horizontal" aria-hidden="true"></i> Выйти</button>
+          <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-sign-out fa-flip-horizontal"></i> Выйти</button>
         </form>
       @else
         <form action="{{ route('auth-vk') }}" method="get">

@@ -85,7 +85,5 @@ class MainController extends Controller
 
       $returnHTML = view('layouts.home-ajax', ['items' => $group->groups, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
-
-  //    return view('home', ['items' => $group->groups, 'info' => $info]);
     }
 }

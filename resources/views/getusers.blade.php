@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="container">
+  @include('inc.toast')
   <form class="" id="search-submit" action="{{ route('getusers') }}" method="post">
     @csrf
     <h2 class="m-3 text-center text-uppercase" >Собрать базу подписчиков групп вконтакте</h2>

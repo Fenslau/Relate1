@@ -74,11 +74,54 @@ Route::post('/del-follow-group', 'App\Http\Controllers\NewUsersController@del')
 
 Route::get('/stream', 'App\Http\Controllers\Stream\StreamController@main')
 ->name('stream');
+Route::post('/stream/gen-key', 'App\Http\Controllers\Stream\StreamController@gen')
+->name('stream-gen-key');
+Route::post('/stream/stream-fake-vkid', 'App\Http\Controllers\Stream\StreamController@fakeVKID')
+->name('stream-fake-vkid');
+
+Route::post('/stream/link-add', 'App\Http\Controllers\Stream\UserlinkController@add')
+->name('link-add');
+Route::post('/stream/link-del', 'App\Http\Controllers\Stream\UserlinkController@del')
+->name('link-del');
+
+Route::post('/stream/rule-add', 'App\Http\Controllers\Stream\RuleController@add')
+->name('rule-add');
+Route::post('/stream/rule-edit', 'App\Http\Controllers\Stream\RuleController@edit')
+->name('rule-edit');
+Route::post('/stream/rule-del', 'App\Http\Controllers\Stream\RuleController@del')
+->name('rule-del');
 
 Route::post('/stream/add-project', 'App\Http\Controllers\Stream\ProjectController@add')
 ->name('stream-add-project');
 Route::post('/stream/del-project', 'App\Http\Controllers\Stream\ProjectController@del')
 ->name('stream-del-project');
+
+Route::get('/stream/{project_name}', 'App\Http\Controllers\Stream\PostController@main')
+->name('post');
+
+Route::post('/stream/save-file', 'App\Http\Controllers\Stream\SaveFileController@main')
+->name('save-file');
+
+Route::post('/stream/ruleErasePosts', 'App\Http\Controllers\Stream\StreamButtonsController@ruleErasePosts')
+->name('ruleErasePosts');
+Route::post('/stream/trashErase', 'App\Http\Controllers\Stream\StreamButtonsController@trashErase')
+->name('trashErase');
+Route::post('/stream/ruleDelete', 'App\Http\Controllers\Stream\StreamButtonsController@ruleDelete')
+->name('ruleDelete');
+Route::post('/stream/oldRuleDelete', 'App\Http\Controllers\Stream\StreamButtonsController@oldRuleDelete')
+->name('oldRuleDelete');
+Route::post('/stream/userLinksErasePosts', 'App\Http\Controllers\Stream\StreamButtonsController@userLinksErasePosts')
+->name('userLinksErasePosts');
+Route::post('/stream/userLinksDelete', 'App\Http\Controllers\Stream\StreamButtonsController@userLinksDelete')
+->name('userLinksDelete');
+Route::post('/stream/changePostLink', 'App\Http\Controllers\Stream\StreamButtonsController@changePostLink')
+->name('changePostLink');
+Route::post('/stream/flagErase', 'App\Http\Controllers\Stream\StreamButtonsController@flagErase')
+->name('flagErase');
+Route::post('/stream/erasePost', 'App\Http\Controllers\Stream\StreamButtonsController@erasePost')
+->name('erasePost');
+Route::post('/stream/flagPost', 'App\Http\Controllers\Stream\StreamButtonsController@flagPost')
+->name('flagPost');
 
 Route::post('/qiwi_request', 'App\Http\Controllers\QiwiRequestController@confirm')
 ->name('qiwi-request');

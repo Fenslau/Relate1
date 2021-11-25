@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class StreamKey extends Model
 {
     use HasFactory;
+    protected $fillable = ['endpoint', 'streamkey'];
 }

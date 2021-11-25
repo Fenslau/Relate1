@@ -121,3 +121,25 @@ td.ava-group {
 	padding: 0;
 	position: relative;
 }
+
+input.check_cut {
+	display: none;
+}
+label.check_cut {
+	cursor: pointer;
+}
+input:checked + label.check_cut  {
+	color: #77ffba;
+}
+.block-text_help_words, .block-text {
+	display: none;
+}
+
+.aside .btn {
+    min-width: 2rem;
+}
+
+.modal-body h6 {
+	margin-bottom: 0;
+	margin-top: 0.5rem;
+}

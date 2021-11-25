@@ -43,6 +43,11 @@ class Stream extends Command
      */
     public function handle()
     {
+//  $keyword = 'rtt';
+//  $arr[1] = 'Rt??|fff??|rtt??';
+//
+// echo in_array($keyword, explode('|', str_replace('?', '', strtolower($arr[1]))));
+// die;
         $counter = 1;
         main_cycle:
 
@@ -88,32 +93,33 @@ class Stream extends Command
         $user_links = '';
         $array_of_keywords=array();
         $vk_rule = $projects->where(DB::raw('concat(vkid, "", rule)'), $usertag)->first()->toArray();
-        if (!empty($vk_rule['mode1'])) $array_of_keywords = array_diff(explode("\n", str_replace('?', '', strtolower($vk_rule['mode1']))), array('', NULL, 0));
+        if (!empty($vk_rule['mode1'])) $array_of_keywords = array_diff(explode("\n", str_replace('?', '', mb_strtolower($vk_rule['mode1']))), array('', NULL, 0));
         if (!empty($vk_rule['mode2'])) {
-        	$array_of_keywords = array_merge($array_of_keywords, array_diff(explode("\n", str_replace('?', '', strtolower($vk_rule['mode2']))), array('', NULL, 0)));
+        	$array_of_keywords = array_merge($array_of_keywords, array_diff(explode("\n", str_replace('?', '', mb_strtolower($vk_rule['mode2']))), array('', NULL, 0)));
         }
-        if (!empty($vk_rule['mode3'])) $array_of_keywords = array_diff(explode("\n", str_replace('?', '', strtolower($vk_rule['mode3']))), array('', NULL, 0));
+        if (!empty($vk_rule['mode3'])) $array_of_keywords = array_diff(explode("\n", str_replace('?', '', mb_strtolower($vk_rule['mode3']))), array('', NULL, 0));
         $new_array_of_keywords_ = array();
         $count_of_keywords = count($array_of_keywords);
         $tmp_arr=$array_of_keywords;
 
         //print_r ($array_of_keywords);
         foreach ($array_of_keywords as $array_of_keyword) {
-        $new_array_of_keywords = explode('|', str_replace('?', '', strtolower($array_of_keyword)));
+        $new_array_of_keywords = explode('|', str_replace('?', '', mb_strtolower($array_of_keyword)));
         foreach ($new_array_of_keywords as $new_array_of_keyword) $new_array_of_keywords_[] = $new_array_of_keyword;
         }
         $array_of_keywords = $new_array_of_keywords_;
 
         file_put_contents ('public/temp/stream.txt', $text, LOCK_EX);
-        shell_exec('cd public/temp/ && mystem stream.txt streamoutput.txt -nc');
+        shell_exec('cd public/temp/ && '.env('MYSTEM').' stream.txt streamoutput.txt -nc');
         $value=explode("\n", file_get_contents('public/temp/streamoutput.txt'));
 
 
         $text='';
-        $search = ['\n', '\xAB', '\xBB', '\xA0', '\xB7'];
-        $replace = ['', '«', '»', ' ', '-'];
+        $search = ['\r', '\n', '\xAB', '\xBB', '\xA0', '\xB7'];
+        $replace = ['', '', '«', '»', ' ', '-'];
         $word_number=0;
         $close=$position=array();
+
         foreach ($value as $word) {
         		$arr=preg_split('/\{|\}(, *)?/', $word, -1);
         		if (isset($arr[0])) {
@@ -122,10 +128,11 @@ class Stream extends Command
         				else $arr[0] = str_replace('_', ' ', $arr[0]);
         			$arr[0] = json_decode('"'.$arr[0].'"');
 
-        			foreach ($array_of_keywords as $keyword_)
-        			foreach (explode('|', str_replace('?', '', strtolower($keyword_))) as $keyword) {
-        				if (!empty($arr[1]) AND !empty($keyword) AND in_array($keyword, explode('|', str_replace('?', '', strtolower($arr[1])))) ) {
-        					$arr[0]='<span class="keyword">'.$arr[0].'</span>';
+              foreach ($array_of_keywords as $keyword_)
+        			foreach (explode('|', str_replace('?', '', mb_strtolower($keyword_))) as $keyword) {
+        				if (!empty($arr[1]) AND !empty($keyword) AND in_array($keyword, explode('|', str_replace('?', '', mb_strtolower($arr[1]))))
+        					AND (strpos($arr[0], '<mark>') === FALSE) ) {
+        					$arr[0]='<mark>'.$arr[0].'</mark>';
         					$position[$keyword][] = ($word_number);
         				}
               }
@@ -158,10 +165,10 @@ class Stream extends Command
         if (!empty($vk_rule['mode1']) AND empty($vk_rule['mode2'])) $close = $cartesian->PosNClose($position, $vk_rule['words1']);
         if (!empty($vk_rule['mode1']) AND !empty($vk_rule['mode2'])) {
         $mode2_all = $close_flag = array();
-        	$array_of_keywords_1 = array_diff(explode("\n", str_replace('?', '', strtolower($vk_rule['mode1']))), array('', NULL, 0));
+        	$array_of_keywords_1 = array_diff(explode("\n", str_replace('?', '', mb_strtolower($vk_rule['mode1']))), array('', NULL, 0));
         	$new_array_of_keywords_ = array();
         	foreach ($array_of_keywords_1 as $array_of_keyword) {
-        	$new_array_of_keywords = explode('|', str_replace('?', '', strtolower($array_of_keyword)));
+        	$new_array_of_keywords = explode('|', str_replace('?', '', mb_strtolower($array_of_keyword)));
         	foreach ($new_array_of_keywords as $new_array_of_keyword) $new_array_of_keywords_[] = $new_array_of_keyword;
         	}
         	$array_of_keywords_1 = $new_array_of_keywords_;
@@ -199,10 +206,10 @@ class Stream extends Command
         		if (!empty($pairs)) {
         			foreach ($pairs as $pair) {
         				$position_pair=array();
-        				$array_of_keywords_1 = array_diff(explode("\n", str_replace('?', '', strtolower(shell_exec('cd public/temp/ && echo "'.addslashes($pair[0]).'" | mystem -ln')))), array('', NULL, 0));
+        				$array_of_keywords_1 = array_diff(explode("\n", str_replace('?', '', mb_strtolower(shell_exec('cd public/temp/ && echo "'.addslashes($pair[0]).'" | '.env('MYSTEM').' -ln')))), array('', NULL, 0));
         				$new_array_of_keywords_ = array();
         				foreach ($array_of_keywords_1 as $array_of_keyword) {
-        					$new_array_of_keywords = explode('|', str_replace('?', '', strtolower($array_of_keyword)));
+        					$new_array_of_keywords = explode('|', str_replace('?', '', mb_strtolower($array_of_keyword)));
         					foreach ($new_array_of_keywords as $new_array_of_keyword) $new_array_of_keywords_[] = $new_array_of_keyword;
         				}
         				$array_of_keywords_1 = $new_array_of_keywords_;
@@ -223,7 +230,7 @@ class Stream extends Command
         }
         foreach ($tmp_arr as $pkey=>$pvalue) {
         	$difference = FALSE;
-        	foreach (explode('|', str_replace('?', '', strtolower($pvalue))) as $pvalue_word) {
+        	foreach (explode('|', str_replace('?', '', mb_strtolower($pvalue))) as $pvalue_word) {
         		if (in_array ($pvalue_word, $pos_array)) $difference = TRUE;
         	}
         	if ($difference === FALSE) $diff[] = $pvalue;
@@ -234,7 +241,7 @@ class Stream extends Command
         	$user_links = 'Доп.посты';
         	$check_trash=0;
         }
-
+        $data = $text;
 
 
 
@@ -280,7 +287,7 @@ class Stream extends Command
         		case '8': $platform = 'сторонние приложения'; break;
         		default: if (isset($info['event']['author']['platform'])) $platform = $info['event']['author']['platform']; break;
         		}
-        	$data = $text;
+
 
           $streamdata = new StreamData();
           $streamdata->post_id = $post_id;
@@ -315,7 +322,7 @@ class Stream extends Command
         	$counter++;
         goto cycle;
         } catch (\WebSocket\ConnectionException $e) {
-                echo "\n".$e;
+            echo "\n".$e;
         		goto main_cycle;
         }
     }

@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="container">
+  @include('inc.toast')
   <form class="" id="search-submit" action="{{ route('groupsearch') }}" method="post">
     @csrf
     <h2 class="m-3 text-center text-uppercase" >Поиск групп вконтакте</h2>

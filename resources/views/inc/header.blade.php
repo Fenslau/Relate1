@@ -22,8 +22,7 @@
     <nav class="d-sm-none navbar navbar-light">
 
       <a class="navbar-brand text-white" href="#">Меню</a>
-      <button class="navbar-toggler toggler-example text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-        aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars fa-1x"></i></button>
+      <button class="navbar-toggler toggler-example text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"><i class="fas fa-bars fa-1x"></i></button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent1">
         <ul class="navbar-nav mr-auto">
@@ -76,8 +75,8 @@
         @csrf
         <div class="input-group">
           <input class="form-control form-control-sm" type="text" name="opros"
-            placeholder="ОПРОС: Какие функции нужно добавить на сайт, чтоб он стал для вас более удобным?" aria-describedby="opros">
-          <button class="btn btn-sm btn-outline-primary text-white" type="submit">Отправить</button>
+            placeholder="ОПРОС: Какие функции нужно добавить на сайт, чтоб он стал для вас более удобным?">
+          <button class="btn btn-sm btn-outline-primary text-white input-group-append" type="submit">Отправить</button>
         </div>
       </form>
     </div>

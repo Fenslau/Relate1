@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="container-fluid">
+  @include('inc.toast')
   <div class="row">
 
     @if(Session::has('vkid'))
@@ -47,12 +48,12 @@
               <label class="form-check-label" for="inlineCheckbox2">С датами последних постов</label>
             </div>
 
-            <button id="js-load" disabled class="btn btn-sm btn-primary vk-top-bg" type="submit" name="submit"><i class="fa fa-search" aria-hidden="true"></i><span class="spinner-border spinner-border-sm text-light d-none" role="status" aria-hidden="true"></span> Найти группы</button>
+            <button id="js-load" disabled class="btn btn-sm btn-primary vk-top-bg" type="submit" name="submit"><i class="fa fa-search"></i><span class="spinner-border spinner-border-sm text-light d-none"></span> Найти группы</button>
           </div>
       </form>
 
       <div class="mt-2 progress">
-        <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+        <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%"></div>
       </div>
       <div id="progress-text" class="px-2 mt-2 bg-secondary text-white"></div>
     </div>
@@ -124,7 +125,7 @@
                   <div class="text-success">+{{ $item['grouth'] }}
                   </div>
                   @elseif ($item['grouth'] < 0)
-                  <div class="text-danger">{{ $item['grouth'] }}                  
+                  <div class="text-danger">{{ $item['grouth'] }}
                   </div>
                   @endif
                 </td>

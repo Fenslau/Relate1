@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use \App\MyClasses\VKUser;
 use \App\MyClasses\num;
 use App\Models\Stream\Projects;
+use App\Models\Stream\StreamKey;
+use \VK\Client\VKApiClient;
 
 class StreamController extends Controller
 {
@@ -35,9 +37,44 @@ class StreamController extends Controller
         $my_project['rules_count'] = $projects->where('vkid', session('vkid'))->where('project_name', $my_project['project_name'])->whereNotNull('rule')->count();
         $my_project['count_stream_records'] = $projects->where('vkid', session('vkid'))->where('project_name', $my_project['project_name'])->pluck('count_stream_records')->sum();
       }
-
-      return view('stream', ['info' => $info], ['items' => $my_projects]);
+      $vkids = $vk_rules = NULL;
+      if (session('vkid') == 151103777 OR session('realvkid') == 151103777 OR session('vkid') == 409899462 OR session('realvkid') == 409899462) {
+        $info['admin'] = TRUE;
+        $vkids = $projects->distinct()->pluck('vkid')->toArray();
+        $stream = new Streamkey();
+        $stream = $stream->find(1);
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>true,
+                "verify_peer_name"=>true,
+            ),
+        );
+        $rules = json_decode(file_get_contents("https://$stream->endpoint/rules?key=$stream->streamkey", false, stream_context_create($arrContextOptions)), true);
+        if (!empty($rules['rules'])) $vk_rules = array_column($rules['rules'], 'tag'); else $vk_rules = NULL;
+      }
+      return view('stream', ['info' => $info, 'vkids' => $vkids, 'vk_rules' => $vk_rules, 'items' => $my_projects]);
     }
 
+    public function gen() {
+      $key = new StreamKey();
+      $vk = new VKApiClient();
+      $streamkey = $vk->streaming()->getServerUrl(env('ACCESS_TOKEN'),
+      array(
+        'v' 			=> '5.131'
+      ));
+      $streamkey['streamkey'] = $streamkey['key'];
+      if (!empty($streamkey['endpoint']) AND !empty($streamkey['key'])) {
+        $key->updateOrCreate(['id' => 1], $streamkey);
+        return back()->with('success', 'Новый ключ сгенерирован и записан в базу данных');
+      } else return back()->with('error', 'Не удалось получить ключ потока');
 
+    }
+
+    public function fakeVKID(Request $request) {
+      if (is_numeric($request->fakevkid)) {
+        session(['realvkid' => session('vkid')]);
+        session(['vkid' => $request->fakevkid]);
+        return back()->with('success', 'Ваш ВК id подменён на '.$request->fakevkid);
+      } else return back()->with('warning', 'Выберите ВК id из списка');
+    }
 }

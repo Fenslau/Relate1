@@ -11,7 +11,7 @@
 
     @if (empty($items))
       <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" src="/images/create1.png"></h4>
-      <div class="text-center m-5"><a class="btn btn-success" href="{{ route('stream') }}?project=Demo">ДЕМО-ВЕРСИЯ</a></div>
+      <div class="text-center m-5"><a class="btn btn-success" href="{{ route('stream') }}/Demo">ДЕМО-ВЕРСИЯ</a></div>
     @endif
 
 @if(Session::has('vkid'))
@@ -32,7 +32,7 @@
           <div class="input-group-prepend">
             <button class="btn btn-outline-success" type="submit" id="button-addon1">Добавить&nbsp;проект</button>
           </div>
-          <input type="text" class="form-control" name="project_name" placeholder="Название" aria-label="Пример текста с надстройкой кнопки" aria-describedby="button-addon1">
+          <input type="text" class="border-success border-left-0 form-control" name="project_name" placeholder="Название">
         </div>
       </form>
 
@@ -56,10 +56,10 @@
             @foreach ($items as $item)
               <tr class="lh-md text-center">
                 <td>{{ $loop->iteration }}</td>
-                <td class="text-left"><a href="{{ route('stream') }}?project={{ $item['project_name'] }}">{{ $item['project_name'] }}</a></td>
+                <td class="text-left"><a href="{{ route('stream') }}/{{ $item['project_name'] }}">{{ $item['project_name'] }}</a></td>
                 <td>{{ $item['rules_count'] }}</td>
                 <td>{{ $item['count_stream_records'] }}</td>
-                <td><button class="btn btn-sm btn-outline-danger" type="submit" name="del" value="{{ $item['id'] }}"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</button></td>
+                <td><button class="btn btn-sm btn-outline-danger" type="submit" name="del" value="{{ $item['id'] }}"><i class="fa fa-trash"></i> Удалить</button></td>
               </tr>
             @endforeach
             </tbody>
@@ -71,25 +71,44 @@
 @endif
 
   <div class="pb-5">
+    @isset($info['admin'])
+      <div class="row">
+        <form class="m-3" action="{{ route('stream-gen-key') }}" method="post">
+          @csrf
+          <button data-toggle="tooltip" title="Ключ для доступа к сервису стриминга для всего приложения ВКТОППОСТ (генерируется один раз)" class="btn btn-sm btn-outline-info" type="submit" name="gen" value="gen"><i class="fa fa-key"></i> Сгенерировать новый ключ</button>
+        </form>
 
+        <form class="m-3" action="{{ route('stream-fake-vkid') }}" method="post">
+          @csrf
+          <div class="input-group input-group-sm" data-toggle="tooltip" title="Позволяет посмотреть сервис от имени другого пользователя (вместе с его правилами, проектами и т.д.)">
+            <select name="fakevkid" class="form-control">
+              <option selected>Выберите ВК id для подмены</option>
+              @foreach ($vkids as $vkid)
+                <option value="{{ $vkid }}">{{ $vkid }}</option>
+              @endforeach
+            </select>
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-secondary" type="submit"><i class="far fa-user"></i> Подменить</button>
+            </div>
+          </div>
+        </form>
+        <form class="m-3" action="{{ route('ruleDelete') }}" method="post">
+          @csrf
+          <div class="input-group input-group-sm" data-toggle="tooltip" title="Для удаления любых правил из Streaming API, например тех, которые были созданы ошибочно и не попали в интерфейс пользователя">
+            <select name="rule_tag" class="form-control border-danger border-right-0">
+              @foreach ($vk_rules as $rule)
+                <option value="{{ $rule }}">{{ $rule }}</option>
+              @endforeach
+            </select>
+            <div class="input-group-append">
+              <input type="hidden" name="admin" value="true">
+              <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash-alt"></i> Удалить</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    @endisset
   </div>
-
-
-  <!-- <div class="row">
-    <div class="col-md-10">
-
-
-
-
-
-
-
-
-    </div>
-    <div class="col-md-2">
-      @include('inc.aside')
-    </div>
-  </div> -->
 </div>
 
 @endsection

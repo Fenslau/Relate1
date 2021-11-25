@@ -86,7 +86,10 @@ $(document).ready(function () {
                       }
 
                 } else {
-                  alert('Что-то пошло не так. Попробуйте ещё раз или сообщите нам.');
+                  $('.toast-header').addClass('bg-danger');
+                  $('.toast-header').removeClass('bg-success');
+                  $('.toast-body').html('Что-то пошло не так. Попробуйте ещё раз или сообщите нам');
+                  $('.toast').toast('show');
                 }
             },
 
@@ -162,7 +165,10 @@ $(document).ready(function () {
                 $('.search-form').addClass('d-none');
 
             } else {
-              alert('Что-то пошло не так. Попробуйте ещё раз или сообщите нам.');
+              $('.toast-header').addClass('bg-danger');
+              $('.toast-header').removeClass('bg-success');
+              $('.toast-body').html('Что-то пошло не так. Попробуйте ещё раз или сообщите нам');
+              $('.toast').toast('show');
             }
         },
 
