@@ -28,8 +28,8 @@
           <span class="h6 font-weight-bold">Пример</span><br />
             Например, правилу кот будут соответствовать объекты с текстом "кот", "кОт", "Котик".
             Правилу "кот" из вышеперечисленных будет соответствовать только объект с текстом "кот".
-            Правилу -"кот" будут соответствовать объекты, которые не содержат точную словоформу «кот».
-            Правилу -собака будут соответствовать объекты, которые не содержат слово «собака» в любой форме.
+            Если указать минус-слово -"кот", то правилу будут соответствовать объекты, которые не содержат точную словоформу «кот».
+            Правилу с минус-словом -собака будут соответствовать объекты, которые не содержат слово «собака» в любой форме.
             Чтобы искать записи с хэштегом, используйте правило вида "#хэштег".
         </div>
       </div>
@@ -44,11 +44,10 @@
         </div>
       </div>
     </div>
-    <div class="row justify-content-around">
-      <form class="m-1" action="{{ route('stream') }}/{{ $info['project_name'] }}" method="get">
-        <button class="btn btn-lg btn-outline-primary" type="submit"><i class="fab fa-windows"></i> <span class="d-none d-md-inline">Проект {{ $info['project_name'] }}</span></button>
-      </form>
-
+    <div id="begin" class="row justify-content-around">
+      <div class="m-1">
+        <a href="{{ route('post', $info['project_name']) }}" class="btn btn-lg btn-outline-primary"><i class="fab fa-windows"></i> <span class="d-none d-md-inline">Проект {{ $info['project_name'] }}</span></a>
+      </div>
       <form class="m-1" action="{{ route('save-file') }}" method="post">
         @csrf
         <button class="btn btn-lg btn-outline-success" type="submit"><i class="far fa-file-excel"></i> <span class="d-none d-md-inline">Скачать файл Excel</span></button>
@@ -73,14 +72,24 @@
   <div class="row">
     <div class="col-md-9">
 
-
-
-
-
-
-
-
       @include('inc.toast')
+
+
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('stream') }}">Главная</a></li>
+            @isset($info['project_name'])
+            <li class="breadcrumb-item"><a href="{{ route('post', $info['project_name']) }}">{{ $info['project_name'] }}</a></li>
+            @endisset
+            @isset($info['rule'])
+            <li class="breadcrumb-item active" aria-current="page">{{ $info['rule'] }}</li>
+            @endisset
+          </ol>
+      </nav>
+
+
+      @include('inc.posts')
+
     </div>
     <div class="col-md-3">
       @include('inc.aside')
@@ -95,4 +104,11 @@
 <section>
     @include('inc.modal-aside')
 </section>
+<script type="text/javascript">
+  onload = function () {
+    if (window.location.hash) {}
+    else
+    $('#start') [0].scrollIntoView (1)
+  }
+</script>
 @endsection

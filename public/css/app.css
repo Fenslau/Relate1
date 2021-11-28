@@ -127,7 +127,7 @@ td.ava-group {
 input.check_cut {
 	display: none;
 }
-label.check_cut {
+.hider_dublikat, label.check_cut, label.check_trash, label.check_flag {
 	cursor: pointer;
 }
 input:checked + label.check_cut  {
@@ -144,5 +144,28 @@ input:checked + label.check_cut  {
 .modal-body h6 {
 	margin-bottom: 0;
 	margin-top: 0.5rem;
+}
+
+.border-3 {
+		border-width:3px !important;
+}
+
+.pagination .page-link {
+	color: #004aad;
+}
+.pagination .page-item.active .page-link {
+	background-color: #004aad;
+	border-color: #004aad;
+}
+
+input:checked + label.check_flag  {
+	color: gold;
+}
+input:checked + label.check_trash  {
+	color: red;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }
 

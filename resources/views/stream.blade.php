@@ -92,10 +92,11 @@
             </div>
           </div>
         </form>
-        <form class="m-3" action="{{ route('ruleDelete') }}" method="post">
+        <form class="m-3" action="{{ route('stream-button', 'ruleDelete') }}" method="post">
           @csrf
           <div class="input-group input-group-sm" data-toggle="tooltip" title="Для удаления любых правил из Streaming API, например тех, которые были созданы ошибочно и не попали в интерфейс пользователя">
             <select name="rule_tag" class="form-control border-danger border-right-0">
+              <option selected>Выберите правило</option>
               @foreach ($vk_rules as $rule)
                 <option value="{{ $rule }}">{{ $rule }}</option>
               @endforeach

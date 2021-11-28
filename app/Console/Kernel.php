@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\Top1000date::class,
         Commands\HelperHour::class,
         Commands\Stream::class,
+        Commands\City::class,
+        Commands\AuthorGet::class,
     ];
 
     /**
@@ -36,6 +38,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('Top1000date:get')->everySixHours()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000date.log');
 
         $schedule->command('Help:hour')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/HelperHour.log');
+
+        $schedule->command('City:database')->quarterly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/CityDatabase.log');
+
+        $schedule->command('model:prune')->daily()->appendOutputTo('storage/logs/ModelsPrune.log');
+
+
+
+        $schedule->command('Authors:Get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Authors.log');
     }
 
     /**

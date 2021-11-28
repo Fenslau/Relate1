@@ -96,32 +96,19 @@ Route::post('/stream/add-project', 'App\Http\Controllers\Stream\ProjectControlle
 Route::post('/stream/del-project', 'App\Http\Controllers\Stream\ProjectController@del')
 ->name('stream-del-project');
 
-Route::get('/stream/{project_name}', 'App\Http\Controllers\Stream\PostController@main')
+Route::get('/stream/{project_name?}', 'App\Http\Controllers\Stream\PostController@main')
 ->name('post');
 
 Route::post('/stream/save-file', 'App\Http\Controllers\Stream\SaveFileController@main')
 ->name('save-file');
 
-Route::post('/stream/ruleErasePosts', 'App\Http\Controllers\Stream\StreamButtonsController@ruleErasePosts')
-->name('ruleErasePosts');
-Route::post('/stream/trashErase', 'App\Http\Controllers\Stream\StreamButtonsController@trashErase')
-->name('trashErase');
-Route::post('/stream/ruleDelete', 'App\Http\Controllers\Stream\StreamButtonsController@ruleDelete')
-->name('ruleDelete');
-Route::post('/stream/oldRuleDelete', 'App\Http\Controllers\Stream\StreamButtonsController@oldRuleDelete')
-->name('oldRuleDelete');
-Route::post('/stream/userLinksErasePosts', 'App\Http\Controllers\Stream\StreamButtonsController@userLinksErasePosts')
-->name('userLinksErasePosts');
-Route::post('/stream/userLinksDelete', 'App\Http\Controllers\Stream\StreamButtonsController@userLinksDelete')
-->name('userLinksDelete');
-Route::post('/stream/changePostLink', 'App\Http\Controllers\Stream\StreamButtonsController@changePostLink')
-->name('changePostLink');
-Route::post('/stream/flagErase', 'App\Http\Controllers\Stream\StreamButtonsController@flagErase')
-->name('flagErase');
-Route::post('/stream/erasePost', 'App\Http\Controllers\Stream\StreamButtonsController@erasePost')
-->name('erasePost');
-Route::post('/stream/flagPost', 'App\Http\Controllers\Stream\StreamButtonsController@flagPost')
-->name('flagPost');
+
+Route::post('/stream/buttons/{button_name}', 'App\Http\Controllers\Stream\ButtonsController@check')
+->name('stream-button');
+
+Route::post('/stream/checkbox/{check_name}', 'App\Http\Controllers\Stream\CheckController@check')
+->name('checkbox');
+
 
 Route::post('/qiwi_request', 'App\Http\Controllers\QiwiRequestController@confirm')
 ->name('qiwi-request');

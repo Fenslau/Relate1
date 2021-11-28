@@ -10,9 +10,11 @@ use App\Models\Stream\StreamData;
 use App\Models\Stream\StreamKey;
 use \App\MyClasses\MyRules;
 
-class StreamButtonsController extends Controller
+class ButtonsController extends Controller
 {
-    public function ruleErasePosts(Request $request) {
+  public function check($button_name, Request $request) {
+
+    if ($button_name == 'ruleErasePosts') {
       $rule_tag	= $request->tag;
       $project	= $request->project;
       $vkid	= session('vkid');
@@ -28,8 +30,7 @@ class StreamButtonsController extends Controller
     }
 
 
-
-    public function ruleDelete(Request $request) {
+    if ($button_name == 'ruleDelete') {
       $stream = new Streamkey();
       $projects = new Projects();
       $posts = new StreamData();
@@ -50,7 +51,7 @@ class StreamButtonsController extends Controller
 			curl_close($ch);
       if ($request->admin == 'true' AND !empty($out['code']) AND $out['code'] == 200) {
         $projects->where('vkid', session('vkid'))->where('rule', str_replace(session('vkid'), '', $rule_tag))->delete();
-        return back()->with('success', 'Правило <b>'.$rule_tag.'</b> удалено из VK Streaming API.');
+        return back()->with('success', 'Правило <b>'.$rule_tag.'</b> удалено из VK Streaming API');
       }
       $vkid = session('vkid');
       if (!empty($out['code']) AND $out['code'] == 200) {
@@ -62,8 +63,7 @@ class StreamButtonsController extends Controller
     }
 
 
-
-    public function oldRuleDelete(Request $request) {
+    if ($button_name == 'oldRuleDelete') {
       $projects = new Projects();
       $vkid	= session('vkid');
       $rule_tag = $request->rule_tag;
@@ -72,8 +72,7 @@ class StreamButtonsController extends Controller
     }
 
 
-
-    public function userLinksErasePosts(Request $request) {
+    if ($button_name == 'userLinksErasePosts') {
       $user_link	= $request->tag;
       $project	= $request->project;
       $vkid	= session('vkid');
@@ -85,17 +84,22 @@ class StreamButtonsController extends Controller
     }
 
 
+    if ($button_name == 'userLinksDelete') {
+      $user_link	= $request->tag;
+      $project	= $request->project;
+      $vkid	= session('vkid');
+      $posts = new StreamData();
+      $rules = array_column(array_merge(MyRules::getRules($project), MyRules::getOldRules($project)), 'rule');
+        $rules = array_map(function($n) use($vkid){return ($vkid.$n);}, $rules);
+      $posts->whereIn('user', $rules)->where('user_links', $user_link)->where('check_flag', 0)->update(['check_trash' => 2]);
 
-    public function userLinksDelete(Request $request) {
-      $this->userLinksErasePosts($request);
       $links = new Links();
       $links->where('vkid', session('vkid'))->where('project_name', $request->project)->where('link_name', $request->user_link)->delete();
       return back()->with('success', 'Папка <b>'.$request->user_link.'</b> удалена');
     }
 
 
-
-    public function trashErase(Request $request) {
+    if ($button_name == 'trashErase') {
       $project	= $request->project;
       $vkid	= session('vkid');
       $posts = new StreamData();
@@ -106,8 +110,7 @@ class StreamButtonsController extends Controller
     }
 
 
-
-    public function flagErase(Request $request) {
+    if ($button_name == 'flagErase') {
       $project	= $request->project;
       $vkid	= session('vkid');
       $posts = new StreamData();
@@ -116,22 +119,5 @@ class StreamButtonsController extends Controller
       $posts->whereIn('user', $rules)->where('check_flag', 1)->update(['check_trash' => 2]);
       return response()->json(array('success' => 'Папка Избранное проекта <b>'.$project.'</b> очищена'));
     }
-
-
-
-    public function erasePost(Request $request) {
-
-    }
-
-
-
-    public function flagPost(Request $request) {
-
-    }
-
-
-
-    public function changePostLink(Request $request) {
-
-    }
+  }
 }
