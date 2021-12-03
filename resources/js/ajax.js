@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
   $(":submit").prop('disabled', false);
-  $(".chosen-select").chosen();
+  
 });
 
 $('body').tooltip({

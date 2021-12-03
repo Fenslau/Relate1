@@ -4,6 +4,9 @@ var __webpack_exports__ = {};
   !*** ./resources/js/post.js ***!
   \******************************/
 $(document).ready(function () {
+  $(".chosen-select").chosen();
+});
+$(document).ready(function () {
   $(document).on('click', '.ajax-comment', function (e) {
     var _this = $(this);
 

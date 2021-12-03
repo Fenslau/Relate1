@@ -1,3 +1,7 @@
+$(document).ready(function () {
+  $(".chosen-select").chosen();
+});
+
 
 $(document).ready(function () {
   $(document).on('click', '.ajax-comment', function (e) {

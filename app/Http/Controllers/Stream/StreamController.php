@@ -63,7 +63,8 @@ class StreamController extends Controller
         'v' 			=> '5.131'
       ));
       $streamkey['streamkey'] = $streamkey['key'];
-      if (!empty($streamkey['endpoint']) AND !empty($streamkey['key'])) {
+      unset($streamkey['key']);
+      if (!empty($streamkey['endpoint']) AND !empty($streamkey['streamkey'])) {
         $key->updateOrCreate(['id' => 1], $streamkey);
         return back()->with('success', 'Новый ключ сгенерирован и записан в базу данных');
       } else return back()->with('error', 'Не удалось получить ключ потока');

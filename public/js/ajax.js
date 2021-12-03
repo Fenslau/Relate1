@@ -862,7 +862,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 $(document).ready(function () {
   $(":submit").prop('disabled', false);
-  $(".chosen-select").chosen();
 });
 $('body').tooltip({
   selector: '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])',
