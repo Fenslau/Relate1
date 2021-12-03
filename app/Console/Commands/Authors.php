@@ -63,6 +63,7 @@ class AuthorGet extends Command
         		$profiles = $vk->users()->get(env('ACCESS_TOKEN'), $params);
             $data_500 = $data = array();
           	if (!empty($profiles)) foreach ($profiles as $user) {
+              $data['author_id'] = $data['name'] = $data['country'] = $data['city'] = $data['city_id'] = $data['members_count'] = $data['sex'] = $data['age'] = NULL;
           		$age = NULL;
           		$data['author_id'] = $user['id'];
           		$data['name'] = $user['first_name'].' '.$user['last_name'];
@@ -103,6 +104,7 @@ class AuthorGet extends Command
           		$profiles = $vk->groups()->getById(env('ACCESS_TOKEN'), $params);
               $data_500 = $data = array();
           	  if (!empty($profiles)) foreach ($profiles as $group) {
+                $data['author_id'] = $data['name'] = $data['country'] = $data['city'] = $data['city_id'] = $data['members_count'] = $data['sex'] = $data['age'] = NULL;
             		$data['author_id'] = -$group['id'];
             		$data['name'] = $group['name'];
                 if (!empty($group['country']['title'])) $data['country'] = $group['country']['title'];

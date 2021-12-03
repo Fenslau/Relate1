@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Stream;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use \VK\Client\VKApiClient;
 use \App\MyClasses\MyRules;
 use App\Models\Stream\Projects;
 use App\Models\Stream\StreamData;
+use App\Models\Stream\Russia;
 use \App\MyClasses\num;
 use Carbon\Carbon;
 
@@ -14,7 +16,7 @@ class PostController extends Controller
 {
     public function main($project_name, Request $request) {
       if(empty($project_name)) return redirect()->route('stream');
-      $items = $info = array();
+      $video = $post = $posts = $videos = $items = $info = array();
       $items = $this->getPost($project_name, $request);
 
       $info['project_name'] = $project_name;
@@ -25,8 +27,73 @@ class PostController extends Controller
 
       if ($items->total() > 0) $info['found'] = 'Всего нашлось <b>'.num::declension ($items->total(), array('</b> запись', '</b> записи', '</b> записей'));
 
+      $vk = new VKApiClient();
+      try {
+        $post = $video = array();
+        $video_ids = implode('', array_diff(array_column($items->items(), 'video_player'), array('', NULL)));
+        $params = array(
+  				'videos'		      => $video_ids,
+  				'v' 			        => '5.107'
+  			);
+        if(!empty($video_ids)) $videos = $vk->video()->get(session('token'), $params);
+
+        $posts = '';
+        foreach ($items as $item) if ($item['event_type'] == 'post' OR $item['event_type'] == 'share')
+        $posts .= str_replace('https://vk.com/wall', '', $item['event_url']).',';
+        $params = array(
+  				'posts'		      => $posts,
+  				'v' 			        => '5.107'
+  			);
+        if(!empty($posts)) $posts = $vk->wall()->getById(session('token'), $params);
+      } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+          return back()->with('warning', 'Закончилось действие токена ВК, залогиньтесь заново, чтобы продолжить');
+      }
+
       foreach ($items as &$item) {
-        $item['action_time'] = Carbon::createFromFormat('U', $item['action_time'])->format('j M yг. H:i');
+
+        if (!empty($videos['items']) AND !empty($item['video_player'])) {
+            $video_players = array_diff(explode(",", $item['video_player']), array('', NULL));
+            $i=0;
+            foreach ($video_players as $video_player) {
+              preg_match_all("'_(.+?)_'", $video_player, $matches);
+
+              $index_of_videos = array_search($matches[1][0], (array_column($videos['items'], 'id')));
+
+              if ($index_of_videos !== FALSE) {
+                if (!empty($videos['items'][$index_of_videos]['player'])) $video[$item['id']][$i]['player'] = $videos['items'][$index_of_videos]['player'];
+                else $video[$item['id']][$i]['player'] = '';
+                if (!empty($videos['items'][$index_of_videos]['title'])) $video[$item['id']][$i]['title'] = $videos['items'][$index_of_videos]['title'];
+                else $video[$item['id']][$i]['title'] = '';
+                if (!empty($videos['items'][$index_of_videos]['description'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['description'];
+                elseif (!empty($videos['items'][$index_of_videos]['content_restricted'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['content_restricted_message'];
+                else $video[$item['id']][$i]['description']  = '';
+              } else {
+                $video[$item['id']][$i]['title'] = '';
+                $video[$item['id']][$i]['description'] = 'Это видео можно посмотреть только перейдя по ссылке поста';
+                $video[$item['id']][$i]['player'] = '';
+              }
+              $i++;
+            }
+        }
+
+        if (!empty($posts)) $count_of_posts = array_keys((array_column($posts, 'id')), $item['post_id']);
+				if (!empty($count_of_posts) AND $count_of_posts !== FALSE) {
+  					$post_count = ' ';
+  					foreach ($count_of_posts as $count_of_post) if ($posts[$count_of_post]['from_id'] == $item['author_id'])
+  						$post_count = $count_of_post;
+  				if (is_numeric($post_count)) {
+            $count_of_posts = $post_count;
+    				if (!empty($posts[$count_of_posts]['comments']['count']))
+    					$post[$item['id']]['comments'] = $posts[$count_of_posts]['comments']['count'];
+    				if (!empty($posts[$count_of_posts]['likes']['count']))
+              $post[$item['id']]['likes'] = $posts[$count_of_posts]['likes']['count'];
+    				if (!empty($posts[$count_of_posts]['reposts']['count']))
+              $post[$item['id']]['reposts'] = $posts[$count_of_posts]['reposts']['count'];
+    				if (!empty($posts[$count_of_posts]['views']['count']))
+              $post[$item['id']]['views'] = $posts[$count_of_posts]['views']['count'];
+				   }
+         }
+
 
         if ($item['author_id'] > 0) $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/id'.$item['author_id'];
         else $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/public'.-$item['author_id'];
@@ -38,7 +105,11 @@ class PostController extends Controller
   			$item['data'] = preg_replace($re, $subst, $item['data']);
 
       }
-      return view('streaming.main', ['cut' => MyRules::getCut($project_name), 'projects' => MyRules::getProjects(), 'rules' => MyRules::getRules($project_name), 'old_rules' => MyRules::getOldRules($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $items]);
+      $countries = $cities = $ages = $dates = array();
+      $countries = array(0 => 'Россия');
+      $cities = array(0 => 'Москва');
+
+      return view('streaming.main', ['request' => $request, 'cut' => MyRules::getCut($project_name), 'projects' => MyRules::getProjects(), 'rules' => MyRules::getRules($project_name), 'old_rules' => MyRules::getOldRules($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $items, 'video' => $video, 'post' => $post, 'countries' => $countries, 'cities' => $cities, 'dates' => $dates, 'ages' => $ages]);
     }
 
     public function getPost($project_name, Request $request) {
@@ -46,7 +117,17 @@ class PostController extends Controller
       $vkid = session('vkid');
       $posts = new StreamData();
       $projects = new Projects();
-      $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.id as id']);
+
+      if (!empty($request->age)) {
+        $age = explode(' - ', $request->age);
+        $min_age = $age[0];
+        $max_age = $age[1];
+      }
+      else {
+        $min_age = 13;
+        $max_age = 118;
+      }
+      $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id']);
 
       $actual_rules = MyRules::getRules($project_name);
       $old_rules = MyRules::getOldRules($project_name);
@@ -73,51 +154,56 @@ class PostController extends Controller
       if (!empty($request->followers_from) AND is_numeric($request->followers_from)) $posts->where('members_count', '>=', $request->followers_from);
       if (!empty($request->followers_to) AND is_numeric($request->followers_to)) $posts->where('members_count', '<=', $request->followers_to);
 
-      if (!empty($request->calendar_from)) $posts->where('action_time', '>=', $request->calendar_from);
-      if (!empty($request->calendar_to)) $posts->where('action_time', '<=', $request->calendar_to);
+      if (!empty($request->calendar_from)) $posts->where('action_time', '>=', strtotime($request->calendar_from));
+      if (!empty($request->calendar_to)) $posts->where('action_time', '<=', strtotime($request->calendar_to)+60*60*24);
 
     	if (!empty($request->city)) {
+          $city = $request->city;
       		if (!empty($request->in_region)) {
             $russia = new Russia();
-      			$region = $russia->whereIn('title', $city)->pluck('region');
-      			$city = $russia->whereIn('title', $region)->pluck('title');
+      			$region = $russia->whereIn('title', $request->city)->pluck('region');
+      			$city = $russia->where('region', $region)->pluck('title');
       		}
-      $posts->whereIn('city', $request->city);
+      $posts->whereIn('city', $city);
       }
 
       if (!empty($request->not_city)) {
+          $not_city = $request->not_city;
       		if (!empty($request->in_region_not)) {
             $russia = new Russia();
-      			$region = $russia->whereIn('title', $city)->pluck('region');
-      			$not_city = $russia->whereIn('title', $region)->pluck('title');
+      			$region = $russia->whereIn('title', $request->not_city)->pluck('region');
+      			$not_city = $russia->where('region', $region)->pluck('title');
       		}
-      $posts->whereNotIn('city', $request->not_city);
+      $posts->whereNotIn('city', $not_city);
       }
 
       if (!empty($request->country)) $posts->whereIn('country', $request->country);
 
-      $type_parsed = array();
-      	if (!empty($request->type)) {
-      		foreach ($request->type as $rec_type) {
-      		if ($rec_type == 'comment') $posts->where(function ($query) {
-              $query->where('event_type', 'comment')
-              ->orWhere('event_type', 'reply');
-          });
-      		else $posts->where('event_type', $rec_type);
-      		}
+      if (!empty($request->type)) {
+        		$posts->where(function ($query) use ($request){
+              foreach ($request->type as $rec_type) {
+                if ($rec_type == 'comment') $query->orWhere('event_type', 'comment')->orWhere('event_type', 'reply');
+                else $query->orWhere('event_type', $rec_type);
+              }
+            });
       }
 
-      if (!empty($request->man)) $posts-where('sex', 2);
-      if (!empty($request->woman)) $posts-where('sex', 1);
+      if (!empty($request->man) OR !empty($request->woman) OR !empty($request->group)) {
 
-      if ((!empty($request->man) OR !empty($request->woman)) AND ($request->min_age > 13 OR $request->max_age < 118))
-      $posts->whereBetween('age', [$request->min_age, $request->max_age]);
+        $posts->where(function ($query) use ($request) {
+            if (!empty($request->man)) $query->orWhere('sex', 2);
+            if (!empty($request->woman)) $query->orWhere('sex', 1);
+            if (!empty($request->group)) $query->orWhere('stream_data.author_id', '<', 0);
+        });
+      }
 
-      if (!empty($request->group)) $posts->where('author_id', '<', 0);
+      if ($min_age > 13 OR $max_age < 118)
+      $posts->whereBetween('age', [$min_age, $max_age]);
+
 
       if (!empty($request->user_link)) {
       	$posts = new StreamData();
-      	$posts = $posts->whereIn('user', $all_rules)->where('user_links', $request->user_link);
+      	$posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id'])->whereIn('user', $all_rules)->where('user_links', $request->user_link);
       }
 
       if (empty($request->trash)) $posts->where('check_trash', 0);
@@ -127,23 +213,30 @@ class PostController extends Controller
       	if (empty($request->user_link)) $posts->where('user_links', '');
       }
       else {
-      	if (!empty($request->user_link) AND $request->user_link != 'Доп.посты') $posts->where('user_links', '!=', 'Доп.посты');
+        $posts->where('user_links', '!=', 'Доп.посты');
       	if (!empty($request->user_links)) {
       		if ($request->user_links == 'on') $posts->where('user_links', '!=', '');
       		if ($request->user_links == 'off') $posts->where('user_links', '');
+          if ($request->user_links == 'all') {}
       	}
       }
 
       if (!empty($request->trash)) {
       	$posts = new StreamData();
-        $posts = $posts->whereIn('user', $all_rules)->where('check_trash', 1);
+        $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id'])->whereIn('user', $all_rules)->where('check_trash', 1);
       }
       if (!empty($request->flag)) {
         $posts = new StreamData();
-        $posts = $posts->whereIn('user', $all_rules)->where('check_flag', 1);
+        $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id'])->whereIn('user', $all_rules)->where('check_flag', 1);
       }
 
-      $items = $posts->orderBy('action_time', 'desc')->paginate(2)->withQueryString()->fragment('begin');
+      if (empty($request->author_id) AND (empty($request->user_link) OR $request->user_link == 'Доп.посты') AND empty($request->flag)) {
+      $posts->where(function ($query) {
+          $query->where('dublikat', 'NOT LIKE' ,'d%')
+          ->orWhereNull('dublikat');
+      });
+      }
+      $items = $posts->orderBy('action_time', 'desc')->paginate(100)->withQueryString()->fragment('begin');
 
       return $items;
     }

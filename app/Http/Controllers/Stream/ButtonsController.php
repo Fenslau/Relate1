@@ -86,6 +86,7 @@ class ButtonsController extends Controller
 
     if ($button_name == 'userLinksDelete') {
       $user_link	= $request->tag;
+      if ($user_link = 'Доп.посты') return back()->with('error', 'Папка <b> Доп.посты </b> не может быть удалена, она нужна для корректной работы системы');
       $project	= $request->project;
       $vkid	= session('vkid');
       $posts = new StreamData();

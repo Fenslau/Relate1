@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/ajax.js": "/js/ajax.js",
     "/js/aside.js": "/js/aside.js",
+    "/js/readmore.js": "/js/readmore.js",
+    "/js/post.js": "/js/post.js",
     "/css/app.css": "/css/app.css"
 }

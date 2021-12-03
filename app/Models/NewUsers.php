@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class NewUsers extends Model
 {
     use HasFactory;
-    protected $fillable = ['vkid', 'group_id',	'name',	'uid1',	'uid2'];
+    protected $guarded = [];
 }

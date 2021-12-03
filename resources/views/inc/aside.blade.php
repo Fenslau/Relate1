@@ -17,13 +17,13 @@
           <input class='check check_cut' id='project_cut' type='checkbox' {{ ($cut == 1 ? "checked":"") }} name="{{ $info['project_name'] }}" url="cut">
 				  <label class="p-1 m-1 check_cut" data-toggle="tooltip" title="Прятать длинные тексты под кат для этого проекта" for="project_cut" ><i class="fas fa-cut"></i><span class="spinner-border spinner-border-sm d-none"></span></label>
           <div class="d-inline float-right" data-toggle="tooltip" title="Добавить проект">
-              <button class="my-1 btn btn-sm btn-light text-success border border-dark" type="button" id="add_project_button" data-toggle="modal" data-target="#add_project"><i class="fa fa-plus"></i></button>
+              <button class="my-1 btn btn-sm btn-light text-success border border-dark shadow-none" type="button" id="add_project_button" data-toggle="modal" data-target="#add_project"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         <hr class="m-1 bg-white" />
         <div class="my-2">
           <div class="text-truncate">Добавить правило:</div>
-          <button class="my-1 btn btn-sm btn-light text-success border border-dark" type="button" id="add_rule_button" data-toggle="modal" data-target="#add_rule"><i class="fa fa-plus"></i></button>
+          <button class="my-1 btn btn-sm btn-light text-success border border-dark shadow-none" type="button" id="add_rule_button" data-toggle="modal" data-target="#add_rule"><i class="fa fa-plus"></i></button>
           @if (!empty($rules))
             <div class="text-truncate">Актуальные правила:</div>
             <form class="" action="{{ route('stream-button', 'ruleDelete') }}" method="post">
@@ -31,7 +31,7 @@
               @foreach ($rules as $rule)
                 <div class="d-flex">
                   <a href="?rule={{ $rule['rule'] }}" class="text-left w-100 text-truncate border border-dark btn btn-sm btn-light" type="button">{{ $rule['rule'] }}</a>
-                  <div id = "edit_{{ $rule['id'] }}" data-toggle="tooltip" title="Редактировать правило"><button class="border border-dark btn btn-sm btn-light text-info" type="button" data-toggle="modal" data-target="#edit_rule_{{ $rule['id'] }}"><i class="far fa-edit"></i></button></div>
+                  <div id = "edit_{{ $rule['id'] }}" data-toggle="tooltip" title="Редактировать правило"><button class="border border-dark btn btn-sm btn-light text-info shadow-none" type="button" data-toggle="modal" data-target="#edit_rule_{{ $rule['id'] }}"><i class="far fa-edit"></i></button></div>
                   <button class="border border-dark btn btn-sm btn-light text-warning ajax-aside" type="button" data-toggle="tooltip" title="Стереть посты" name = "{{ $info['project_name'] }}" value="{{ $rule['rule'] }}" url="ruleErasePosts"><i class="icon fas fa-eraser"></i><span class="spinner-border spinner-border-sm d-none"></span></button>
                   <button class="border border-dark btn btn-sm btn-light text-danger" type="submit" name="rule_tag" value="{{ $rule['rule'] }}" data-toggle="tooltip" title="Удалить правило"><i class="far fa-trash-alt"></i></button>
                 </div>

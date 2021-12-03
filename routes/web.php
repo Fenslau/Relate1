@@ -109,6 +109,12 @@ Route::post('/stream/buttons/{button_name}', 'App\Http\Controllers\Stream\Button
 Route::post('/stream/checkbox/{check_name}', 'App\Http\Controllers\Stream\CheckController@check')
 ->name('checkbox');
 
+Route::post('/stream/comments', 'App\Http\Controllers\Stream\CommentsController@get')
+->name('comments');
+
+Route::post('/stream/dublikat', 'App\Http\Controllers\Stream\DublikatController@get')
+->name('dublikat');
+
 
 Route::post('/qiwi_request', 'App\Http\Controllers\QiwiRequestController@confirm')
 ->name('qiwi-request');

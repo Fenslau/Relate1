@@ -38,7 +38,7 @@ class CreateStreamDataTable extends Migration
             $table->text('geo_place_icon')->nullable();
             $table->integer('author_id')->index();
             $table->integer('shared_post_author_id')->nullable();
-            $table->enum('platform', ['Android','полная версия сайта','iPhone','мобильная версия','Windows Phone','iPad','сторонние приложения','Windows 8',''])->nullable();
+            $table->enum('platform', ['Android','полная версия сайта','iPhone','мобильная версия','Windows Phone','iPad','сторонние приложения','Windows 8','мобильная версия сайта',''])->nullable();
             $table->string('user', 128)->index();
             $table->longText('data')->nullable();
             $table->timestamps();

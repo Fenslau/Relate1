@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Progress extends Model
 {
     use HasFactory;
-    protected $fillable = ['vkid', 'width', 'info', 'process'];
+    protected $guarded = [];
 }

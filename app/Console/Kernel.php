@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\Stream::class,
         Commands\City::class,
         Commands\AuthorGet::class,
+        Commands\Dublikat::class,
     ];
 
     /**
@@ -46,6 +47,8 @@ class Kernel extends ConsoleKernel
 
 
         $schedule->command('Authors:Get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Authors.log');
+
+        $schedule->command('Dublikat:find')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Dublikats.log');
     }
 
     /**

@@ -1,7 +1,16 @@
 
 $(document).ready(function () {
   $(":submit").prop('disabled', false);
+  $(".chosen-select").chosen();
 });
+
+$('body').tooltip({
+        selector: '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])',
+        trigger: 'hover',
+        container: 'body'
+    }).on('click mousedown mouseup', '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])', function () {
+        $('[data-toggle="tooltip"], [title]:not([data-toggle="popover"])').tooltip('dispose');
+    });
 
 $(document).ready(function () {
     $('#js-load').on('click', function (e) {
