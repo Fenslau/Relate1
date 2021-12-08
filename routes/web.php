@@ -95,11 +95,13 @@ Route::post('/stream/add-project', 'App\Http\Controllers\Stream\ProjectControlle
 ->name('stream-add-project');
 Route::post('/stream/del-project', 'App\Http\Controllers\Stream\ProjectController@del')
 ->name('stream-del-project');
+Route::post('/stream/del-file', 'App\Http\Controllers\Stream\ProjectController@delFile')
+->name('stream-del-file');
 
 Route::get('/stream/{project_name?}', 'App\Http\Controllers\Stream\PostController@main')
 ->name('post');
 
-Route::post('/stream/save-file', 'App\Http\Controllers\Stream\SaveFileController@main')
+Route::post('/stream/{project_name}/save-file', 'App\Http\Controllers\Stream\SaveFileController@main')
 ->name('save-file');
 
 

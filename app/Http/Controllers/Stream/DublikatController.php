@@ -80,7 +80,7 @@ class DublikatController extends Controller
         }
         $info['project_name'] = $project[0]['project_name'];
         $dublikat_render = 1;
-        $returnHTML = view('inc.posts', ['dublikat_render' => $dublikat_render, 'cut' => $cut, 'info' => $info, 'items' => $items, 'post' => $post])->render();
+        $returnHTML = view('inc.posts', ['request' => $request, 'dublikat_render' => $dublikat_render, 'cut' => $cut, 'info' => $info, 'items' => $items, 'post' => $post])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
 }

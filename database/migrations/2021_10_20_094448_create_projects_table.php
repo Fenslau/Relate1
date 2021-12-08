@@ -36,12 +36,12 @@ class CreateProjectsTable extends Migration
             $table->tinyInteger('cut')->default(1);
             $table->tinyInteger('re_cloud')->default(0);
 
-            $table->integer('mindate')->default(0);
-            $table->integer('maxdate')->default(0);
+            $table->integer('mindate')->default(0)->nullable();
+            $table->integer('maxdate')->default(0)->nullable();
             $table->text('countries')->nullable();
             $table->text('cities')->nullable();
 
-            $table->integer('count_stream_records')->default(0);
+            $table->integer('count_stream_records')->default(0)->nullable();
             $table->text('ignore_authors')->nullable();
 
             $table->timestamps();

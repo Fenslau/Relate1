@@ -60,7 +60,7 @@ class City extends Command
             if (!empty($city['title'])) $data['title'] = $city['title']; else $data['title'] = '';
             if (!empty($city['region'])) $data['region'] = $city['region'];
               elseif ($city['title'] == 'Москва') $data['region'] = 'Москва город';
-              elseif ($city['title'] == 'Москва') $data['region'] = 'Санкт-Петербург город';
+              elseif ($city['title'] == 'Санкт-Петербург') $data['region'] = 'Санкт-Петербург город';
               else $data['region'] = 'неизвестно';
             $data_1000[] = $data;
           }

@@ -9,6 +9,7 @@ use \App\MyClasses\num;
 use App\Models\Stream\Projects;
 use App\Models\Stream\StreamKey;
 use \VK\Client\VKApiClient;
+use App\Models\Stream\FileXLS;
 
 class StreamController extends Controller
 {
@@ -37,7 +38,10 @@ class StreamController extends Controller
         $my_project['rules_count'] = $projects->where('vkid', session('vkid'))->where('project_name', $my_project['project_name'])->whereNotNull('rule')->count();
         $my_project['count_stream_records'] = $projects->where('vkid', session('vkid'))->where('project_name', $my_project['project_name'])->pluck('count_stream_records')->sum();
       }
-      $vkids = $vk_rules = NULL;
+      $my_files = $vkids = $vk_rules = NULL;
+      $files = new FileXLS();
+      $my_files = $files->where('vkid', session('vkid'))->get()->toArray();
+
       if (session('vkid') == 151103777 OR session('realvkid') == 151103777 OR session('vkid') == 409899462 OR session('realvkid') == 409899462) {
         $info['admin'] = TRUE;
         $vkids = $projects->distinct()->pluck('vkid')->toArray();
@@ -52,7 +56,7 @@ class StreamController extends Controller
         $rules = json_decode(file_get_contents("https://$stream->endpoint/rules?key=$stream->streamkey", false, stream_context_create($arrContextOptions)), true);
         if (!empty($rules['rules'])) $vk_rules = array_column($rules['rules'], 'tag'); else $vk_rules = NULL;
       }
-      return view('stream', ['info' => $info, 'vkids' => $vkids, 'vk_rules' => $vk_rules, 'items' => $my_projects]);
+      return view('stream', ['info' => $info, 'vkids' => $vkids, 'vk_rules' => $vk_rules, 'items' => $my_projects, 'files' => $my_files]);
     }
 
     public function gen() {

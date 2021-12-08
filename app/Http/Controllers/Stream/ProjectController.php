@@ -8,7 +8,8 @@ use \App\MyClasses\VKUser;
 use \App\MyClasses\num;
 use App\Models\Stream\Projects;
 use App\Models\Stream\Links;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use App\Models\Stream\FileXLS;
 
 class ProjectController extends Controller
 {
@@ -47,12 +48,19 @@ class ProjectController extends Controller
       $user_links = $links->where('vkid', session('vkid'))->where('project_name', $project->project_name)->pluck('id');
       $project_name = $project->project_name;
       $project_to_del = $projects->where('vkid', session('vkid'))->where('project_name', $project->project_name)->pluck('id');
+      Schema::dropIfExists('clouds_'.session('vkid').$project_name);
+      Schema::dropIfExists('tags_'.session('vkid').$project_name);
       $projects->destroy($project_to_del);
       $links->destroy($user_links);
-      DB::statement('DROP TABLE IF EXISTS clouds_'.session('vkid').$project_name.'');
-      DB::statement('DROP TABLE IF EXISTS tags_'.session('vkid').$project_name.'');
       return back()->with('success', 'Проект <b>'.$project_name.'</b> успешно удалён');
     } else return back()->with('warning', 'Проект не найден, возможно он уже был удалён');
+  }
 
+  public function delFile(Request $request) {
+    $filename = FileXLS::find($request->del);
+    if ($filename->link AND unlink('storage/stream/'.$filename->link.'.xlsx')) {
+      $filename->delete();
+      return back()->with('success', 'Файл <b>'.$filename->link.'</b> успешно удалён');
+    } else return back()->with('warning', 'Файл не найден, возможно он уже был удалён');
   }
 }

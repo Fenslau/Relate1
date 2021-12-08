@@ -861,7 +861,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 $(document).ready(function () {
-  $(":submit").prop('disabled', false);
+  $(":submit:not(.enabled)").prop('disabled', false);
 });
 $('body').tooltip({
   selector: '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])',
@@ -869,6 +869,13 @@ $('body').tooltip({
   container: 'body'
 }).on('click mousedown mouseup', '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])', function () {
   $('[data-toggle="tooltip"], [title]:not([data-toggle="popover"])').tooltip('dispose');
+});
+$(document).ready(function () {
+  $('[data-toggle="popover"]').popover();
+  $('.popover-label').click(function (e) {
+    e.preventDefault();
+    $(this).parent().attr('disabled', false);
+  });
 });
 $(document).ready(function () {
   $('#js-load').on('click', function (e) {

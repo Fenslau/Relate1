@@ -45,7 +45,7 @@ $time_start = microtime(true);
         $all_post_time = $time = $k = 0;
         $posts = new StreamData();
         $projects = new Projects();
-        while (!empty ($post = $posts->whereNull('dublikat')->orderBy('action_time', 'desc')->first())) {
+        while (!empty ($post = $posts->whereNull('dublikat')->where('user_links', '!=', 'Доп.посты')->where('check_trash', 0)->orderBy('action_time', 'desc')->first())) {
             if (strlen($post->data) < 20) {
               $post->dublikat = 'ch';
               $post->save();
@@ -60,7 +60,7 @@ $time_start = microtime(true);
 
             $post_data = str_replace('*', '\*', substr($post->data, 0, 1024));
 
-            $dublikaty = StreamData::selectRaw("id, data, MATCH (data) AGAINST(?) AS search_score", [$post_data])->whereIn('user', $rules)->orderBy('search_score', 'desc')->orderBy('id', 'desc')->take(1000)->get()->toArray();
+            $dublikaty = StreamData::selectRaw("id, data, MATCH (data) AGAINST(?) AS search_score", [$post_data])->whereIn('user', $rules)->where('user_links', '!=', 'Доп.посты')->where('check_trash', 0)->orderBy('search_score', 'desc')->orderBy('id', 'desc')->take(1000)->get()->toArray();
 
             $k++;
             $rel = $dublikaty[0]['search_score'];
@@ -74,6 +74,7 @@ $time_start = microtime(true);
                   $dub_id .= ', '.$dublikaty[$i]['id'];
                 }
                 $i++;
+                if (empty($dublikaty[$i]['search_score'])) break;
               }
               $prev_time = $time;
               $time = microtime(true)-$time_start;

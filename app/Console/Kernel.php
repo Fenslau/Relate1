@@ -21,6 +21,8 @@ class Kernel extends ConsoleKernel
         Commands\City::class,
         Commands\AuthorGet::class,
         Commands\Dublikat::class,
+        Commands\Cloud::class,
+        Commands\File::class,
     ];
 
     /**
@@ -49,6 +51,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('Authors:Get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Authors.log');
 
         $schedule->command('Dublikat:find')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Dublikats.log');
+
+        $schedule->command('File:get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/FileXLS.log');
+
+        $schedule->command('Cloud:get')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Cloud.log');
     }
 
     /**

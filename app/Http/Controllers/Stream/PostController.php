@@ -11,13 +11,14 @@ use App\Models\Stream\StreamData;
 use App\Models\Stream\Russia;
 use \App\MyClasses\num;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     public function main($project_name, Request $request) {
       if(empty($project_name)) return redirect()->route('stream');
       $video = $post = $posts = $videos = $items = $info = array();
-      $items = $this->getPost($project_name, $request);
+      $items = $this->getPost(session('vkid'), $project_name, $request);
 
       $info['project_name'] = $project_name;
       if (!empty($request->rule)) $info['rule'] = $request->rule;
@@ -25,96 +26,124 @@ class PostController extends Controller
       elseif (!empty($request->flag)) $info['rule'] = 'Избранное';
       elseif (!empty($request->trash)) $info['rule'] = 'Корзина';
 
-      if ($items->total() > 0) $info['found'] = 'Всего нашлось <b>'.num::declension ($items->total(), array('</b> запись', '</b> записи', '</b> записей'));
+    if ($request->apply_filter == 'Показать записи' OR empty($request->apply_filter)) {
+        if ($items->total() > 0) $info['found'] = 'Всего нашлось <b>'.num::declension ($items->total(), array('</b> запись', '</b> записи', '</b> записей'));
 
-      $vk = new VKApiClient();
-      try {
-        $post = $video = array();
-        $video_ids = implode('', array_diff(array_column($items->items(), 'video_player'), array('', NULL)));
-        $params = array(
-  				'videos'		      => $video_ids,
-  				'v' 			        => '5.107'
-  			);
-        if(!empty($video_ids)) $videos = $vk->video()->get(session('token'), $params);
+        $vk = new VKApiClient();
+        try {
+          $post = $video = array();
+          $video_ids = implode('', array_diff(array_column($items->items(), 'video_player'), array('', NULL)));
+          $params = array(
+    				'videos'		      => $video_ids,
+    				'v' 			        => '5.107'
+    			);
+          if(!empty($video_ids)) $videos = $vk->video()->get(session('token'), $params);
 
-        $posts = '';
-        foreach ($items as $item) if ($item['event_type'] == 'post' OR $item['event_type'] == 'share')
-        $posts .= str_replace('https://vk.com/wall', '', $item['event_url']).',';
-        $params = array(
-  				'posts'		      => $posts,
-  				'v' 			        => '5.107'
-  			);
-        if(!empty($posts)) $posts = $vk->wall()->getById(session('token'), $params);
-      } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
-          return back()->with('warning', 'Закончилось действие токена ВК, залогиньтесь заново, чтобы продолжить');
-      }
-
-      foreach ($items as &$item) {
-
-        if (!empty($videos['items']) AND !empty($item['video_player'])) {
-            $video_players = array_diff(explode(",", $item['video_player']), array('', NULL));
-            $i=0;
-            foreach ($video_players as $video_player) {
-              preg_match_all("'_(.+?)_'", $video_player, $matches);
-
-              $index_of_videos = array_search($matches[1][0], (array_column($videos['items'], 'id')));
-
-              if ($index_of_videos !== FALSE) {
-                if (!empty($videos['items'][$index_of_videos]['player'])) $video[$item['id']][$i]['player'] = $videos['items'][$index_of_videos]['player'];
-                else $video[$item['id']][$i]['player'] = '';
-                if (!empty($videos['items'][$index_of_videos]['title'])) $video[$item['id']][$i]['title'] = $videos['items'][$index_of_videos]['title'];
-                else $video[$item['id']][$i]['title'] = '';
-                if (!empty($videos['items'][$index_of_videos]['description'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['description'];
-                elseif (!empty($videos['items'][$index_of_videos]['content_restricted'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['content_restricted_message'];
-                else $video[$item['id']][$i]['description']  = '';
-              } else {
-                $video[$item['id']][$i]['title'] = '';
-                $video[$item['id']][$i]['description'] = 'Это видео можно посмотреть только перейдя по ссылке поста';
-                $video[$item['id']][$i]['player'] = '';
-              }
-              $i++;
-            }
+          $posts = '';
+          foreach ($items as $item) if ($item['event_type'] == 'post' OR $item['event_type'] == 'share')
+          $posts .= str_replace('https://vk.com/wall', '', $item['event_url']).',';
+          $params = array(
+    				'posts'		      => $posts,
+    				'v' 			        => '5.107'
+    			);
+          if(!empty($posts)) $posts = $vk->wall()->getById(session('token'), $params);
+        } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+            return redirect()->route('stream');
         }
 
-        if (!empty($posts)) $count_of_posts = array_keys((array_column($posts, 'id')), $item['post_id']);
-				if (!empty($count_of_posts) AND $count_of_posts !== FALSE) {
-  					$post_count = ' ';
-  					foreach ($count_of_posts as $count_of_post) if ($posts[$count_of_post]['from_id'] == $item['author_id'])
-  						$post_count = $count_of_post;
-  				if (is_numeric($post_count)) {
-            $count_of_posts = $post_count;
-    				if (!empty($posts[$count_of_posts]['comments']['count']))
-    					$post[$item['id']]['comments'] = $posts[$count_of_posts]['comments']['count'];
-    				if (!empty($posts[$count_of_posts]['likes']['count']))
-              $post[$item['id']]['likes'] = $posts[$count_of_posts]['likes']['count'];
-    				if (!empty($posts[$count_of_posts]['reposts']['count']))
-              $post[$item['id']]['reposts'] = $posts[$count_of_posts]['reposts']['count'];
-    				if (!empty($posts[$count_of_posts]['views']['count']))
-              $post[$item['id']]['views'] = $posts[$count_of_posts]['views']['count'];
-				   }
-         }
+        foreach ($items as &$item) {
 
+          if (!empty($videos['items']) AND !empty($item['video_player'])) {
+              $video_players = array_diff(explode(",", $item['video_player']), array('', NULL));
+              $i=0;
+              foreach ($video_players as $video_player) {
+                preg_match_all("'_(.+?)_'", $video_player, $matches);
 
-        if ($item['author_id'] > 0) $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/id'.$item['author_id'];
-        else $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/public'.-$item['author_id'];
-        if (!empty($item['name'])) $item['author_id'] .= '" data-toggle="tooltip" title="Автор">'.$item['name'].'</a>';
-        else $item['author_id'] .= '">Автор</a>';
+                $index_of_videos = array_search($matches[1][0], (array_column($videos['items'], 'id')));
 
-        $re = '/\[(.+)\|(.+)\]/U';
-  			$subst = '<a rel="nofollow" target="_blank" href="https://vk.com/$1">$2</a>';
-  			$item['data'] = preg_replace($re, $subst, $item['data']);
+                if ($index_of_videos !== FALSE) {
+                  if (!empty($videos['items'][$index_of_videos]['player'])) $video[$item['id']][$i]['player'] = $videos['items'][$index_of_videos]['player'];
+                  else $video[$item['id']][$i]['player'] = '';
+                  if (!empty($videos['items'][$index_of_videos]['title'])) $video[$item['id']][$i]['title'] = $videos['items'][$index_of_videos]['title'];
+                  else $video[$item['id']][$i]['title'] = '';
+                  if (!empty($videos['items'][$index_of_videos]['description'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['description'];
+                  elseif (!empty($videos['items'][$index_of_videos]['content_restricted'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['content_restricted_message'];
+                  else $video[$item['id']][$i]['description']  = '';
+                } else {
+                  $video[$item['id']][$i]['title'] = '';
+                  $video[$item['id']][$i]['description'] = 'Это видео можно посмотреть только перейдя по ссылке поста';
+                  $video[$item['id']][$i]['player'] = '';
+                }
+                $i++;
+              }
+          }
+
+          if (!empty($posts)) $count_of_posts = array_keys((array_column($posts, 'id')), $item['post_id']);
+  				if (!empty($count_of_posts) AND $count_of_posts !== FALSE) {
+    					$post_count = ' ';
+    					foreach ($count_of_posts as $count_of_post) if ($posts[$count_of_post]['from_id'] == $item['author_id'])
+    						$post_count = $count_of_post;
+    				if (is_numeric($post_count)) {
+              $count_of_posts = $post_count;
+      				if (!empty($posts[$count_of_posts]['comments']['count']))
+      					$post[$item['id']]['comments'] = $posts[$count_of_posts]['comments']['count'];
+      				if (!empty($posts[$count_of_posts]['likes']['count']))
+                $post[$item['id']]['likes'] = $posts[$count_of_posts]['likes']['count'];
+      				if (!empty($posts[$count_of_posts]['reposts']['count']))
+                $post[$item['id']]['reposts'] = $posts[$count_of_posts]['reposts']['count'];
+      				if (!empty($posts[$count_of_posts]['views']['count']))
+                $post[$item['id']]['views'] = $posts[$count_of_posts]['views']['count'];
+  				   }
+           }
+
+          $re = '/\[(.+)\|(.+)\]/U';
+     			$subst = '<a rel="nofollow" target="_blank" href="https://vk.com/$1">$2</a>';
+     			$item['data'] = preg_replace($re, $subst, $item['data']);
 
       }
-      $countries = $cities = $ages = $dates = array();
-      $countries = array(0 => 'Россия');
-      $cities = array(0 => 'Москва');
+      $dublikat_render = 0;
+    } else $dublikat_render = 1;
+      foreach ($items as &$item) {
+        if ($item['author_id'] > 0) $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/id'.$item['author_id'];
+        else $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/public'.-$item['author_id'];
+        if (!empty($item['name'])) {
+          if (empty($request->apply_filter) OR $request->apply_filter == 'Показать записи')
+            $item['author_id'] .= '" data-toggle="tooltip" title="Автор"';
+          $item['author_id'] .= '">'.$item['name'].'</a>';
+        }
+        else $item['author_id'] .= '">Автор</a>';
 
-      return view('streaming.main', ['request' => $request, 'cut' => MyRules::getCut($project_name), 'projects' => MyRules::getProjects(), 'rules' => MyRules::getRules($project_name), 'old_rules' => MyRules::getOldRules($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $items, 'video' => $video, 'post' => $post, 'countries' => $countries, 'cities' => $cities, 'dates' => $dates, 'ages' => $ages]);
+        if (!empty($item['sex']) AND $item['sex'] == 1) $item['sex'] = 'жен';
+        if (!empty($item['sex']) AND $item['sex'] == 2) $item['sex'] = 'муж';
+      }
+      $projects = new Projects();
+      $stream = new StreamData();
+
+      $rules = $projects->select("*", DB::raw("CONCAT (vkid, '', rule) AS rule_tag"))->where('project_name', $project_name)->whereNotNull('rule')->get()->toArray();
+      if (array_sum(array_column($rules, 'count_stream_records')) < 10000) {
+        $count = $stream->select(DB::raw("max(action_time) AS maxdate, min(action_time) AS mindate"))->whereIn('user', array_column($rules, 'rule_tag'))->where('check_trash', 0)->where (function ($query) {
+          $query->where('dublikat', 'NOT LIKE', 'd%');
+          $query->orWhereNotNull('dublikat');
+        })->get()->toArray();
+        $countries = $stream->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('country, COUNT(*) as cnt'))->whereIn('user', array_column($rules, 'rule_tag'))->orderBy('cnt', 'desc')->groupBy('country')->pluck('country')->toArray();
+        $countries = array_diff($countries, array('', NULL));
+
+        $cities = $stream->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('city, COUNT(*) as cnt'))->whereIn('user', array_column($rules, 'rule_tag'))->orderBy('cnt', 'desc')->groupBy('city')->pluck('city')->toArray();
+        $cities = array_diff($cities, array('', NULL));
+        $mindate = date('Y-m-d', $count[0]['mindate']);
+        $maxdate = date('Y-m-d', $count[0]['maxdate']);
+      } else {
+        $mindate = date('Y-m-d', min(array_column($rules, 'mindate')));
+        $maxdate = date('Y-m-d', max(array_column($rules, 'maxdate')));
+        $countries = explode(',', implode(',', (array_column($rules, 'countries'))));
+        $cities = explode(',', implode(',', (array_column($rules, 'cities'))));
+      }
+
+      return view('streaming.main', ['dublikat_render' => $dublikat_render, 'request' => $request, 'cut' => MyRules::getCut($project_name), 'projects' => MyRules::getProjects(), 'rules' => MyRules::getRules($project_name), 'old_rules' => MyRules::getOldRules($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $items, 'video' => $video, 'post' => $post, 'countries' => $countries, 'cities' => $cities, 'mindate' => $mindate, 'maxdate' => $maxdate]);
     }
 
-    public function getPost($project_name, Request $request) {
+    public function getPost($vkid, $project_name, $request, $offset=NULL) {
 
-      $vkid = session('vkid');
       $posts = new StreamData();
       $projects = new Projects();
 
@@ -127,10 +156,12 @@ class PostController extends Controller
         $min_age = 13;
         $max_age = 118;
       }
-      $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id']);
+      if (empty($request->apply_filter) OR $request->apply_filter == 'Показать записи') {
+        $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id']);
+      } else $posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['stream_data.author_id', 'name', 'country', 'city', 'members_count', 'sex', 'age', DB::raw("COUNT(stream_data.author_id) AS cnt"), 'stream_data.author_id as author_id']);
 
-      $actual_rules = MyRules::getRules($project_name);
-      $old_rules = MyRules::getOldRules($project_name);
+      $actual_rules = MyRules::getRules($project_name, $vkid);
+      $old_rules = MyRules::getOldRules($project_name, $vkid);
 
       $all_rules = array_column(array_merge($actual_rules, $old_rules), 'rule');
       $all_rules = array_map(function($n) use($vkid){return ($vkid.$n);}, $all_rules);
@@ -236,8 +267,16 @@ class PostController extends Controller
           ->orWhereNull('dublikat');
       });
       }
-      $items = $posts->orderBy('action_time', 'desc')->paginate(100)->withQueryString()->fragment('begin');
 
+      if (empty($request->apply_filter) OR $request->apply_filter == 'Показать записи') {
+        if ($offset === NULL) {
+          $items = $posts->orderBy('action_time', 'desc')->paginate(100)->withQueryString()->fragment('begin');
+        } else $items = $posts->orderBy('action_time', 'desc')->take(1000)->skip($offset)->get()->toArray();
+      } else {
+        if ($offset === NULL) {
+          $items = $posts->groupBy('stream_data.author_id')->orderBy('cnt', 'desc')->take(10000)->get()->toArray();
+        } else $items = $posts->groupBy('stream_data.author_id')->orderBy('cnt', 'desc')->take(1000)->skip($offset)->get()->toArray();
+      }
       return $items;
     }
 }

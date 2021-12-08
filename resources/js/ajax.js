@@ -1,7 +1,6 @@
 
 $(document).ready(function () {
-  $(":submit").prop('disabled', false);
-  
+  $(":submit:not(.enabled)").prop('disabled', false);
 });
 
 $('body').tooltip({
@@ -11,6 +10,16 @@ $('body').tooltip({
     }).on('click mousedown mouseup', '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])', function () {
         $('[data-toggle="tooltip"], [title]:not([data-toggle="popover"])').tooltip('dispose');
     });
+
+$(document).ready(function () {
+  $('[data-toggle="popover"]').popover();
+  $('.popover-label').click(function(e){
+    e.preventDefault();
+    $(this).parent().attr('disabled', false);
+
+  });
+})
+
 
 $(document).ready(function () {
     $('#js-load').on('click', function (e) {

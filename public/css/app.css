@@ -199,4 +199,12 @@ input:checked + label.check_trash  {
 	visibility: visible;
 	opacity: 1;
 }
+.popover-label {
+	position: absolute;
+	top: -7px;
+	right: -2px;
+	cursor: pointer;
+	color: gray;
+	font-size: 90%;
+}
 

@@ -49,7 +49,11 @@
 
         <a href="{{ route('post', $info['project_name']) }}" class="m-1 btn btn-lg btn-outline-primary"><i class="fab fa-windows"></i> <span class="d-none d-md-inline">Проект {{ $info['project_name'] }}</span></a>
 
-        <button class="m-1 btn btn-lg btn-outline-success" type="submit"><i class="far fa-file-excel"></i> <span class="d-none d-md-inline">Скачать файл Excel</span></button>
+        <form class="m-0" action="{{ route('save-file', $info['project_name']) }}" method="post">
+          @csrf
+          <input type="hidden" name="query_string" value="{{ serialize($request->all()) }}">
+          <button class="m-1 btn btn-lg btn-outline-success enabled position-relative overflow-hidden" type="submit" disabled><i class="far fa-file-excel"></i> <span class="d-none d-md-inline">Скачать файл Excel</span> <a class="popover-label" tabindex="0" data-toggle="popover" data-placement="top" data-trigger="focus" title="Как пользоваться:" data-content="Сначала сформируйте выборку постов (с помощью фильтров или без них), а потом нажмите эту зелёную кнопку — в файле будут все посты из данной выборки."><i class="far fa-question-circle"></i></a></button>
+        </form>
 
         <button class="m-1 btn btn-lg btn-outline-warning" type="submit"><i class="fas fa-history"></i> <span class="d-none d-md-inline">Прошлые посты</span></button>
 
@@ -161,8 +165,8 @@
 
             <div class="form-group col">
               Дата от
-              <input class="form-control form-control-sm" type="date" name="calendar_from" value="{{ $request->calendar_from }}"	max="" min="">
-              до <input class="form-control form-control-sm" type="date" name="calendar_to" value="{{ $request->calendar_to }}" max="" min="">
+              <input class="form-control form-control-sm" type="date" name="calendar_from" value="{{ $request->calendar_from }}"	max="{{ $maxdate }}" min="{{ $mindate }}">
+              до <input class="form-control form-control-sm" type="date" name="calendar_to" value="{{ $request->calendar_to }}" max="{{ $maxdate }}" min="{{ $mindate }}">
             </div>
 
             <div class="form-group col">
@@ -189,6 +193,7 @@
 
             <div class="form-group col">
                 <input type="hidden" name="stat" value="1">
+                <input type="hidden" name="rule" value="{{ $request->rule }}">
                 <input class="my-2 d-inline-block btn btn-sm btn-primary vk-top-bg text-white" type="submit" name="apply_filter" value = "Показать записи">
                 <input class="my-2 d-inline-block btn btn-sm btn-info" type="submit" name="apply_filter" value = "Собрать авторов">
                 <p class="lh-md"><small>Фильтры применяются либо ко всему проекту, либо к отдельному правилу (смотря где вы находитесь, когда их включаете), за исключением папки "Доп.посты". Записи оттуда не входят ни в какие выборки</small></p>
