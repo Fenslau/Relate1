@@ -46,7 +46,7 @@ $time_start = microtime(true);
         $posts = new StreamData();
         $projects = new Projects();
         while (!empty ($post = $posts->whereNull('dublikat')->where('user_links', '!=', 'Доп.посты')->where('check_trash', 0)->orderBy('action_time', 'desc')->first())) {
-            if (strlen($post->data) < 20) {
+            if (strlen($post->data) < 13) {
               $post->dublikat = 'ch';
               $post->save();
               continue;
@@ -64,18 +64,18 @@ $time_start = microtime(true);
 
             $k++;
             $rel = $dublikaty[0]['search_score'];
-            $dub_id = '';
+            $dub_id = array();
             $i = 0;
 
               while ($i < 1000 AND $rel != 0 AND ($dublikaty[$i]['search_score']/$rel) > 0.2) {
                 similar_text($post_data, substr($dublikaty[$i]['data'], 0, 1024), $dup_per);
                 if ($dup_per > 90 AND $dublikaty[$i]['id'] != $post->id) {
-                  $posts->where('id', $dublikaty[$i]['id'])->update(['dublikat' => 'd:'.$post->author_id]);
-                  $dub_id .= ', '.$dublikaty[$i]['id'];
+                  $dub_id[] = $dublikaty[$i]['id'];
                 }
                 $i++;
                 if (empty($dublikaty[$i]['search_score'])) break;
               }
+
               $prev_time = $time;
               $time = microtime(true)-$time_start;
               $post_time = $time - $prev_time;
@@ -84,7 +84,10 @@ $time_start = microtime(true);
               echo ' '.round (($time), 0).'сек. '.$k.' '.$project.' '.' '.$post->id.' за '.round (($post_time), 0).' сек. Среднее время поста '.
               round (($average_time), 0).' сек'."\n";
 
-            if (!empty($dub_id)) $posts->where('id', $post->id)->update(['dublikat' => $dub_id]);
+            if (!empty($dub_id)) {
+              $dub_id[] = $post->id;
+              $posts->whereIn('id', $dub_id)->update(['dublikat' => implode(',', $dub_id)]);    
+            }
             else $posts->where('id', $post->id)->update(['dublikat' => 'ch']);
 
           } else $posts->where('id', $post->id)->update(['dublikat' => 'ch']);

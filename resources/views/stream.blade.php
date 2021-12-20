@@ -5,13 +5,12 @@
 @section('content')
 
 <div class="container">
-  <h2 class="m-3 text-center text-uppercase">Этот раздел находится в разработке</h2>
   <h2 class="m-3 text-center text-uppercase">Собрать и анализировать посты</h2>
 
 
     @if (empty($items))
       <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" src="/images/create1.png"></h4>
-      <div class="text-center m-5"><a class="btn btn-success" href="{{ route('stream') }}/Demo">ДЕМО-ВЕРСИЯ</a></div>
+      <div class="text-center m-5"><a class="btn btn-success text-uppercase" href="/streamdemo">Демо-версия</a></div>
     @endif
 
 @if(Session::has('vkid'))
@@ -147,6 +146,9 @@
         </form>
       </div>
     @endisset
+    @if (session('demo'))
+      <a class="btn btn-sm btn-warning" href="/end-demo"><i class="far fa-user"></i> Выйти из демо-режима</a>
+    @endif
   </div>
 </div>
 

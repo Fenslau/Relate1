@@ -17,6 +17,7 @@ class ProjectController extends Controller
     $request->validate([
         'project_name' => 'required|min:2|max:63',
     ]);
+    if (session('demo')) return back()->with('error', 'В демо-режиме нельзя создавать проекты');
     $user = new VKUser(session('vkid'));
     if (empty($user->project_limit)) return back()->with('error', 'Ваш тариф не допускает создания проектов');
     $projects = new Projects();

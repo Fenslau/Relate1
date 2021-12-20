@@ -25,5 +25,20 @@ class VKUser {
         $this->date = NULL;
       }
     }
+
+    public function save() {
+      $oplata = new Oplata();
+      $tarif = $oplata->where('vkid', $this->vkid)->orderBy('id', 'desc')->first();
+
+      $tarif->old_post_fact = $this->old_post_fact;
+
+      $tarif->demo = $this->demo;
+      $tarif->date = $this->date;
+      $tarif->old_post_limit = $this->old_post_limit;
+      $tarif->project_limit = $this->project_limit;
+      $tarif->rules_limit = $this->rules_limit;
+
+      $tarif->save();
+    }
 }
 ?>

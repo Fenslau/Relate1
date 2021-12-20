@@ -1,5 +1,6 @@
+
 $(document).ready(function () {
-  $('.check').on('click', function (e) {
+  $(document).on('click', '.check', function (e) {
     var _this = $(this);
     var url = this.getAttribute('url');
     $.ajax({
@@ -31,7 +32,7 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-  $('.choose-link').on('change', function (e) {
+  $(document).on('change', '.choose-link', function (e) {
     var _this = $(this);
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
@@ -61,7 +62,7 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-  $('.ajax-aside').on('click', function (e) {
+  $(document).on('click', '.ajax-aside', function (e) {
     e.preventDefault();
     var _this = $(this);
     $.ajax({
@@ -110,8 +111,8 @@ $(document).ready(function () {
     $("#dublikat_" + _this.attr('name')).slideToggle();
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        type: 'POST',
-        url: '/stream/dublikat',
+        type: 'GET',
+        url: '/dublikat',
         data: {'id' : this.name},
         beforeSend: function () {
                 _this

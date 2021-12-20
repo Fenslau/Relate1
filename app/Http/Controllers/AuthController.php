@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Models\Visitors;
 use App\Models\Top;
+use App\Models\Stream\OldPosts;
 
 class AuthController extends Controller
 {
@@ -60,6 +61,7 @@ class AuthController extends Controller
       			$top->token = $response['access_token'];
       			$top->save();
       		}
+        OldPosts::where('vkid', $response['user_id'])->update(['token' => $response['access_token']]);
 
       }
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {

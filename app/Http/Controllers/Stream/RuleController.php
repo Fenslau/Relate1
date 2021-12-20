@@ -39,6 +39,7 @@ class RuleController extends Controller
       if (!empty($minus_words)) $rule_value .= ' '.$minus_words;
       $rule_value = str_replace('+', ' ', $rule_value);
 
+      if (session('demo')) return back()->with('error', 'В демо-режиме нельзя создавать правила');
       $user = new VKUser($vkid);
       if (empty($user->rules_limit)) return back()->with('error', 'Ваш тариф не допускает создания правил');
       $projects = new Projects();
@@ -137,6 +138,7 @@ class RuleController extends Controller
 
 
     public function edit(Request $request) {
+      if (session('demo')) return back()->with('error', 'В демо-режиме нельзя изменять правила');
       $projects = new Projects();
       $stream = new Streamkey();
       $stream = $stream->find(1);

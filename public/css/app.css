@@ -199,12 +199,36 @@ input:checked + label.check_trash  {
 	visibility: visible;
 	opacity: 1;
 }
-.popover-label {
-	position: absolute;
-	top: -7px;
-	right: -2px;
-	cursor: pointer;
-	color: gray;
-	font-size: 90%;
+
+.popover {
+  will-change: unset !important;
+	box-shadow: 5px 5px 5px 0 rgb(0 0 0 / 50%);
+}
+
+.no-outline:focus {
+	box-shadow: none;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+	padding-left: 0.3rem !important;
+}
+
+#controls-checkbox .icon {
+	transition: all 0.3s ease-in-out;
+}
+.activnost:hover ~ #controls-checkbox .icon {
+	transform: scale(1.5);
+}
+
+.filter-panel {
+	color: #68ed86;
+	font-weight: bold;
+}
+
+.page-link:focus, .ajax-post:focus {
+	box-shadow: none;
+}
+.like :empty, .comment :empty, .repost :empty, .view :empty {
+	display: none;
 }
 

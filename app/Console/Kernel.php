@@ -23,6 +23,8 @@ class Kernel extends ConsoleKernel
         Commands\Dublikat::class,
         Commands\Cloud::class,
         Commands\File::class,
+        Commands\Fulltext::class,
+        Commands\OldPost::class,
     ];
 
     /**
@@ -43,6 +45,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Help:hour')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/HelperHour.log');
 
         $schedule->command('City:database')->quarterly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/CityDatabase.log');
+        $schedule->command('fulltext:rebuild')->quarterly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Fulltext.log');
 
         $schedule->command('model:prune')->daily()->appendOutputTo('storage/logs/ModelsPrune.log');
 
@@ -55,6 +58,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('File:get')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/FileXLS.log');
 
         $schedule->command('Cloud:get')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Cloud.log');
+
+        $schedule->command('old:post')->everyMinute()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/OldPosts.log');
     }
 
     /**

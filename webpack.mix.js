@@ -16,6 +16,7 @@ mix.js('resources/js/ajax.js', 'public/js');
 mix.js('resources/js/aside.js', 'public/js');
 mix.js('resources/js/readmore.js', 'public/js');
 mix.js('resources/js/post.js', 'public/js');
+mix.js('resources/js/stat.js', 'public/js');
 mix.postCss('resources/css/app.css', 'public/css', [
         //
     ]);

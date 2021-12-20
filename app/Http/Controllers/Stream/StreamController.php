@@ -28,7 +28,7 @@ class StreamController extends Controller
         			$info['success'] .= ';">'.date("d.m.Y H:i", strtotime($user->date)).'</b>.
         			Вам доступно создание <b>'.num::declension ($user->project_limit, array('</b>проекта', '</b>проектов', '</b>проектов')).', <b>
         			'.num::declension ($user->rules_limit, array('</b>правила в проекте', '</b>правил в проекте', '</b>правил в проекте')).
-        			' и закачка <b>'.num::declension ($user->old_post_limit, array('"</b>старого" поста', '</b>"старых" постов', '</b>"старых" постов')).'.</p>';
+        			' и закачка <b>'.num::declension ($user->old_post_limit-$user->old_post_fact, array('"</b>старого" поста', '</b>"старых" постов', '</b>"старых" постов')).' из '.$user->old_post_limit.'.</p>';
         			}
       } else $info['warning'] = '<p class="text-uppercase text-center">Ваш <a href="'.route('tarifs').'">тариф</a> не подходит
       для этой услуги. Ознакомьтесь с тарифами семейства POST</p>';
@@ -42,7 +42,7 @@ class StreamController extends Controller
       $files = new FileXLS();
       $my_files = $files->where('vkid', session('vkid'))->get()->toArray();
 
-      if (session('vkid') == 151103777 OR session('realvkid') == 151103777 OR session('vkid') == 409899462 OR session('realvkid') == 409899462) {
+      if (!session('demo') AND (session('vkid') == 151103777 OR session('realvkid') == 151103777 OR session('vkid') == 409899462 OR session('realvkid') == 409899462)) {
         $info['admin'] = TRUE;
         $vkids = $projects->distinct()->pluck('vkid')->toArray();
         $stream = new Streamkey();
@@ -81,5 +81,18 @@ class StreamController extends Controller
         session(['vkid' => $request->fakevkid]);
         return back()->with('success', 'Ваш ВК id подменён на '.$request->fakevkid);
       } else return back()->with('warning', 'Выберите ВК id из списка');
+    }
+
+    public function demo() {
+      if (empty(session('vkid'))) return back()->with('error', 'Авторизуйтесь ВК для ознакомления с услугой в демо-режиме');
+      else {
+        session(['demo' => 1, 'realvkid' => session('vkid'), 'vkid' => 151103777]);
+        return redirect()->route('post', 'Demo');
+      }
+    }
+
+    public function endDemo() {
+        session(['demo' => 0, 'vkid' => session('realvkid')]);
+        return back()->with('success', 'Приходите к нам ещё!');
     }
 }

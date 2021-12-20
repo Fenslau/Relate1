@@ -15,7 +15,7 @@ class VkGroups extends Model
 
     public function prunable()
     {
-        return static::where('updated_at', '<=', now()->subDays(90));
+        return static::where('updated_at', '<=', now()->subDays(180));
     }
 
 }

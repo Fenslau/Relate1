@@ -189,11 +189,11 @@ class Cloud extends Command
       			$this->Cloud (-1, $vkid, $project, array_column($rules, 'rule_tag'));
           }
       }
-      if (file_exists('public/temp.txt')) unlink ('public/temp.txt');
-      if (file_exists('public/output.txt')) unlink ('public/output.txt');
-      if (file_exists('public/sorted.txt')) unlink ('public/sorted.txt');
-      if (file_exists('public/temp_tags.txt')) unlink ('public/temp_tags.txt');
-      if (file_exists('public/output_tags.txt')) unlink ('public/output_tags.txt');
-      if (file_exists('public/sorted_tags.txt')) unlink ('public/sorted_tags.txt');
+      if (file_exists('public/temp/temp.txt')) unlink ('public/temp/temp.txt');
+      if (file_exists('public/temp/output.txt')) unlink ('public/temp/output.txt');
+      if (file_exists('public/temp/sorted.txt')) unlink ('public/temp/sorted.txt');
+      if (file_exists('public/temp/temp_tags.txt')) unlink ('public/temp/temp_tags.txt');
+      if (file_exists('public/temp/output_tags.txt')) unlink ('public/temp/output_tags.txt');
+      if (file_exists('public/temp/sorted_tags.txt')) unlink ('public/temp/sorted_tags.txt');
     }
 }

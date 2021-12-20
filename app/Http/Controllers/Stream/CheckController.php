@@ -19,9 +19,8 @@ class CheckController extends Controller
           $dublikat = $dublikaty->dublikat;
 
         	if ($request->checked == 'true') {
-        		if (!empty($dublikat) AND $dublikat != 'ch' AND strpos($dublikat, 'd:') === FALSE) {
-        			$dublikat = array_diff(explode(', ', $dublikat), array(0, '', null));
-        			$dublikat[] = $request->name;
+        		if (!empty($dublikat) AND $dublikat != 'ch') {
+        			$dublikat = explode(',', $dublikat);
         			$posts->whereIn('id', $dublikat)->update(['check_trash' => 1, 'check_flag' => 0]);
         		} else {
         			$dublikaty->check_trash = 1;
@@ -31,9 +30,8 @@ class CheckController extends Controller
             $message = 'Запись (id '.$request->name.') удалена в "Корзину"';
         	}
         	if ($request->checked == 'false') {
-        		if (!empty($dublikat) AND $dublikat != 'ch' AND strpos($dublikat, 'd:') === FALSE) {
-        			$dublikat = array_diff(explode(', ', $dublikat), array(0, '', null));
-        			$dublikat[] = $request->name;
+        		if (!empty($dublikat) AND $dublikat != 'ch') {
+        			$dublikat = explode(',', $dublikat);
         			$posts->whereIn('id', $dublikat)->update(['check_trash' => 0]);
         		} else {
               $dublikaty->check_trash = 0;

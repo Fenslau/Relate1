@@ -41,8 +41,8 @@
           </div>
           <div class="col-md-4">
             <div class="row">
-              <input class="col mx-2 mt-3 mb-5 form-control" id="members_count_from" type="text" name="members_count_from" placeholder="от" value="{{ old('members_count_from') }}">
-              <input class="col mt-3 mb-5 form-control" id="members_count_to" type="text" name="members_count_to" placeholder="до" value="{{ old('members_count_to') }}">
+              <input class="col mx-2 mt-3 mb-5 form-control" id="members_count_from" type="number" min="0" name="members_count_from" placeholder="от" value="{{ old('members_count_from') }}">
+              <input class="col mt-3 mb-5 form-control" id="members_count_to" type="number" min="0" name="members_count_to" placeholder="до" value="{{ old('members_count_to') }}">
             </div>
           </div>
         </div>

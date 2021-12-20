@@ -60,19 +60,18 @@ class HelperHour extends Command
         $posts = new StreamData();
         $rules = $projects->select("*", DB::raw("CONCAT (vkid, '', rule) AS rule_tag"))->whereNotNull('rule')->pluck('rule_tag');
         foreach ($rules as $rule) {
-          $count = $posts->select(DB::raw("COUNT(*) AS cnt, max(action_time) AS maxdate, min(action_time) AS mindate"))->where('user', $rule)->where('check_trash', 0)->where('user_links', '')->where (function ($query) {
-            $query->where('dublikat', 'NOT LIKE', 'd%');
-            $query->orWhereNotNull('dublikat');
-          })->get()->toArray();
+          $count = $posts->select(DB::raw("COUNT(*) AS cnt, max(action_time) AS maxdate, min(action_time) AS mindate"))->where('user', $rule)->where('check_trash', 0)->where('user_links', '')->first()->toArray();
+
           $countries = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('country, COUNT(*) as cnt'))->where('user', $rule)->orderBy('cnt', 'desc')->groupBy('country')->pluck('country')->toArray();
           $countries = array_diff($countries, array('', NULL));
           $countries = implode(',', $countries);
 
-          $cities = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('city, COUNT(*) as cnt'))->where('user', $rule)->orderBy('cnt', 'desc')->groupBy('city')->pluck('city')->toArray();
-          $cities = array_diff($cities, array('', NULL));
-          $cities = implode(',', $cities);
+          $cities = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('city, city_id, COUNT(*) as cnt'))->where('user', $rule)->whereNotNull('city')->orderBy('cnt', 'desc')->groupBy('city_id')->pluck('city', 'city_id')->toArray();
+          $cities1 = '';
+          foreach ($cities as $city_id => $city)
+          $cities1 .= $city_id.'\\'.$city.'* ';
 
-          $projects->whereRaw("CONCAT (vkid, '', rule) = ?", $rule)->update(['maxdate' => $count[0]['maxdate'], 'mindate' => $count[0]['mindate'], 'count_stream_records' => $count[0]['cnt'], 'countries' => $countries, 'cities' => $cities]);
+          $projects->whereRaw("CONCAT (vkid, '', rule) = ?", $rule)->update(['maxdate' => $count['maxdate'], 'mindate' => $count['mindate'], 'count_stream_records' => $count['cnt'], 'countries' => $countries, 'cities' => $cities1]);
         }
 
 

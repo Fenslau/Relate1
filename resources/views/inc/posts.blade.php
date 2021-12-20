@@ -1,23 +1,80 @@
-<div class="">
+<div id="query_request"
+@if ($request instanceof Illuminate\Http\Request)
+query_string="{{ serialize($request->all()) }}"
+@endif
+class="">
+@if (empty($dublikat_render))
+@include('inc.breadcrumbs')
+@endif
+<div id="ajax"> </div>
 @if (!empty($info['rule']) AND $info['rule'] == 'Доп.посты')
 <p class="alert alert-info">В этой папке собираются записи, в которых не удалось достоверно определить наличие ключевых слов. Однако они должны где-то там быть. Например, они могут быть в описании фотографий, или находиться внутри ссылок, названий видео/аудио и т.п.</p>
 @endif
 @if (!empty($info['rule']) AND $info['rule'] == 'Корзина')
 <p class="alert alert-info">В корзине могут лежать не только те записи, которые вы сами удалили. Иногда система помещает сюда посты, в которых есть ключевые слова, но они находятся на большом расстоянии друг от друга, поэтому скорее всего не являются целевыми, однако посматривать сюда бывает полезно. Корзина самоочищается раз в сутки</p>
 @endif
+@isset($info['old_rule'])
+  @if($info['old_rule'] === TRUE)
+  <p class="alert alert-info">Старые правила — это правила, по которым больше не собираются посты, но прошлые записи ещё остались в базе</p>
+  @endif
+@endisset
 @isset($info['found'])
 <p>{!! $info['found'] !!}</p>
 @endisset
+
+@if (!empty($request->man) || !empty($request->woman) || !empty($request->group) || !empty($request->type) || (!empty($request->age) && $request->age != '13 - 118') || !empty($request->country) || !empty($request->city) || !empty($request->not_city) || !empty($request->followers_to) || !empty($request->followers_from) || !empty($request->calendar_from) || !empty($request->calendar_to) || !empty($request->author_id))
+  <div class="rounded mb-3 px-2 pb-1 bg-dark filter-panel">
+      <i class="mx-3 fas fa-filter">:</i>
+    @isset ($request->man)
+      <i class="mx-1 fas fa-male"></i>
+    @endisset
+    @isset ($request->woman)
+      <i class="mx-1 fas fa-female"></i>
+    @endisset
+    @isset ($request->group)
+      <i class="mx-1 fas fa-users"></i>
+    @endisset
+    @isset ($request->type)
+      @if(in_array('comment', $request->type))<i class="mx-1 far fa-comments"></i>@endif
+      @if(in_array('share', $request->type))<i class="mx-1 far fa-bullhorn"></i>@endif
+      @if(in_array('post', $request->type))<span class="badge">Post</span>@endif
+      @if(in_array('topic_post', $request->type))<span class="badge">topic-post</span>@endif
+    @endisset
+    @isset ($request->age)
+      @if($request->age != '13 - 118')<span class="badge">Age</span>@endif
+    @endisset
+    @isset ($request->country)
+      <span class="badge">{{ $request->country[0] }}...</span>
+    @endisset
+  @isset ($cities)
+    @isset ($request->city)
+      <span class="badge">{{ $cities[$request->city[0]] }}...</span>
+    @endisset
+    @isset ($request->not_city)
+      <span class="badge"><s>{{ $cities[$request->not_city[0]] }}...</s></span>
+    @endisset
+  @endisset
+    @if (!empty($request->followers_to) || !empty($request->followers_from))
+      <span class="badge">Подписч.</span>
+    @endif
+    @if (!empty($request->calendar_from) || !empty($request->calendar_to))
+      <i class="mx-1 far fa-calendar-alt"></i>
+    @endif
+    @if (!empty($request->author_id))
+      <i class="mx-1 fas fa-user-edit"></i>
+    @endif
+  </div>
+@endif
+
 @if ($request->apply_filter == 'Показать записи' || empty($request->apply_filter))
-  @if (empty($dublikat_render))
+
   {{ $items->onEachSide(4)->links() }}
-  @endif
 
     @forelse ($items as $item)
       <div class="my-3 card record" id="record{{ $item['id'] }}">
         <div class="px-1 d-flex justify-content-between card-header text-muted">
 
-          @if (!empty($item['dublikat']) AND $item['dublikat'] != 'ch' AND strpos($item['dublikat'], 'd:') === FALSE)
+          @if (!empty($item['dublikat']) AND $item['dublikat'] != 'ch' AND empty($dublikat_render))
             <button class="p-0 btn border-0 text-success hider_dublikat shadow-none" name="{{ $item['id'] }}"
             data-toggle="tooltip" title="Раскрыть дубликаты"><i class="icon far fa-plus-square"></i><span class="spinner-border spinner-border-sm d-none"></span></button>
           @endif
@@ -99,18 +156,18 @@
             </div>
           @endif
 
-          @if (!empty($item['video_player']) && !empty($video[$item['id']]))
+          @if (!empty($item['video_player']))
             <div class="p-2 d-flex flex-wrap justify-content-between">
-              @foreach ($video[$item['id']] as $video1)
-                <div class="my-2 border border-gray" style="width: 375px">
+              @foreach (array_diff(explode(',', $item['video_player']), ['']) as $video1)
+                <div id="video{{ $loop->index }}_{{ $item['id'] }}" class="my-2 border border-gray" style="width: 375px">
                   <h6 class="text-muted">К записи прикреплено видео:</h6>
-                  <h6 class="">{{ $video1['title'] }}</h6>
-                  @if (!empty($video1['player']))
+                  <h6 class="video-title"></h6>
+
                     <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="{{ $video1['player'] }}" allowfullscreen></iframe>
+                      <iframe class="embed-responsive-item" src="" allowfullscreen></iframe>
                     </div>
-                  @endif
-                  <p class="lh-m text-muted">{{ $video1['description'] }}</p>
+
+                  <p class="lh-m text-muted video-description"></p>
                 </div>
               @endforeach
             </div>
@@ -171,42 +228,30 @@
         <div class="p-1 d-flex justify-content-between card-footer text-muted">
           <div class="d-flex">
             @if ($item['event_type'] == 'post' || $item['event_type'] == 'share')
-              @if (!empty($post[$item['id']]['comments']))
-                <button data-toggle="tooltip" title="Комментарии" style="color: #004aad" class="btn p-0 mt-0 text-nowrap mx-2 ajax-comment shadow-none" event_url="{{ $item['event_url'] }}" name="{{ $item['id'] }}">
-                  <i class="icon far fa-comments"></i><span class="spinner-border spinner-border-sm d-none"></span>
-                  {{ number_format($post[$item['id']]['comments'], 0, ',', ' ') }}
-                </button>
-              @endif
 
-              @if (!empty($post[$item['id']]['likes']))
-                <div data-toggle="tooltip" title="Лайки" class="text-nowrap mx-2">
-                  <i class="far fa-heart"></i>
-                  {{ number_format($post[$item['id']]['likes'], 0, ',', ' ') }}
-                </div>
-              @endif
+                <div data-toggle="tooltip" title="Комментарии" style="color: #004aad" class="p-0 mt-0 text-nowrap cursor-pointer mx-2 ajax-comment shadow-none comment" event_url="{{ $item['event_url'] }}" name="{{ $item['id'] }}"><i class="icon far fa-comments comments"></i><span class="spinner-border spinner-border-sm mx-2 d-none"> </span></div>
 
-              @if (!empty($post[$item['id']]['reposts']))
-                <div data-toggle="tooltip" title="Репосты" class="text-nowrap mx-2">
-                  <i class="fas fa-bullhorn"></i>
-                  {{ number_format($post[$item['id']]['reposts'], 0, ',', ' ') }}
+                <div data-toggle="tooltip" title="Лайки" class="text-nowrap mx-2 like">
+                  <i class="far fa-heart likes"></i>
                 </div>
-              @endif
 
-              @if (!empty($post[$item['id']]['views']))
-                <div data-toggle="tooltip" title="Просмотры" class="text-nowrap mx-2">
-                  <i class="far fa-eye"></i>
-                  {{ number_format($post[$item['id']]['views'], 0, ',', ' ') }}
+                <div data-toggle="tooltip" title="Репосты" class="text-nowrap mx-2 repost">
+                  <i class="far fa-bullhorn reposts"></i>
                 </div>
-              @endif
+
+                <div data-toggle="tooltip" title="Просмотры" class="text-nowrap mx-2 view">
+                  <i class="far fa-eye views"></i>
+                </div>
+
             @endif
           </div>
           <div class="text-truncate">
-            <span class="d-none d-md-inline">Правило: </span><mark><a class="text-muted" data-toggle="tooltip" title="Показать записи только с этой меткой" href = "{{ route('stream') }}/{{ $info['project_name'] }}/?rule={{ str_replace(session('vkid'), '', $item['user']) }}">{{ str_replace(session('vkid'), '', $item['user']) }}</a></mark>
+            <span class="d-none d-md-inline">Правило: </span><mark><a class="text-muted ajax-post" data-toggle="tooltip" title="Показать записи только с этой меткой" href = "{{ route('stream') }}/{{ $info['project_name'] }}/?rule={{ str_replace(session('vkid'), '', $item['user']) }}">{{ str_replace(session('vkid'), '', $item['user']) }}</a></mark>
           </div>
         </div>
-        @if (!empty($post[$item['id']]['comments']))
-          <div class="bg-light" id="comment_{{ $item['id'] }}"></div>
-        @endif
+
+        <div class="bg-light" id="comment_{{ $item['id'] }}"></div>
+
       </div>
     @empty
       @if (empty($dublikat_render))
@@ -214,10 +259,7 @@
       @endif
     @endforelse
 
-    @if (empty($dublikat_render))
     {{ $items->onEachSide(4)->links() }}
-    @endif
-
 
   @if (!empty($cut))
     <script src="/js/readmore.js" type="text/javascript"></script>
@@ -278,3 +320,52 @@
 @else <p class="alert alert-warning">Не нашлось ни одного автора по фильтрам</p>
 @endif
 </div>
+
+@if (($request->apply_filter == 'Показать записи' || empty($request->apply_filter)))
+  <div id_id="{{ serialize(array_column($items->items(), 'id')) }}" author_id="{{ serialize(array_column($items->items(), 'original_author_id')) }}" post_id="{{ serialize(array_column($items->items(), 'post_id')) }}" event_type="{{ serialize(array_column($items->items(), 'event_type')) }}" event_url="{{ serialize(array_column($items->items(), 'event_url')) }}" video_player="{{ serialize(array_column($items->items(), 'video_player')) }}" id="serialize"></div>
+  <script type="text/javascript">
+      $(document).ready(function () {
+
+        var id_id = $('#serialize').attr('id_id');
+        var event_url = $('#serialize').attr('event_url');
+        var author_id = $('#serialize').attr('author_id');
+        var post_id = $('#serialize').attr('post_id');
+        var video_player = $('#serialize').attr('video_player');
+        var event_type = $('#serialize').attr('event_type');
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            type: 'POST',
+            url: "{{ route('video-likes', $info['project_name']) }}",
+            data: {'event_url' :  event_url, 'video_player' : video_player, 'event_type' : event_type, 'post_id' : post_id, 'author_id' : author_id, 'id' : id_id},
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+              //var data = $.parseJSON(data);
+                if(data.success == true) {
+                  $.each(JSON.parse(data.post), function(key, value) {
+                      const entries = Object.entries(value)
+                      entries.forEach(function(entry) {
+                          $('#record'+key+' .'+entry[0]).html('<span style="font-family: system-ui;"> '+entry[1].toLocaleString('ru-RU')+'</span>');
+                      });
+                  })
+                  $.each(JSON.parse(data.video), function(key, value) {
+                      const entries = Object.entries(value)
+                      entries.forEach(function(entry) {
+                          $('#video'+entry[0]+'_'+key+' .video-title').text(entry[1].title);
+                          $('#video'+entry[0]+'_'+key+' .video-description').text(entry[1].description);
+                          if (entry[1].player) $('#video'+entry[0]+'_'+key+' .embed-responsive-item').prop('src', entry[1].player);
+                      });
+                  })
+
+                } else {
+                  $('.toast-header').addClass('bg-danger');
+                  $('.toast-header').removeClass('bg-success');
+                  $('.toast-body').html('Не удалось получить информацию о Видео, лайках, комментариях, репостах и просмотрах');
+                  $('.toast').toast('show');
+                }
+            },
+        });
+      });
+  </script>
+@endif

@@ -74,6 +74,10 @@ Route::post('/del-follow-group', 'App\Http\Controllers\NewUsersController@del')
 
 Route::get('/stream', 'App\Http\Controllers\Stream\StreamController@main')
 ->name('stream');
+Route::get('/streamdemo', 'App\Http\Controllers\Stream\StreamController@demo')
+->name('streamdemo');
+Route::get('/end-demo', 'App\Http\Controllers\Stream\StreamController@endDemo')
+->name('end-demo');
 Route::post('/stream/gen-key', 'App\Http\Controllers\Stream\StreamController@gen')
 ->name('stream-gen-key');
 Route::post('/stream/stream-fake-vkid', 'App\Http\Controllers\Stream\StreamController@fakeVKID')
@@ -104,6 +108,23 @@ Route::get('/stream/{project_name?}', 'App\Http\Controllers\Stream\PostControlle
 Route::post('/stream/{project_name}/save-file', 'App\Http\Controllers\Stream\SaveFileController@main')
 ->name('save-file');
 
+Route::post('/stream/{project_name}/old-post', 'App\Http\Controllers\Stream\OldPostController@add')
+->name('old-post');
+
+Route::get('/stream/{project_name}/get-post', 'App\Http\Controllers\Stream\PostController@getAjax')
+->name('get-post');
+
+Route::post('/stream/{project_name}/video-likes', 'App\Http\Controllers\Stream\PostController@ajaxVideoLikes')
+->name('video-likes');
+
+Route::post('/stream/{project_name?}/statistic', 'App\Http\Controllers\Stream\StatisticController@get')
+->name('statistic');
+Route::post('/stream/{project_name?}/statistic/period', 'App\Http\Controllers\Stream\StatisticController@period')
+->name('period-stat');
+Route::post('/stream/{project_name?}/statistic/del-from-ignore', 'App\Http\Controllers\Stream\StatisticController@delIgnore')
+->name('del-from-ignore');
+Route::post('/stream/{project_name?}/statistic/add-to-ignore', 'App\Http\Controllers\Stream\StatisticController@addIgnore')
+->name('add-to-ignore');
 
 Route::post('/stream/buttons/{button_name}', 'App\Http\Controllers\Stream\ButtonsController@check')
 ->name('stream-button');
@@ -114,7 +135,7 @@ Route::post('/stream/checkbox/{check_name}', 'App\Http\Controllers\Stream\CheckC
 Route::post('/stream/comments', 'App\Http\Controllers\Stream\CommentsController@get')
 ->name('comments');
 
-Route::post('/stream/dublikat', 'App\Http\Controllers\Stream\DublikatController@get')
+Route::get('/dublikat', 'App\Http\Controllers\Stream\DublikatController@get')
 ->name('dublikat');
 
 

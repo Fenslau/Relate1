@@ -7,7 +7,6 @@ use App\Models\Stream\Projects;
 use App\Models\Stream\StreamData;
 use App\Models\Stream\FileXLS;
 use \XLSXWriter;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Stream\PostController;
 
 class File extends Command

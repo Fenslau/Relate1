@@ -26,9 +26,9 @@
         <div data-toggle="tooltip" title="Это наиболее подходящие значения, рекомендованные для сбора групп с похожей аудиторией" class="form-inline justify-content-around d-flex">
 
           <label for="from">от</label>
-          <input class="form-control" id="from" type="text" name="from" value="100">
+          <input class="form-control" id="from" type="number" min="0" max="50000" name="from" value="100">
           <label for="to">до</label>
-          <input class="form-control" id="to" type="text" name="to" value="30000">
+          <input class="form-control" id="to" type="number" min="0" max="50000" name="to" value="30000">
         </div>
       </div>
     </div>

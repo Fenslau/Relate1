@@ -872,13 +872,9 @@ $('body').tooltip({
 });
 $(document).ready(function () {
   $('[data-toggle="popover"]').popover();
-  $('.popover-label').click(function (e) {
-    e.preventDefault();
-    $(this).parent().attr('disabled', false);
-  });
 });
 $(document).ready(function () {
-  $('#js-load').on('click', function (e) {
+  $(document).on('click', '#js-load', function (e) {
     e.preventDefault();
 
     if (typeof process1 !== 'undefined') {
@@ -1006,7 +1002,7 @@ $(document).ready(function () {
   });
 });
 $(document).ready(function () {
-  $('.follow').on('click', function (e) {
+  $(document).on('click', '.follow', function (e) {
     e.preventDefault();
 
     var _this = $(this);

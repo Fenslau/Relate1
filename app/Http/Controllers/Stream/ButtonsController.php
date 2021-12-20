@@ -16,9 +16,9 @@ class ButtonsController extends Controller
 
     if ($button_name == 'ruleErasePosts') {
       $rule_tag	= $request->tag;
+      if (session('demo')) return response()->json(array('success' => 'Ограничение демо-режима для правила <b>'.$rule_tag));
       $project	= $request->project;
       $vkid	= session('vkid');
-
       $posts = new StreamData();
       $projects = new Projects();
       $posts->where('user', $vkid.$rule_tag)->where('check_flag', 0)->where(function ($query) {
@@ -31,6 +31,7 @@ class ButtonsController extends Controller
 
 
     if ($button_name == 'ruleDelete') {
+      if (session('demo')) return back()->with('error', 'В демо-режиме нельзя удалять правила');
       $stream = new Streamkey();
       $projects = new Projects();
       $posts = new StreamData();
@@ -85,8 +86,8 @@ class ButtonsController extends Controller
 
 
     if ($button_name == 'userLinksDelete') {
-      $user_link	= $request->tag;
-      if ($user_link = 'Доп.посты') return back()->with('error', 'Папка <b> Доп.посты </b> не может быть удалена, она нужна для корректной работы системы');
+      $user_link	= $request->user_link;
+      if ($user_link == 'Доп.посты') return back()->with('error', 'Папка <b> Доп.посты </b> не может быть удалена, она нужна для корректной работы системы');
       $project	= $request->project;
       $vkid	= session('vkid');
       $posts = new StreamData();

@@ -17,6 +17,11 @@ class GetProgress {
     $this->progress->updateOrCreate(['vkid' => $this->vkid, 'process' => $this->process], $data);
   }
 
+  public function message ($message) {
+    $this->info = $message;
+    $this->progress->update(['info' => $this->info]);
+  }
+
   public function step () {
 
     if ($this->count_step) $this->width += round((100/$this->count_step),3); else $this->width = 100;
