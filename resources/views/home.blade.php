@@ -11,7 +11,7 @@
     @if(Session::has('vkid'))
     <script type="text/javascript">
       var vkid={{ session('vkid') }};
-      var url='{{ route('home') }}';
+      var url='{{ route('search') }}';
       var process1='simple_search';
     </script>
 

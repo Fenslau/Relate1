@@ -14,7 +14,7 @@ class DublikatController extends Controller
 {
     public function get(Request $request) {
         $post = $info = array();
-
+        if ($request->ajax() AND empty(session('vkid'))) return response()->json(array('success' => false));
         $dublikaty = StreamData::find($request->id);
         $project = Projects::whereRaw("CONCAT_WS('', vkid, rule)=?", $dublikaty->user)->first()->toArray();
         $cut = $project['cut'];

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Schema;
 class StatisticController extends Controller
 {
     public function get($project_name, Request $request) {
+      if ($request->ajax() AND empty(session('vkid'))) return response()->json(array('success' => true, 'html'=>'<p class="alert alert-danger">Необходимо авторизоваться заново, так как ваша сессия истекла</p>'));
       if (empty($project_name)) return redirect()->route('stream');
       define("region_quantity", "30");
       define("mos", "Москва город");

@@ -12,13 +12,13 @@ use App\Models\Stream\Russia;
 use App\Models\Stream\Authors;
 use App\Models\Stream\OldPosts;
 use \App\MyClasses\num;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     public function main($project_name, Request $request) {
-      if (empty($project_name) OR !isset($request)) return redirect()->route('stream');
+      if (!$request->ajax() AND (empty(session('vkid')) OR empty($project_name) OR !isset($request))) return redirect()->route('stream');
+      if ($request->ajax() AND empty(session('vkid'))) return response()->json(array('success' => true, 'html'=>'<p class="alert alert-danger">Необходимо авторизоваться заново, так как ваша сессия истекла</p>'));
       if(session('demo') AND $project_name != 'Demo') return redirect()->route('post', 'Demo');
       $result['video'] = $result['post'] = $items = $info = array();
       $items = $this->getPost(session('vkid'), $project_name, $request);
@@ -33,25 +33,13 @@ class PostController extends Controller
     if ($request->apply_filter == 'Показать записи' OR empty($request->apply_filter)) {
         if ($items->total() > 0) $info['found'] = 'Всего нашлось <b>'.num::declension ($items->total(), array('</b> запись', '</b> записи', '</b> записей'));
 
-        $for_count = count($items);
-        $unset = array();
-        for ($i=0; $i<$for_count; $i++) {
-          if (in_array($i, $unset)) continue;
-          if (isset($items[$i]) AND !empty($items[$i]['dublikat']) AND $items[$i]['dublikat'] != 'ch') {
-            $dublikat = array_diff(explode(',', $items[$i]['dublikat']), [$items[$i]['id']]);
-            foreach ($dublikat as $dub) {
-              $unset[] = (array_search($dub, array_column($items->items(), 'id')));
-            }
-          }
-        }
-        foreach ($unset as $del) if (!empty($del)) unset($items[$del]);
+        $items = $this->dublikatUnset($items);
 
-        $result['items'] = $post_control->authorName($items);
         $dublikat_render = 0;
     } else {
         $dublikat_render = 1;
-        $result['items'] = $post_control->authorName($items);
       }
+      $result['items'] = $post_control->authorName($items);
       $projects = new Projects();
       $stream = new StreamData();
 
@@ -248,26 +236,14 @@ class PostController extends Controller
 
       $items = $this->getPost($vkid, $project_name, $request);
 
-      $for_count = count($items);
-      $unset = array();
-      for ($i=0; $i<$for_count; $i++) {
-        if (in_array($i, $unset)) continue;
-        if (isset($items[$i]) AND !empty($items[$i]['dublikat']) AND $items[$i]['dublikat'] != 'ch') {
-          $dublikat = array_diff(explode(',', $items[$i]['dublikat']), [$items[$i]['id']]);
-          foreach ($dublikat as $dub) {
-            $unset[] = (array_search($dub, array_column($items->items(), 'id')));
-          }
-        }
-      }
-      foreach ($unset as $del) if (!empty($del)) unset($items[$del]);
+      $items = $this->dublikatUnset($items);
 
       $post_control = new GetPostInfo();
-      $result = $post_control->vkGet($items);
-      $result['items'] = $post_control->authorName($result['items']);
+      $result['items'] = $post_control->authorName($items);
       $info['project_name'] = $project_name;
       if ($result['items']->total() > 0) $info['found'] = '<h5>Активность автора '.Authors::where('author_id', $author_id)->first()->name.':</h5> Всего нашлось <b>'.num::declension ($result['items']->total(), array('</b> запись', '</b> записи', '</b> записей'));
 
-      $returnHTML = view('inc.posts', ['dublikat_render' => $dublikat_render, 'request' => $request, 'cut' => MyRules::getCut($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $result['items'], 'video' => $result['video'], 'post' => $result['post']])->render();
+      $returnHTML = view('inc.posts', ['dublikat_render' => $dublikat_render, 'request' => $request, 'cut' => MyRules::getCut($project_name), 'links' => MyRules::getLinks($project_name), 'info' => $info, 'items' => $result['items']])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
 
@@ -298,5 +274,21 @@ class PostController extends Controller
       $result['post'] = json_encode($result['post']);
       $result['video'] = json_encode($result['video']);
       return response()->json( array('success' => true, 'post' => $result['post'], 'video' => $result['video']) );
+    }
+
+    public function dublikatUnset($items) {
+      $for_count = count($items);
+      $unset = array();
+      for ($i=0; $i<$for_count; $i++) {
+        if (in_array($i, $unset)) continue;
+        if (isset($items[$i]) AND !empty($items[$i]['dublikat']) AND $items[$i]['dublikat'] != 'ch') {
+          $dublikat = array_diff(explode(',', $items[$i]['dublikat']), [$items[$i]['id']]);
+          foreach ($dublikat as $dub) {
+            $unset[] = (array_search($dub, array_column($items->items(), 'id')));
+          }
+        }
+      }
+      foreach ($unset as $del) if (!empty($del)) unset($items[$del]);
+      return ($items);
     }
 }

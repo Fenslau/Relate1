@@ -14,6 +14,7 @@ use App\Models\Stream\FileXLS;
 class ProjectController extends Controller
 {
   public function add(Request $request) {
+    if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
     $request->validate([
         'project_name' => 'required|min:2|max:63',
     ]);
@@ -42,6 +43,7 @@ class ProjectController extends Controller
   }
 
   public function del(Request $request) {
+    if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
     $projects = new Projects();
     $project = $projects->find($request->del);
     if ($project) {

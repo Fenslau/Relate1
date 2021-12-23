@@ -9,6 +9,7 @@ use \VK\Client\VKApiClient;
 class CommentsController extends Controller
 {
     public function get(Request $request) {
+      if ($request->ajax() AND empty(session('vkid'))) return response()->json(array('success' => false));
       $info = $items = array();
       $event_url = str_replace('https://vk.com/wall', '', $request->event_url);
   		$event_url = explode('_', $event_url);

@@ -9,6 +9,7 @@ use App\Models\Stream\Links;
 class UserlinkController extends Controller
 {
       public function add(Request $request) {
+        if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
         if (empty($request->link_name)) return back()->with('error', 'Задайте какое-нибудь имя папки.');
         $links = new Links();
         $link = $links->where('vkid', session('vkid'))->where('project_name', $request->project_name)->pluck('link_name')->toArray();
@@ -22,7 +23,4 @@ class UserlinkController extends Controller
           else return back()->with('error', 'Папка с таким именем уже существует');
         }
 
-      public function del(Request $request) {
-
-      }
 }

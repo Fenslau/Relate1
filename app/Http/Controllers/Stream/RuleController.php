@@ -12,6 +12,7 @@ use App\Models\Stream\StreamKey;
 class RuleController extends Controller
 {
     public function add(Request $request) {
+      if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
       $stream = new Streamkey();
       $stream = $stream->find(1);
       if (empty($request->project_name) OR $request->project_name == '#') return back()->with('error', 'Сначала выберите проект из списка или создайте новый');
@@ -138,6 +139,7 @@ class RuleController extends Controller
 
 
     public function edit(Request $request) {
+      if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
       if (session('demo')) return back()->with('error', 'В демо-режиме нельзя изменять правила');
       $projects = new Projects();
       $stream = new Streamkey();

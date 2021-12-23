@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\MainController@main')
 ->name('home');
 
-Route::post('/', 'App\Http\Controllers\MainController@search')
+Route::post('/search', 'App\Http\Controllers\MainController@search')
 ->name('search');
 
 Route::post('/groupsearch', 'App\Http\Controllers\GroupSearchController@search')
@@ -102,6 +102,9 @@ Route::post('/stream/del-project', 'App\Http\Controllers\Stream\ProjectControlle
 Route::post('/stream/del-file', 'App\Http\Controllers\Stream\ProjectController@delFile')
 ->name('stream-del-file');
 
+Route::get('/stream/dublikat', 'App\Http\Controllers\Stream\DublikatController@get')
+->name('dublikat');
+
 Route::get('/stream/{project_name?}', 'App\Http\Controllers\Stream\PostController@main')
 ->name('post');
 
@@ -134,9 +137,6 @@ Route::post('/stream/checkbox/{check_name}', 'App\Http\Controllers\Stream\CheckC
 
 Route::post('/stream/comments', 'App\Http\Controllers\Stream\CommentsController@get')
 ->name('comments');
-
-Route::get('/dublikat', 'App\Http\Controllers\Stream\DublikatController@get')
-->name('dublikat');
 
 
 Route::post('/qiwi_request', 'App\Http\Controllers\QiwiRequestController@confirm')

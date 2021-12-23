@@ -142,6 +142,10 @@ class Groups {
       echo $exception->getMessage()."\n";
       die;
     }
+    catch (\VK\Exceptions\VKClientException  $exception) {
+      echo $exception->getMessage()."\n";
+      die;
+    }
     if (!empty($group_ids2)) {
       $params['group_ids'] = $group_ids2;
       try {

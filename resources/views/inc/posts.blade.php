@@ -127,11 +127,9 @@ class="">
 
   				<input id="{{ $item['id'] }}_flag" class="d-none check_flag check" type="checkbox" {{ ($item['check_flag'] == 1 ? "checked":"") }} name="{{ $item['id'] }}" url="flag">
           <label for="{{ $item['id'] }}_flag" data-toggle="tooltip" title="В избранное" class="mx-1 m-0 check_flag cursor-pointer"><i class="fa fa-star"></i></label>
-          @if (empty($dublikat_render))
+
           <span class="text-danger font-weight-bold">{{ $items->firstItem()+$loop->index }}</span>
-          @else
-          <span class="text-danger font-weight-bold">{{ $loop->iteration }}</span>
-          @endif
+
         </div>
         <div class="border-left border-warning border-3" id="dublikat_{{ $item['id'] }}"></div>
         <div class="p-0 card-body">

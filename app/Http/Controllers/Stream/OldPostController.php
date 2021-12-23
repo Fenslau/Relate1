@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 class OldPostController extends Controller
 {
     public function add($project_name, Request $request) {
+      if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
       if ($request->get_old_stop) {
         $rules = Projects::select('*', DB::raw("CONCAT (vkid, '', rule) AS rule_tag"))->where('vkid', session('vkid'))->where('project_name', $project_name)->whereNull('old')->whereNotNull('rule')->pluck('rule_tag')->toArray();
         OldPosts::whereIn('user', $rules)->delete();

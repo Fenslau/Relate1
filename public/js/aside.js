@@ -19,7 +19,7 @@ $(document).ready(function () {
         'checked': _this.prop('checked')
       },
       success: function success(data) {
-        if (data.success) {
+        if (data.success && data.success != 'true') {
           $('.toast-header').addClass('bg-success');
           $('.toast-header').removeClass('bg-danger');
           $('.toast-body').html(data.success);
@@ -50,7 +50,7 @@ $(document).ready(function () {
         'value': this.value
       },
       success: function success(data) {
-        if (data.success) {
+        if (data.success && data.success != 'true') {
           $('.toast-header').addClass('bg-success');
           $('.toast-header').removeClass('bg-danger');
           $('.toast-body').html(data.success);
@@ -89,7 +89,7 @@ $(document).ready(function () {
         _this.find('.spinner-border-sm').removeClass('d-none');
       },
       success: function success(data) {
-        if (data.success) {
+        if (data.success && data.success != 'true') {
           $('.toast-header').addClass('bg-success');
           $('.toast-header').removeClass('bg-danger');
           $('.toast-body').html(data.success);
@@ -121,7 +121,7 @@ $(document).ready(function () {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         type: 'GET',
-        url: '/dublikat',
+        url: '/stream/dublikat',
         data: {
           'id': this.name
         },

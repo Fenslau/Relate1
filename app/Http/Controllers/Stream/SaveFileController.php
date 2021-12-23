@@ -9,6 +9,7 @@ use App\Models\Stream\FileXLS;
 class SaveFileController extends Controller
 {
     public function main($project_name, Request $request) {
+      if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
       $file = new FileXLS();
 
       $file->vkid = session('vkid');

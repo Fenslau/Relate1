@@ -37,6 +37,7 @@ class AuthController extends Controller
     $client_secret = env('CLIENT_SECRET');
     $redirect_uri = 'http://lara.sarby.ru/vk-auth-code';
     $code = Request::input('code');
+    if (empty($code)) return redirect()->route(Request::input('state'));
     try {
       $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
       if (!empty($response['access_token'])) {
