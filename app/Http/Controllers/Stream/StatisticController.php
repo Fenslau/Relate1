@@ -210,12 +210,15 @@ class StatisticController extends Controller
       elseif (!empty($request->flag)) $info['rule'] = 'Избранное';
       elseif (!empty($request->trash)) $info['rule'] = 'Корзина';
 
-      $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', $vkid)->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['']);
-      $ignore_list = Authors::whereIn('author_id', $ignore_list)->pluck('name', 'author_id');
-
-
-        $returnHTML = view('streaming.statistic', ['request' => $request, 'info' => $info, 'stat' => $stat, 'ages' => $ages, 'full_age' => $full_age, 'region_count' => $region_count, 'mos' => mos, 'spb' => spb, 'region_quantity' => region_quantity, 'region_score' => $region_score, 'other_regions' => $other_regions, 'city_score' => $city_score, 'country_score' => $country_score, 'forein_city_score' => $forein_city_score, 'country_count' => $country_count, 'country_score1' => $country_score1, 'weight_cloud' => $weight_cloud, 'weight_tag' => $weight_tag, 'author_scores' => $author_score, 'ignore_list' => $ignore_list, 'period_stat' => $period_stat])->render();
+        $returnHTML = view('streaming.statistic', ['request' => $request, 'info' => $info, 'stat' => $stat, 'ages' => $ages, 'full_age' => $full_age, 'region_count' => $region_count, 'mos' => mos, 'spb' => spb, 'region_quantity' => region_quantity, 'region_score' => $region_score, 'other_regions' => $other_regions, 'city_score' => $city_score, 'country_score' => $country_score, 'forein_city_score' => $forein_city_score, 'country_count' => $country_count, 'country_score1' => $country_score1, 'weight_cloud' => $weight_cloud, 'weight_tag' => $weight_tag, 'author_scores' => $author_score, 'period_stat' => $period_stat])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
+    }
+
+    public function ignoreList($project_name) {
+      $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', session('vkid'))->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['']);
+      $ignore_list = Authors::whereIn('author_id', $ignore_list)->pluck('name', 'author_id');
+      $returnHTML = view('inc.ignore-list', ['ignore_list' => $ignore_list])->render();
+      return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
 
     public function delIgnore ($project_name, Request $request) {
@@ -224,7 +227,7 @@ class StatisticController extends Controller
 
       Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNull('rule')->update(['ignore_authors' => implode(',', $ignore_list)]);
 
-      return response()->json(array('success' => 'Автор <b>'.$name.'</b> удалён из игнор-листа. Список авторов в игнор-листе обновится после <a class="cursor-pointer text-link" onclick="location.reload();">перезагрузки</a> страницы'));
+      return response()->json(array('success' => 'Автор <b>'.$name.'</b> удалён из игнор-листа'));
     }
 
 
@@ -239,7 +242,7 @@ class StatisticController extends Controller
       if ($request->ignore) {
         $ignore_list = array_unique(array_merge($ignore_list, $author_id));
         Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNull('rule')->update(['ignore_authors' => implode(',', $ignore_list)]);
-        return response()->json(array('success' => 'Автор'.(count($name)>1?"ы":"").' <b>'.implode(', ', $name).'</b> добавлен'.(count($name)>1?"ы":"").' в игнор-лист. Список авторов в игнор-листе обновится после <a class="cursor-pointer text-link" onclick="location.reload();">перезагрузки</a> страницы'));
+        return response()->json(array('success' => 'Автор'.(count($name)>1?"ы":"").' <b>'.implode(', ', $name).'</b> добавлен'.(count($name)>1?"ы":"").' в игнор-лист'));
       }
       return response()->json(array('success' => 'Автор'.(count($name)>1?"ы":"").' <b>'.implode(', ', $name).'</b> удален'.(count($name)>1?"ы":"").' из базы данных вместе с '.(count($name)>1?"их":"его").' записями. Но посты от '.(count($name)>1?"них":"него").' всё ещё будут приходить в дальнейшем'));
     }

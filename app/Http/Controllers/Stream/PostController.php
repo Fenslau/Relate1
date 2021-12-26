@@ -34,11 +34,10 @@ class PostController extends Controller
         if ($items->total() > 0) $info['found'] = 'Всего нашлось <b>'.num::declension ($items->total(), array('</b> запись', '</b> записи', '</b> записей'));
 
         $items = $this->dublikatUnset($items);
-
-        $dublikat_render = 0;
     } else {
-        $dublikat_render = 1;
-      }
+        if (count($items) > 0) $info['found'] = 'Всего нашлось <b>'.num::declension (count($items), array('</b> автор', '</b> автора', '</b> авторов'));
+    }
+      $dublikat_render = 0;
       $result['items'] = $post_control->authorName($items);
       $projects = new Projects();
       $stream = new StreamData();
@@ -249,8 +248,8 @@ class PostController extends Controller
 
     public function ajaxVideoLikes (Request $request) {
       $items = $result['post'] = $result['video'] = array();
+      if (empty(session('vkid'))) return response()->json( array('success' => false));
 
-    //  $items = json_decode($request->items);
       $id = unserialize($request->id);
       $post_id = unserialize($request->post_id);
       $author_id = unserialize($request->author_id);
@@ -271,9 +270,11 @@ class PostController extends Controller
       $post_control = new GetPostInfo();
       $result = $post_control->vkGet($items);
 
-      $result['post'] = json_encode($result['post']);
-      $result['video'] = json_encode($result['video']);
-      return response()->json( array('success' => true, 'post' => $result['post'], 'video' => $result['video']) );
+      if ($result) {
+        $result['post'] = json_encode($result['post']);
+        $result['video'] = json_encode($result['video']);
+        return response()->json(array('success' => 'yes', 'post' => $result['post'], 'video' => $result['video']) );
+      } else return response()->json(array('success' => false));
     }
 
     public function dublikatUnset($items) {

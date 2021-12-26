@@ -5,6 +5,7 @@ use \VK\Client\VKApiClient;
 
 class GetPostInfo{
   public function vkGet($items) {
+      if (empty(session('vkid'))) return FALSE;
       $vk = new VKApiClient();
       try {
         $post = $video = array();
@@ -26,7 +27,7 @@ class GetPostInfo{
         );
         if(!empty($posts)) $posts = $vk->wall()->getById(session('token'), $params);
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
-          if($request->ajax()) return response()->json( array('success' => false));
+          if(empty($request) OR $request->ajax()) return FALSE;
           else return redirect()->route('stream');
       }
 

@@ -58,6 +58,7 @@ class CheckController extends Controller
       }
 
       if ($check_name == 'cut') {
+        if (empty(session('vkid'))) return response()->json(array('success' => false));
           $projects = new Projects;
           if ($request->checked == 'true') {
             $message = 'Длинные посты будут спрятаны под ссылку "Развернуть". Эффект будет после <a class="cursor-pointer text-link" onclick="location.reload();">перезагрузки</a> страницы';

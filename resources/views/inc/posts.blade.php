@@ -339,8 +339,7 @@ class="">
 
             },
             success: function (data) {
-              //var data = $.parseJSON(data);
-                if(data.success == true) {
+                if(data.success == 'yes') {
                   $.each(JSON.parse(data.post), function(key, value) {
                       const entries = Object.entries(value)
                       entries.forEach(function(entry) {

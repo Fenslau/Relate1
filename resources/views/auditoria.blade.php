@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block', 'Группы ВК с похожей ЦА')
+@section('description-block', 'В каких еще группах сидит ваша целевая аудитория? Поиск групп похожих на заданные')
 
 @section('content')
 

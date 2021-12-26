@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block', 'Сбор подписчиков групп ВК')
+@section('description-block', 'Сбор подписчиков групп ВК и информации о них')
 
 @section('content')
 

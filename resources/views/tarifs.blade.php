@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block', 'Тарифы ВКТОППОСТ')
+@section('description-block', 'Тарифы на услуги прощадки ВКТОППОСТ')
 
 @section('content')
 
@@ -221,6 +222,41 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+      @if (session('vkid') == 151103777 || session('vkid') == 409899462)
+      <div class="m-auto d-flex flex-md-nowrap flex-wrap justify-content-center align-content-around text-center">
+        <div class="tarif">
+            <div class="tarif-name">
+                1296 Секунд
+            </div>
+            <div class="tarif-text">
+                <ul>
+                    <li>Тестовая оплата 1р. для админов</li>
+                    <li>Продлевает дату оплаты на 1296 секунд</li>
+                </ul>
+            </div>
+            <div class="tarif-bottom">
+                <form action="{{ route('tarif-choose') }}" accept-charset="utf-8" method="POST">
+                  @csrf
+                  <input type="hidden" name="amount" value="1">
+                  <input type="hidden" name="comment" value="Тестовая оплата. После оплаты вернитесь на сайт https://vktoppost.ru самостоятельно">
+                  <input type="hidden" name="vkid" value="{{ session('vkid') }}">
+                  @if(Session::has('token'))
+                  <input class="kupit" type="submit" name="submit1" value="Купить">
+                  @else
+                  <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
+                  <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit1" value="Купить">
+                  </span>
+                  @endif
+                </form>
+                <div class="price">
+                    1₽
+                </div>
+            </div>
+        </div>
+      </div>
+      @endif
     </div>
   </div>
 

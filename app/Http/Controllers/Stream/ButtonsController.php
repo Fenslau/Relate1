@@ -13,7 +13,7 @@ use \App\MyClasses\MyRules;
 class ButtonsController extends Controller
 {
   public function check($button_name, Request $request) {
-
+    if (empty(session('vkid'))) return response()->json(array('success' => FALSE));
     if ($button_name == 'ruleErasePosts') {
       $rule_tag	= $request->tag;
       if (session('demo')) return response()->json(array('success' => 'Ограничение демо-режима для правила <b>'.$rule_tag));

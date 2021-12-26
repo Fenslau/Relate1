@@ -1007,13 +1007,35 @@
                 sanitize: false,
                 title: `Список игнорируемых авторов:`,
                 content:
-                ` @forelse ($ignore_list as $id => $name)
-                    <div class="m-1 d-flex justify-content-between align-items-center"><span class="group-name text-truncate text-nowrap">{{ $name }}</span> <i data-toggle="tooltip" title="Убрать из игнор-листа" ignoreid="{{ $id }}" class="text-danger cursor-pointer fa fa-times"></i></div>
-                  @empty
-                  <p>Вы пока никого не заигнорили</p>
-                  @endforelse
-                  `
+                `<div id="ignore-list"></div>`
                 })
+            });
+
+            $('body').on('click', '#ignored_authors_btn', function() {
+                $.ajax({
+                  headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                  type: 'POST',
+                  url: '{{ route('ignore-list', $info['project_name']) }}',
+
+                  success: function(data){
+                    if (data.success) {
+                      $('#ignore-list').html(data.html);
+                      var body = document.getElementsByTagName('body')[0];
+                        var event = new CustomEvent("scroll", {
+                          detail: {
+                            scrollTop: 1
+                          }
+                        });
+                        window.dispatchEvent(event);
+
+                    } else {
+                      $('.toast-header').addClass('bg-danger');
+                      $('.toast-header').removeClass('bg-success');
+                      $('.toast-body').html('Что-то пошло не так. Попробуйте ещё раз или сообщите нам');
+                      $('.toast').toast('show');
+                    }
+                  }
+                });
             });
 
             $('body').on('click', '.fa-times', function() {

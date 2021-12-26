@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block', 'Сбор упоминаний о бренде ВК')
+@section('description-block', 'Вы можете собрать посты или комментарии ВКонтакте о вашей фирме или бренде в реальном времени')
 
 @section('content')
 

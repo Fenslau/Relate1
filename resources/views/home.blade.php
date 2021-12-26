@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block', 'Поиск ТОП-групп ВК')
+@section('description-block', 'Топ группы ВК + поиск по группам из разных городов. Поиск групп ВК по открытой стене. Статистика посетителей групп ВКонтакте')
 
 @section('content')
 

@@ -124,6 +124,9 @@ Route::post('/stream/{project_name?}/statistic', 'App\Http\Controllers\Stream\St
 ->name('statistic');
 Route::post('/stream/{project_name?}/statistic/period', 'App\Http\Controllers\Stream\StatisticController@period')
 ->name('period-stat');
+
+Route::post('/stream/{project_name?}/statistic/ignore-list', 'App\Http\Controllers\Stream\StatisticController@ignoreList')
+->name('ignore-list');
 Route::post('/stream/{project_name?}/statistic/del-from-ignore', 'App\Http\Controllers\Stream\StatisticController@delIgnore')
 ->name('del-from-ignore');
 Route::post('/stream/{project_name?}/statistic/add-to-ignore', 'App\Http\Controllers\Stream\StatisticController@addIgnore')

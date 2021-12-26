@@ -10,7 +10,7 @@ $(document).ready(function () {
         data: {'name' : this.name, 'checked' : _this.prop('checked')},
 
         success: function (data) {
-            if(data.success && data.success != 'true') {
+            if(data.success && data.success !== true) {
               $('.toast-header').addClass('bg-success');
               $('.toast-header').removeClass('bg-danger');
               $('.toast-body').html(data.success);
@@ -41,7 +41,7 @@ $(document).ready(function () {
         data: {'name' : this.name, 'value' : this.value},
 
         success: function (data) {
-            if(data.success && data.success != 'true') {
+            if(data.success && data.success !== true) {
               $('.toast-header').addClass('bg-success');
               $('.toast-header').removeClass('bg-danger');
               $('.toast-body').html(data.success);
@@ -77,7 +77,7 @@ $(document).ready(function () {
                   _this.find('.spinner-border-sm').removeClass('d-none');
         },
         success: function (data) {
-            if(data.success && data.success != 'true') {
+            if(data.success && data.success !== true) {
               $('.toast-header').addClass('bg-success');
               $('.toast-header').removeClass('bg-danger');
               $('.toast-body').html(data.success);

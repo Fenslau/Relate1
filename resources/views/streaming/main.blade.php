@@ -332,8 +332,8 @@
             <div class="form-group col">
                 <input type="hidden" name="stat" value="1">
                 <input type="hidden" name="rule" value="{{ $request->rule }}">
-                <button class="my-2 d-inline-block btn btn-sm btn-primary vk-top-bg text-white filter-form-submit" type="submit" name="apply_filter" value = "Показать записи"><i class="icon far fa-newspaper"></i><span class="spinner-border spinner-border-sm d-none"></span> Показать посты</button>
-                <button class="my-2 d-inline-block btn btn-sm btn-info filter-form-submit" type="submit" name="apply_filter" value = "Собрать авторов"><i class="icon fas fa-user-edit"></i><span class="spinner-border spinner-border-sm d-none"></span> Авторов</button>
+                <button class="my-2 d-inline-block btn btn-sm btn-primary vk-top-bg text-white filter-form-submit text-nowrap" type="submit" name="apply_filter" value = "Показать записи"><i class="icon far fa-newspaper"></i><span class="spinner-border spinner-border-sm d-none"></span> Показать посты</button>
+                <button class="my-2 d-inline-block btn btn-sm btn-info filter-form-submit text-nowrap" type="submit" name="apply_filter" value = "Собрать авторов"><i class="icon fas fa-user-edit"></i><span class="spinner-border spinner-border-sm d-none"></span> Авторов</button>
                 <p class="lh-md"><small>Фильтры применяются либо ко всему проекту, либо к отдельному правилу (смотря где вы находитесь, когда их включаете), за исключением папки "Доп.посты". Записи оттуда не входят ни в какие выборки</small></p>
             </div>
           </form>
