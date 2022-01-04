@@ -50,8 +50,8 @@ class PostController extends Controller
 
         $cities = $stream->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(DB::raw('city, city_id, COUNT(*) as cnt'))->whereIn('user', array_column($rules, 'rule_tag'))->whereNotNull('city')->orderBy('cnt', 'desc')->groupBy('city_id')->pluck('city', 'city_id')->toArray();
 
-        $mindate = date('Y-m-d', $dates['mindate']);
-        $maxdate = date('Y-m-d', $dates['maxdate']);
+        if (!empty($dates['mindate'])) $mindate = date('Y-m-d', $dates['mindate']); else $mindate = date("Y-m-d", date('U'));
+        if (!empty($dates['maxdate'])) $maxdate = date('Y-m-d', $dates['maxdate']); else $maxdate = date("Y-m-d", date('U'));
       } else {
         $mindate = date('Y-m-d', min(array_column($rules, 'mindate')));
         $maxdate = date('Y-m-d', max(array_column($rules, 'maxdate')));

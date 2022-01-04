@@ -83,7 +83,7 @@ class AuthController extends Controller
         ));
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
           Session::flush();
-          return back()->with('info', 'Ваша сессия устарела. Залогиньтесь заново');
+          return back()->with('danger', 'Ваша сессия устарела. Залогиньтесь заново');
       }
       return (object)($user_profile[0]);
     }

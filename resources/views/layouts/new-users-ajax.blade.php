@@ -27,7 +27,6 @@
               <th>id</th>
               <th></th>
               <th>Имя</th>
-              <th>Фамилия</th>
               <th>Пол</th>
               <th>Возраст</th>
               <th>Город</th>
@@ -44,8 +43,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td><a rel="nofollow" target="_blank" href="https://vk.com/{{ $item['domain'] }}">{{ $item['id'] }}</a></td>
                 <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_100'] }}" /></td>
-                <td>{{ $item['first_name'] }}</td>
-                <td>{{ $item['last_name'] }}</td>
+                <td>{{ $item['first_name'] }} {{ $item['last_name'] }}</td>
                 <td>{{ $item['sex'] }}</td>
                 <td>{{ $item['bdate'] }}</td>
                 <td>{{ $item['city']['title'] }}</td>
@@ -69,7 +67,6 @@
               <th>id</th>
               <th></th>
               <th>Имя</th>
-              <th>Фамилия</th>
               <th>Пол</th>
               <th>Возраст</th>
               <th>Город</th>
@@ -86,8 +83,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td><a rel="nofollow" target="_blank" href="https://vk.com/{{ $item['domain'] }}">{{ $item['id'] }}</a></td>
                 <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_100'] }}" /></td>
-                <td>{{ $item['first_name'] }}</td>
-                <td>{{ $item['last_name'] }}</td>
+                <td>{{ $item['first_name'] }} {{ $item['last_name'] }}</td>
                 <td>{{ $item['sex'] }}</td>
                 <td>{{ $item['bdate'] }}</td>
                 <td>{{ $item['city']['title'] }}</td>
