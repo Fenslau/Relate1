@@ -987,6 +987,7 @@
   <div class="row">
       <div class="col-md-12 my-5">
         <h4 class="text-center">Список активных авторов</h4>
+        <p class="text-center">Всех авторов можно собрать через Фильтры, кнопка Авторы</p>
         <p class="activnost alert alert-info">Нажмите на цифру в столбике "Активность", чтобы увидеть все активные посты этого автора</p>
         <div class="my-2 p-1 d-flex border rounded justify-content-between align-items-center">
           <div class="form-inline">
@@ -1199,7 +1200,7 @@
                           _this.find('.icon').addClass('d-inline-block');
                           _this.find('.spinner-border-sm').addClass('d-none');
         								$("#posts").html(data.html);
-        								window.location = "#begin";
+        								window.location = "#posts";
         							} else {
                         $('.toast-header').addClass('bg-danger');
                         $('.toast-header').removeClass('bg-success');

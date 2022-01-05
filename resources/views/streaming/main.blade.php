@@ -185,7 +185,7 @@
                             .prop('disabled', false)
                             .find('.icon').removeClass('d-none');
                             _this.find('.spinner-border-sm').addClass('d-none');
-                          $("main").html(data.html);
+                          $(".main").html(data.html);
                         } else {
                           $('.toast-header').addClass('bg-danger');
                           $('.toast-header').removeClass('bg-success');
@@ -347,7 +347,7 @@
 
 </div>
 
-<div class="my-3 container-xl">
+<div class="my-3 container-xl main">
 
   <div class="row">
     <div class="col-md-9">

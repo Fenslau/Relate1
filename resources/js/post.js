@@ -17,7 +17,7 @@ $(document).ready(function () {
           success: function (data) {
               if(data.success) {
                 $('#posts').html(data.html);
-                window.location = "#begin";
+                window.location = "#posts";
                 _this.prop('disabled', false)
                 .find('.icon').removeClass('d-none');
                 _this.find('.spinner-border-sm').addClass('d-none');

@@ -873,6 +873,50 @@ $('body').tooltip({
 $(document).ready(function () {
   $('[data-toggle="popover"]').popover();
 });
+
+function soundClick() {
+  var audio = new Audio();
+  audio.src = '/sounds/ding.mp3';
+  audio.autoplay = true;
+}
+
+var old_title = document.title;
+
+var changeTitle = function changeTitle() {
+  this.title = function () {
+    var title = document.title;
+    document.title = title == "Сбор окончен" ? old_title : "Сбор окончен";
+  };
+};
+
+var timerTitle = new changeTitle();
+
+changeTitle.prototype.start = function () {
+  this.timer = setInterval(this.title, 1000);
+};
+
+changeTitle.prototype.stop = function () {
+  clearInterval(this.timer);
+};
+
+window.onfocus = function () {
+  timerTitle.stop();
+  document.title = old_title;
+};
+
+var select_options = 0;
+$(document).ready(function () {
+  $(document).on('click', '.select_options', function (e) {
+    if ($(this).prop('checked')) select_options++;else select_options--;
+
+    if ($(this).prop('checked') && select_options > 2) {
+      $('.toast-header').addClass('bg-danger');
+      $('.toast-header').removeClass('bg-success');
+      $('.toast-body').html('Если выбрать много опций, которые уточняют подписчиков, их может найтись мало, или не найтись вовсе');
+      $('.toast').toast('show');
+    }
+  });
+});
 $(document).ready(function () {
   $(document).on('click', '#js-load', function (e) {
     e.preventDefault();
@@ -985,10 +1029,20 @@ $(document).ready(function () {
               }
 
               if (process1 == 'new-users') {
-                $('.alert-success:not(.w-100)').addClass('d-none');
-                $('.search-form').addClass('d-none');
+                $('.alert-success:not(.w-100)').addClass('d-none'); // $('.search-form').addClass('d-none');
+
                 $('#table-search .search-form').removeClass('d-none');
               }
+
+              if (process1 == 'getusers' || process1 == 'auditoria') {
+                if (document.hidden) {
+                  timerTitle.start();
+                }
+
+                soundClick();
+              }
+
+              window.location = "#table-search";
             } else {
               $('.toast-header').addClass('bg-danger');
               $('.toast-header').removeClass('bg-success');
@@ -1094,12 +1148,18 @@ $(document).ready(function () {
 
           _this.prop('disabled', false).find('.fa-search').removeClass('d-none');
 
-          _this.find('.spinner-border-sm').addClass('d-none');
+          _this.find('.spinner-border-sm').addClass('d-none'); // $('#new-search').removeClass('d-none');
 
-          $('#new-search').removeClass('d-none');
-          $('#table-search').removeClass('d-none');
-          $('#js-load').addClass('d-none');
-          $('.search-form').addClass('d-none');
+
+          $('#table-search').removeClass('d-none'); // $('#js-load').addClass('d-none');
+          // $('.search-form').addClass('d-none');
+
+          if (document.hidden) {
+            timerTitle.start();
+          }
+
+          soundClick();
+          window.location = "#table-search";
         } else {
           $('.toast-header').addClass('bg-danger');
           $('.toast-header').removeClass('bg-success');

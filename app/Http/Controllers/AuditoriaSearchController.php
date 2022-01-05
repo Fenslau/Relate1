@@ -49,8 +49,9 @@ class AuditoriaSearchController extends Controller
     }
 
     if (empty($list_users['count'])) $info['warning'] = 'Невозможно определить подписчиков группы';
-    elseif ($list_users['count'] > 31000) $info['warning'] = 'Слишком большая группа, допускаются группы, не более 31 000 подписчиков';
+    elseif ($list_users['count'] > 100000) $info['warning'] = 'Слишком большая исходная группа, допускаются группы, не более 100 000 подписчиков';
     if (isset($info['warning']) OR $info['found'] === NULL) {
+      $info['found'] = NULL;
       $returnHTML = view('layouts.auditoria-ajax', ['items' => $items, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
@@ -77,11 +78,16 @@ class AuditoriaSearchController extends Controller
 					}
 					$code_1 = $code_1.'];';
 
-					$stat1 = $vk->getRequest()->post('execute', $access_token, array(
+retry:   try {
+	       $stat1 = $vk->getRequest()->post('execute', $access_token, array(
             'code' 			    => $code_1,
             'access_token'  => $access_token,
             'v' 			      => '5.95'
-          ));
+          ));}
+          catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+            echo 'Аудитория '.$exception->getMessage()."\n";
+            goto retry;
+          }
 
 			foreach ($stat1 as $item)
 				if (isset($item['items'])) foreach ($item['items'] as $item1)

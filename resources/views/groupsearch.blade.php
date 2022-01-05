@@ -17,22 +17,22 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="city"><h3 class="h5 font-weight-bold text-uppercase">Город</h3>
-            Название города нужно вводить, если вы ищете группы, ЗАРЕГИСТРИРОВАННЫЕ в каком-то конкретном городе. Если город - это часть названия группы, при необходимости введите его в строку "название группы", а это поле оставьте пустым</label>
-          </div>
-          <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="city" type="text" name="city" value="{{ old('city') }}">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="name"><h3 class="h5 font-weight-bold text-uppercase">Название группы</h3>
             Введите название группы или его часть в виде ключевого слова для поиска, Если вы хотите найти группы, указавшие город в своем назваии, то вводите название города в этой строке</label>
           </div>
           <div class="col-md-4 form-inline w-100 flex-nowrap align-items-baseline">
               <input class="w-100 mt-3 mb-5 form-control" id="name" type="text" name="name" value="{{ old('name') }}">
               <a class="mx-1 cursor-pointer text-secondary" tabindex="0" data-toggle="popover" data-placement="top" data-trigger="focus" title="Как пользоваться:" data-content="Этот поиск работает по точному соответствию символов в части навания. Здесь не работают звёздочки (*) или автоматические склонения. Пример: если вам нужны результаты, которые включают (работа, работой, работе), то пишите просто 'работ'"><i class="far fa-question-circle"></i></a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+            <label for="city"><h3 class="h5 font-weight-bold text-uppercase">Город</h3>
+            Название города нужно вводить, если вы ищете группы, ЗАРЕГИСТРИРОВАННЫЕ в каком-то конкретном городе. Если город - это часть названия группы, при необходимости введите его в строку "название группы", а это поле оставьте пустым</label>
+          </div>
+          <div class="col-md-4">
+              <input class="mt-3 mb-5 form-control" id="city" type="text" name="city" value="{{ old('city') }}">
           </div>
         </div>
 

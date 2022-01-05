@@ -54,7 +54,7 @@ https://vk.com/club1
             <label for="site"><h3 class="h5 font-weight-bold text-uppercase">Сайт</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан сайт</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="site" type="checkbox" name="site" value="site">
+              <input class="mt-3 mb-5 form-control select_options" id="site" type="checkbox" name="site" value="site">
           </div>
         </div>
 
@@ -63,7 +63,7 @@ https://vk.com/club1
             <label for="contacts"><h3 class="h5 font-weight-bold text-uppercase">Контакты</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указано что-нибудь в контактах (обычно это телефон)</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="contacts" type="checkbox" name="contacts" value="contacts">
+              <input class="mt-3 mb-5 form-control select_options" id="contacts" type="checkbox" name="contacts" value="contacts">
           </div>
         </div>
 
@@ -72,7 +72,7 @@ https://vk.com/club1
             <label for="social"><h3 class="h5 font-weight-bold text-uppercase">Профили соц-сетей</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан хотя-бы один профиль из соц-сетей</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="social" type="checkbox" name="social" value="social">
+              <input class="mt-3 mb-5 form-control select_options" id="social" type="checkbox" name="social" value="social">
           </div>
         </div>
 
@@ -81,7 +81,7 @@ https://vk.com/club1
             <label for="relation"><h3 class="h5 font-weight-bold text-uppercase">Отношения</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, которые указали, что состоят с кем-то в отношениях</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="relation" type="checkbox" name="relation" value="relation">
+              <input class="mt-3 mb-5 form-control select_options" id="relation" type="checkbox" name="relation" value="relation">
           </div>
         </div>
 
@@ -90,7 +90,7 @@ https://vk.com/club1
             <label for="half2"><h3 class="h5 font-weight-bold text-uppercase">Вторая половина</h3><small class="lh-sm d-inline-flex">Данный параметр собирается, если пользователь на своей стене указал с кем состоит в отношениях</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="half2" type="checkbox" name="half2" value="half2">
+              <input class="mt-3 mb-5 form-control select_options" id="half2" type="checkbox" name="half2" value="half2">
           </div>
         </div>
 
@@ -99,7 +99,7 @@ https://vk.com/club1
             <label for="bday"><h3 class="h5 font-weight-bold text-uppercase">День рождения</h3><small class="lh-sm d-inline-flex">Был или будет в ближайшие 14 дней</small></label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="bday" type="checkbox" name="bday" value="bday">
+              <input class="mt-3 mb-5 form-control select_options" id="bday" type="checkbox" name="bday" value="bday">
           </div>
         </div>
 
