@@ -75,11 +75,12 @@ $(document).ready(function () {
             url: url,
             data: $('#search-submit').serialize(),
             beforeSend: function () {
-              if (process1 == 'auditoria' || process1 == 'getusers' || process1 == 'new-users') {
-                $('.toast-header').addClass('bg-danger');
-                $('.toast-header').removeClass('bg-success');
-                $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
-                $('.toast').toast('show');
+              window.onbeforeunload = function() {
+                // $('.toast-header').addClass('bg-danger');
+                // $('.toast-header').removeClass('bg-success');
+                // $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
+                // $('.toast').toast('show');
+                return false;
               }
               _this
                 .prop('disabled', true)
@@ -125,6 +126,7 @@ $(document).ready(function () {
             },
             success: function (data) {
               //var data = $.parseJSON(data);
+                window.onbeforeunload = null;
                 if(data.success == true) {
                     $('#table-search').html(data.html);
                     _this
@@ -173,11 +175,12 @@ $(document).ready(function () {
         url: '/follow-group',
         data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value,
         beforeSend: function () {
-                if (process1 == 'new-users') {
-                  $('.toast-header').addClass('bg-danger');
-                  $('.toast-header').removeClass('bg-success');
-                  $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
-                  $('.toast').toast('show');
+                window.onbeforeunload = function() {
+                  // $('.toast-header').addClass('bg-danger');
+                  // $('.toast-header').removeClass('bg-success');
+                  // $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
+                  // $('.toast').toast('show');
+                  return false;
                 }
                 _this
                   .prop('disabled', true)
@@ -222,7 +225,8 @@ $(document).ready(function () {
             }
         },
         success: function (data) {
-          //var data = $.parseJSON(data);
+            window.onbeforeunload = null;
+            //var data = $.parseJSON(data);
             if(data.success == true) {
                 $('#table-search').html(data.html);
                 _this
