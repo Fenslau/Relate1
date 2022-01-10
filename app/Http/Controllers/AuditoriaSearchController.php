@@ -65,10 +65,11 @@ class AuditoriaSearchController extends Controller
       goto ex;
     }
     $list_users = explode(',', $list_users);
-
+    $message = 'Идёт сбор информации о группах подписчиков';
+    if (count($list_users) > 30000) $message .= '.<br /> Исходная группа велика, процесс может занять часы';
     $count25 = intdiv(count($list_users), 25);
     $array_groups = array();
-    $progress = new GetProgress(session('vkid'), 'auditoria', 'Идёт сбор информации о группах подписчиков', $count25, 1);
+    $progress = new GetProgress(session('vkid'), 'auditoria', $message, $count25, 1);
     for ($j=0; $j<=$count25; $j++) {
 			$new_users1=array_slice($list_users,($j*25), 25);
 
@@ -87,6 +88,12 @@ retry:   try {
           catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
             echo 'Аудитория '.$exception->getMessage()."\n";
             goto retry;
+          }
+          catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+            $info['found'] = NULL;
+            $info['warning'] = 'Истёк срок действия токена ВК, авторизуйтесь заново';
+            $returnHTML = view('layouts.auditoria-ajax', ['items' => $items, 'info' => $info])->render();
+            return response()->json( array('success' => true, 'html'=>$returnHTML) );
           }
 
 			foreach ($stat1 as $item)
@@ -125,7 +132,7 @@ retry:   try {
     $group_get = $vk->groups()->getById($access_token, array(
         'group_ids'		 => $group_ids,
         'lang'   		   => 'ru',
-        'fields'    	=> 'site,verified,wall,city,market,members_count',
+        'fields'    	 => 'site,verified,wall,city,market,members_count',
         'v' 			     => '5.101'
     ));
 

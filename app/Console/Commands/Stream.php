@@ -43,13 +43,8 @@ class Stream extends Command
      */
     public function handle()
     {
-//  $keyword = 'rtt';
-//  $arr[1] = 'Rt??|fff??|rtt??';
-//
-// echo in_array($keyword, explode('|', str_replace('?', '', strtolower($arr[1]))));
-// die;
         $counter = 1;
-        main_cycle:
+main_cycle:
 
         $streamkey = new StreamKey();
         $info = $streamkey->find(1);
@@ -62,15 +57,13 @@ class Stream extends Command
 
         $client = new Client($url, $option);
         //	$client->setLogger(new EchoLog());
-
+cycle:
         try {
-        cycle:
-          $projects = new Projects();
-        	$ignore = $projects->whereNotNull('ignore_authors')->get()->toArray();
         	$info=$client->receive();
-
         	$info=json_decode ($info, true);
 
+          $projects = new Projects();
+        	$ignore = $projects->whereNotNull('ignore_authors')->get()->toArray();
         	if (!empty($info['error']))	print_r ($info);
         	if ($info['code'] == 100) {
 $time_start = microtime(true);
@@ -173,10 +166,11 @@ $time_start = microtime(true);
         	}
         	echo $counter.' '.round ($time, 3).' сек. '.strlen($data)."\n";
         	$counter++;
-        goto cycle;
+
         } catch (\WebSocket\ConnectionException $e) {
             echo "\n".$e;
         		goto main_cycle;
         }
+        goto cycle;
     }
 }

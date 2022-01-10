@@ -877,7 +877,7 @@ $(document).ready(function () {
 function soundClick() {
   var audio = new Audio();
   audio.src = '/sounds/ding.mp3';
-  audio.autoplay = true;
+  audio.play();
 }
 
 var old_title = document.title;
@@ -912,7 +912,7 @@ $(document).ready(function () {
     if ($(this).prop('checked') && select_options > 2) {
       $('.toast-header').addClass('bg-danger');
       $('.toast-header').removeClass('bg-success');
-      $('.toast-body').html('Если выбрать много опций, которые уточняют подписчиков, их может найтись мало, или не найтись вовсе');
+      $('.toast-body').html('VKToppost собирают только ту информацию, которую пользователи сами размещают в открытом доступе. Лишь 15% пользователей вконтакте полностью заполняют личную страницу. Выбирая 3 и более пункта, вы сильно уменьшаете количество пописчиков, которые полностью подходят под критерии поиска. <b>Совет: для лучшего результата увеличьте количество групп для сбора базы подписчиков или отметьте только наиболее важные критерии</b>');
       $('.toast').toast('show');
     }
   });
@@ -938,7 +938,13 @@ $(document).ready(function () {
           url: url,
           data: $('#search-submit').serialize(),
           beforeSend: function beforeSend() {
-            // далем кнопку недоступной и отображаем спиннер
+            if (process1 == 'auditoria' || process1 == 'getusers' || process1 == 'new-users') {
+              $('.toast-header').addClass('bg-danger');
+              $('.toast-header').removeClass('bg-success');
+              $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
+              $('.toast').toast('show');
+            }
+
             _this.prop('disabled', true).find('.fa-search').addClass('d-none');
 
             _this.find('.spinner-border-sm').removeClass('d-none');
@@ -1069,6 +1075,13 @@ $(document).ready(function () {
       url: '/follow-group',
       data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value,
       beforeSend: function beforeSend() {
+        if (process1 == 'new-users') {
+          $('.toast-header').addClass('bg-danger');
+          $('.toast-header').removeClass('bg-success');
+          $('.toast-body').html('Сбор будет остановлен, если вы уйдёте на другую страницу сайта');
+          $('.toast').toast('show');
+        }
+
         _this.prop('disabled', true).find('.fa-search').addClass('d-none');
 
         _this.find('.spinner-border-sm').removeClass('d-none');
