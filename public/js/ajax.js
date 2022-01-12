@@ -1050,8 +1050,8 @@ $(document).ready(function () {
               }
 
               if (process1 == 'new-users') {
-                $('.alert-success:not(.w-100)').addClass('d-none'); // $('.search-form').addClass('d-none');
-
+                $('.alert-success:not(.w-100)').addClass('d-none');
+                $('.search-form').addClass('d-none');
                 $('#table-search .search-form').removeClass('d-none');
               }
 

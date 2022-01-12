@@ -171,7 +171,14 @@ class GetUsers {
               if ($mode == 'getusers') {
                 goto ex;
               }
-              else return $items_users;
+              return $items_users;
+        }
+        catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+            $items_users[1001] = 'auth vk';
+            if ($mode == 'getusers') {
+              goto ex;
+            }
+            return $items_users;
         }
 
             if (!empty($list_users)) foreach ($list_users as $exec) {
@@ -302,9 +309,12 @@ class GetUsers {
                   }
 
               }
-            } elseif ($mode == 'getusers') {
+            } else {
                 $items_users[1001] = 'limit vk';
-                goto ex;
+                if ($mode == 'getusers') {
+                  goto ex;
+                }
+                return $items_users;
               }
           $progress->step();
       }

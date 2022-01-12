@@ -74,7 +74,7 @@ class NewUsersController extends Controller
 
           if (isset($users_array[1001]) AND is_array($users_array)) {
             if ($users_array[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
-            if ($list_users[1001] == 'auth vk')  $info['token'] = TRUE;
+            if ($users_array[1001] == 'auth vk')  $info['token'] = TRUE;
             if ($users_array[1001] == 'limit vk') $info['warning'] = 'Достигнут лимит ВК по сбору подписчиков групп, попробуйте через несколько часов';
             $info['found'] = NULL;
             goto ex;
@@ -117,7 +117,7 @@ class NewUsersController extends Controller
           $info['found'] = NULL;
           goto ex;
         }
-
+        unset($progress);
         $progress = new GetProgress ($vkid, 'new-users'.$rand, 'Идёт вычисление новых подписчиков', 1, 1);
         $list_users_old = explode(',', $list_users1['uid1']);
         $list_users_new = explode(',', $list_users2);
@@ -136,6 +136,7 @@ class NewUsersController extends Controller
 
         if (!empty($new_users) OR !empty($leave_users)) {
             $vk = new VKApiClient();
+            unset($progress);
             $progress = new GetProgress ($vkid, 'new-users'.$rand, 'Идёт подготовка файла Excel', 1, 1);
       			$writer = new XLSXWriter();
       			if ( $xlsx = SimpleXLSX::parse("storage/new-users/{$vkid}_{$request->id}.xlsx")) {
