@@ -22,7 +22,7 @@ class AuditoriaSearchController extends Controller
     $vk = new VKApiClient();
     $get_users = new GetUsers();
     $access_token = session('token');
-
+    $rand = $request->rand;
     $groupid = $get_users->groupId($request->group);
     if (empty($groupid)) $info['found'] = NULL;
     else {
@@ -69,7 +69,7 @@ class AuditoriaSearchController extends Controller
     if (count($list_users) > 30000) $message .= '.<br /> Исходная группа велика, процесс может занять часы';
     $count25 = intdiv(count($list_users), 25);
     $array_groups = array();
-    $progress = new GetProgress(session('vkid'), 'auditoria', $message, $count25, 1);
+    $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, $message, $count25, 1);
     for ($j=0; $j<=$count25; $j++) {
 			$new_users1=array_slice($list_users,($j*25), 25);
 
@@ -105,7 +105,7 @@ retry:   try {
 		}
 
     unset($progress);
-    $progress = new GetProgress(session('vkid'), 'auditoria', 'Идёт определение наиболее часто встречающихся групп...', 1, 1);
+    $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, 'Идёт определение наиболее часто встречающихся групп...', 1, 1);
 
     $popular = array_count_values($array_groups);
     $max = 2;
@@ -143,7 +143,7 @@ retry:   try {
     } else $limit = 500;
 
     unset($progress);
-    $progress = new GetProgress(session('vkid'), 'auditoria', 'Записывается файл Excel', 1, 1);
+    $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, 'Записывается файл Excel', 1, 1);
 
 
     $writer = new XLSXWriter();

@@ -13,7 +13,8 @@ use \App\MyClasses\SafeMySQL;
 class GroupSearchController extends Controller
 {
   public function search(Request $request) {
-    $progress = new GetProgress(session('vkid'), 'groupsearch', 'Идёт сбор информации по вашему запросу...', 1, 1);
+    $rand = $request->rand;
+    $progress = new GetProgress(session('vkid'), 'groupsearch'.$rand, 'Идёт сбор информации по вашему запросу...', 1, 1);
 
     $db = new SafeMysql(array('host' => env('DB_HOST'), 'user' => env('DB_USERNAME'), 'pass' => env('DB_PASSWORD'),'db' => env('DB_DATABASE'), 'charset' => 'utf8mb4'));
 
@@ -44,7 +45,7 @@ class GroupSearchController extends Controller
     $result = $db->query("SELECT * FROM vk_groups ?p ORDER BY members_count DESC LIMIT 0, ?i", $where, $limit);
 
     unset($progress);
-    $progress = new GetProgress(session('vkid'), 'groupsearch', 'Записывается файл Excel', $result->num_rows, 1);
+    $progress = new GetProgress(session('vkid'), 'groupsearch'.$rand, 'Записывается файл Excel', $result->num_rows, 1);
     $writer = new XLSXWriter();
 														$header = array(
 

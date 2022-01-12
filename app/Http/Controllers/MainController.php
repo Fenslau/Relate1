@@ -69,7 +69,7 @@ class MainController extends Controller
 
         $group = new Groups();
 
-      $group->get1000Groups($our_groups, session('token'));
+      $group->get1000Groups($our_groups, session('token'), $request->rand);
 
     } else {
       $returnHTML = view('layouts.home-ajax', ['info' => $info])->render();
@@ -77,9 +77,9 @@ class MainController extends Controller
 
     }
 
-      if ($request->stat) $group->getStats(session('token'));
+      if ($request->stat) $group->getStats(session('token'), $request->rand);
 
-      if ($request->date) $group->getLastPostDate(session('token'));
+      if ($request->date) $group->getLastPostDate(session('token'), $request->rand);
 
       $group->write('storage/simple_search/'.session('vkid').'_simple_search.xlsx');
 

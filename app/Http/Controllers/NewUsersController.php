@@ -34,6 +34,7 @@ class NewUsersController extends Controller
       $vk = new VKApiClient();
 
       $user = new VKUser(session('vkid'));
+      $rand = $request->rand;
       if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         $limit=1;
         $info['demo'] = TRUE;
@@ -69,7 +70,7 @@ class NewUsersController extends Controller
         if (isset($group_get[0])) {
         	$data['group_id'] = $group_get[0]['id'];
         	$data['name'] = $group_get[0]['name'];
-          $users_array = $get_users->fromGroup($groupid, null, 'new-users');
+          $users_array = $get_users->fromGroup($groupid, null, 'new-users', $request);
 
           if (isset($users_array[1001]) AND is_array($users_array)) {
             if ($users_array[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
@@ -103,10 +104,11 @@ class NewUsersController extends Controller
         $items_old = array();
         $vkid = session('vkid');
         $token = session('token');
+        $rand = $request->rand;
         $new_users = new NewUsers();
         $get_users = new GetUsers();
         $list_users1 = $new_users->where('vkid', $vkid)->where('group_id', $request->id)->first();
-        $list_users2 = $get_users->fromGroup($request->id, null, 'new-users');
+        $list_users2 = $get_users->fromGroup($request->id, null, 'new-users', $request);
 
         if (isset($list_users2[1001]) AND is_array($list_users2)) {
           if ($list_users2[1001] == 'access vk') $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
@@ -116,7 +118,7 @@ class NewUsersController extends Controller
           goto ex;
         }
 
-        $progress = new GetProgress ($vkid, 'new-users', 'Идёт вычисление новых подписчиков', 1, 1);
+        $progress = new GetProgress ($vkid, 'new-users'.$rand, 'Идёт вычисление новых подписчиков', 1, 1);
         $list_users_old = explode(',', $list_users1['uid1']);
         $list_users_new = explode(',', $list_users2);
         $list_users1->uid1 = $list_users2;
@@ -134,7 +136,7 @@ class NewUsersController extends Controller
 
         if (!empty($new_users) OR !empty($leave_users)) {
             $vk = new VKApiClient();
-            $progress = new GetProgress ($vkid, 'new-users', 'Идёт подготовка файла Excel', 1, 1);
+            $progress = new GetProgress ($vkid, 'new-users'.$rand, 'Идёт подготовка файла Excel', 1, 1);
       			$writer = new XLSXWriter();
       			if ( $xlsx = SimpleXLSX::parse("storage/new-users/{$vkid}_{$request->id}.xlsx")) {
       					foreach ($xlsx->rows() as $row) $writer->writeSheetRow('Sheet1', $row);
@@ -169,7 +171,7 @@ class NewUsersController extends Controller
                 $user_get = $vk->users()->get($token, array(
                   'user_ids'		=> $user_ids,
       						'fields'    	=> 'sex,bdate,city,country,photo_100,online,domain,can_post,can_write_private_message',
-      						'v' 			=> '5.101'
+      						'v' 			    => '5.101'
                 ));
 
         				if (!empty($user_get)) foreach ($user_get as $item) {
@@ -215,7 +217,7 @@ class NewUsersController extends Controller
                 $user_get = $vk->users()->get($token, array(
                   'user_ids'		=> $user_ids,
       						'fields'    	=> 'sex,bdate,city,country,photo_100,online,domain,can_post,can_write_private_message',
-      						'v' 			=> '5.101'
+      						'v' 			    => '5.101'
                 ));
 
       				if (!empty($user_get)) foreach ($user_get as $item) {

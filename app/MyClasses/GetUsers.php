@@ -55,6 +55,7 @@ class GetUsers {
     $count = 0;
     $users_all = '';
     $vk = new VKApiClient();
+    if (isset($request->rand)) $rand = $request->rand; else $rand = NULL;
   if (!is_array($groupids) AND is_numeric($groupids)) {
     $tmp = $groupids;
     $groupids = array();
@@ -149,7 +150,7 @@ class GetUsers {
 
     $count_25000 = intdiv ($list_users['count'], $per_time);
 
-    $progress = new GetProgress(session('vkid'), $mode, 'Идёт сбор подписчиков группы '.$groupid, $count_25000+1, 1);
+    $progress = new GetProgress(session('vkid'), $mode.$rand, 'Идёт сбор подписчиков группы '.$groupid, $count_25000+1, 1);
 
     for ($j=0; $j <= $count_25000; $j++) {
 

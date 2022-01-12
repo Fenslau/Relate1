@@ -19,6 +19,7 @@ class GetUsersController extends Controller
       $access_token = session('token');
       $vk = new VKApiClient();
       $user = new VKUser(session('vkid'));
+      $rand = $request->rand;
       if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         //$limit=10;
         $info['demo']=TRUE;

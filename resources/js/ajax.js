@@ -1,3 +1,4 @@
+var audio = new Audio('/sounds/ding.mp3');
 
 $(document).ready(function () {
   $(":submit:not(.enabled)").prop('disabled', false);
@@ -11,13 +12,15 @@ $('body').tooltip({
         $('[data-toggle="tooltip"], [title]:not([data-toggle="popover"])').tooltip('dispose');
     });
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 $(document).ready(function () {
   $('[data-toggle="popover"]').popover();
 })
 
 function soundClick() {
-  var audio = new Audio();
-  audio.src = '/sounds/ding.mp3';
   audio.play();
 }
 
@@ -51,7 +54,7 @@ $(document).ready(function () {
     if ($(this).prop('checked') && select_options > 2) {
       $('.toast-header').addClass('bg-danger');
       $('.toast-header').removeClass('bg-success');
-      $('.toast-body').html('VKToppost собирают только ту информацию, которую пользователи сами размещают в открытом доступе. Лишь 15% пользователей вконтакте полностью заполняют личную страницу. Выбирая 3 и более пункта, вы сильно уменьшаете количество пописчиков, которые полностью подходят под критерии поиска. <b>Совет: для лучшего результата увеличьте количество групп для сбора базы подписчиков или отметьте только наиболее важные критерии</b>');
+      $('.toast-body').html('VKToppost собирает только ту информацию, которую пользователи сами размещают в открытом доступе. Лишь 15% пользователей вконтакте полностью заполняют личную страницу. Выбирая 3 и более пункта, вы сильно уменьшаете количество пописчиков, которые полностью подходят под критерии поиска. <b>Совет: для лучшего результата увеличьте количество групп для сбора базы подписчиков или отметьте только наиболее важные критерии</b>');
       $('.toast').toast('show');
     }
   });
@@ -63,7 +66,7 @@ $(document).ready(function () {
     if (typeof (process1) !== 'undefined') {
         $('#table-search').removeClass('d-none');
         var _this = $(this);
-
+        var rand = getRandomInt(9999);
       if (process1 == 'simple_search' && $('#group-name').val().length < 3) {
             var groupname = document.getElementById("group-name");
             groupname.setAttribute('placeholder', 'Минимум 3 символа');
@@ -73,7 +76,7 @@ $(document).ready(function () {
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             type: 'POST',
             url: url,
-            data: $('#search-submit').serialize(),
+            data: $('#search-submit').serialize() + '&' + 'rand' + '=' + rand,
             beforeSend: function () {
               window.onbeforeunload = function() {
                 // $('.toast-header').addClass('bg-danger');
@@ -100,28 +103,30 @@ $(document).ready(function () {
 
                    let user = {
                      vkid: vkid,
-                     process: process1
+                     process: process1 + rand
                    };
-                     answer = await fetch("/progress", {
-                       method: 'POST',
-                       headers: {
-                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                         'Content-Type': 'application/json;charset=utf-8'
-                       },
-                       body: JSON.stringify(user)
-                     }),
-                     response = await answer.json();
-					 width = response.width;
-           info = response.info;
-					 if (width >= width_old || width == 0) {
-						 elem.style.width = response.width + '%';
-						 elem.innerHTML = Math.floor(response.width) * 1  + '%';
-						 elem2.innerHTML = response.info;
-                     }
-					 width_old = response.width;
-					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
-                        clearInterval(id);
-                      }
+                   if (!document.hidden) {
+                                 answer = await fetch("/progress", {
+                                   method: 'POST',
+                                   headers: {
+                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                     'Content-Type': 'application/json;charset=utf-8'
+                                   },
+                                   body: JSON.stringify(user)
+                                 }),
+                                 response = await answer.json();
+            					 width = response.width;
+                       info = response.info;
+            					 if (width >= width_old || width == 0) {
+            						 elem.style.width = response.width + '%';
+            						 elem.innerHTML = Math.floor(response.width) * 1  + '%';
+            						 elem2.innerHTML = response.info;
+                                 }
+            					 width_old = response.width;
+            					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
+                                    clearInterval(id);
+                                  }
+                    }
                }
             },
             success: function (data) {
@@ -144,12 +149,12 @@ $(document).ready(function () {
                         // $('.search-form').addClass('d-none');
                         $('#table-search .search-form').removeClass('d-none');
                       }
-                      if (process1 == 'getusers' || process1 == 'auditoria') {
+
                         if (document.hidden) {
                           timerTitle.start();
                         }
                         soundClick();
-                      }
+
                     window.location = "#table-search";
                 } else {
                   $('.toast-header').addClass('bg-danger');
@@ -169,11 +174,12 @@ $(document).ready(function () {
   $(document).on('click', '.follow', function (e) {
     e.preventDefault();
     var _this = $(this);
+    var rand = getRandomInt(9999);
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         type: 'POST',
         url: '/follow-group',
-        data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value,
+        data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value + '&' + 'rand' + '=' + rand,
         beforeSend: function () {
                 window.onbeforeunload = function() {
                   // $('.toast-header').addClass('bg-danger');
@@ -200,28 +206,30 @@ $(document).ready(function () {
 
                          let user = {
                            vkid: vkid,
-                           process: process1
+                           process: process1 + rand
                          };
-                           answer = await fetch("/progress", {
-                             method: 'POST',
-                             headers: {
-                               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                               'Content-Type': 'application/json;charset=utf-8'
-                             },
-                             body: JSON.stringify(user)
-                           }),
-                           response = await answer.json();
-      					 width = response.width;
-                 info = response.info;
-      					 if (width >= width_old || width == 0) {
-      						 elem.style.width = response.width + '%';
-      						 elem.innerHTML = Math.floor(response.width) * 1  + '%';
-      						 elem2.innerHTML = response.info;
-                           }
-      					 width_old = response.width;
-      					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
-                              clearInterval(id);
-                            }
+                         if (!document.hidden) {
+                                       answer = await fetch("/progress", {
+                                         method: 'POST',
+                                         headers: {
+                                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                           'Content-Type': 'application/json;charset=utf-8'
+                                         },
+                                         body: JSON.stringify(user)
+                                       }),
+                                       response = await answer.json();
+                  					 width = response.width;
+                             info = response.info;
+                  					 if (width >= width_old || width == 0) {
+                  						 elem.style.width = response.width + '%';
+                  						 elem.innerHTML = Math.floor(response.width) * 1  + '%';
+                  						 elem2.innerHTML = response.info;
+                                       }
+                  					 width_old = response.width;
+                  					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
+                                          clearInterval(id);
+                                        }
+                          }
             }
         },
         success: function (data) {

@@ -54,8 +54,8 @@ class Groups {
       }
     } else return FALSE;
   }
-  public function write($filename) {
-	$progress = new GetProgress(session('vkid'), 'simple_search', 'Записывается файл Excel', count($this->groups), 1);
+  public function write($filename, $rand = NULL) {
+	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Записывается файл Excel', count($this->groups), 1);
     $writer = new XLSXWriter();
 														$header = array(
 														  '№'=>'integer',
@@ -120,9 +120,9 @@ class Groups {
       $writer->writeToFile($filename);
   }
 
-  public function get1000Groups($group_ids, $token) {
+  public function get1000Groups($group_ids, $token, $rand = NULL) {
     if (empty($group_ids)) return FALSE;
-	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собирается общая информация по группам', 1, 1);
+	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Собирается общая информация по группам', 1, 1);
   $group_ids1 = implode(',', array_slice($group_ids, 0, 500));
   $group_ids2 = implode(',', array_slice($group_ids, 500, 500));
   $vk = new VKApiClient();
@@ -204,10 +204,10 @@ class Groups {
   }
 
 
-  public function getStats($token) {
+  public function getStats($token, $rand = NULL) {
     $vk = new VKApiClient();
     $group_ids_all = array_column($this->groups, 'id');
-	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собирается статистика по группам', count($group_ids_all), 25);
+	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Собирается статистика по группам', count($group_ids_all), 25);
     for ($j=1; $j<=40; $j++) {
 		$progress->step();
         $code_1 = 'return[';
@@ -289,11 +289,11 @@ class Groups {
   }
 
 
-  public function getLastPostDate($token) {
+  public function getLastPostDate($token, $rand = NULL) {
     $vk = new VKApiClient();
     $group_ids_all = array_column($this->groups, 'id');
 
-	$progress = new GetProgress(session('vkid'), 'simple_search', 'Собираются даты последних постов', count($group_ids_all), 25);
+	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Собираются даты последних постов', count($group_ids_all), 25);
 
     for ($j=1; $j<=40; $j++) {
 		$progress->step();

@@ -860,6 +860,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var audio = new Audio('/sounds/ding.mp3');
 $(document).ready(function () {
   $(":submit:not(.enabled)").prop('disabled', false);
 });
@@ -870,13 +871,16 @@ $('body').tooltip({
 }).on('click mousedown mouseup', '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])', function () {
   $('[data-toggle="tooltip"], [title]:not([data-toggle="popover"])').tooltip('dispose');
 });
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 $(document).ready(function () {
   $('[data-toggle="popover"]').popover();
 });
 
 function soundClick() {
-  var audio = new Audio();
-  audio.src = '/sounds/ding.mp3';
   audio.play();
 }
 
@@ -912,7 +916,7 @@ $(document).ready(function () {
     if ($(this).prop('checked') && select_options > 2) {
       $('.toast-header').addClass('bg-danger');
       $('.toast-header').removeClass('bg-success');
-      $('.toast-body').html('VKToppost собирают только ту информацию, которую пользователи сами размещают в открытом доступе. Лишь 15% пользователей вконтакте полностью заполняют личную страницу. Выбирая 3 и более пункта, вы сильно уменьшаете количество пописчиков, которые полностью подходят под критерии поиска. <b>Совет: для лучшего результата увеличьте количество групп для сбора базы подписчиков или отметьте только наиболее важные критерии</b>');
+      $('.toast-body').html('VKToppost собирает только ту информацию, которую пользователи сами размещают в открытом доступе. Лишь 15% пользователей вконтакте полностью заполняют личную страницу. Выбирая 3 и более пункта, вы сильно уменьшаете количество пописчиков, которые полностью подходят под критерии поиска. <b>Совет: для лучшего результата увеличьте количество групп для сбора базы подписчиков или отметьте только наиболее важные критерии</b>');
       $('.toast').toast('show');
     }
   });
@@ -926,6 +930,8 @@ $(document).ready(function () {
 
       var _this = $(this);
 
+      var rand = getRandomInt(9999);
+
       if (process1 == 'simple_search' && $('#group-name').val().length < 3) {
         var groupname = document.getElementById("group-name");
         groupname.setAttribute('placeholder', 'Минимум 3 символа');
@@ -936,7 +942,7 @@ $(document).ready(function () {
           },
           type: 'POST',
           url: url,
-          data: $('#search-submit').serialize(),
+          data: $('#search-submit').serialize() + '&' + 'rand' + '=' + rand,
           beforeSend: function beforeSend() {
             window.onbeforeunload = function () {
               // $('.toast-header').addClass('bg-danger');
@@ -973,9 +979,15 @@ $(document).ready(function () {
                       case 0:
                         user = {
                           vkid: vkid,
-                          process: process1
+                          process: process1 + rand
                         };
-                        _context.next = 3;
+
+                        if (document.hidden) {
+                          _context.next = 14;
+                          break;
+                        }
+
+                        _context.next = 4;
                         return fetch("/progress", {
                           method: 'POST',
                           headers: {
@@ -985,12 +997,12 @@ $(document).ready(function () {
                           body: JSON.stringify(user)
                         });
 
-                      case 3:
+                      case 4:
                         answer = _context.sent;
-                        _context.next = 6;
+                        _context.next = 7;
                         return answer.json();
 
-                      case 6:
+                      case 7:
                         response = _context.sent;
                         width = response.width;
                         info = response.info;
@@ -1008,7 +1020,7 @@ $(document).ready(function () {
                           clearInterval(id);
                         }
 
-                      case 13:
+                      case 14:
                       case "end":
                         return _context.stop();
                     }
@@ -1043,14 +1055,11 @@ $(document).ready(function () {
                 $('#table-search .search-form').removeClass('d-none');
               }
 
-              if (process1 == 'getusers' || process1 == 'auditoria') {
-                if (document.hidden) {
-                  timerTitle.start();
-                }
-
-                soundClick();
+              if (document.hidden) {
+                timerTitle.start();
               }
 
+              soundClick();
               window.location = "#table-search";
             } else {
               $('.toast-header').addClass('bg-danger');
@@ -1070,13 +1079,14 @@ $(document).ready(function () {
 
     var _this = $(this);
 
+    var rand = getRandomInt(9999);
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       type: 'POST',
       url: '/follow-group',
-      data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value,
+      data: $('.follow-form').serialize() + '&' + this.name + '=' + this.value + '&' + 'rand' + '=' + rand,
       beforeSend: function beforeSend() {
         window.onbeforeunload = function () {
           // $('.toast-header').addClass('bg-danger');
@@ -1113,9 +1123,15 @@ $(document).ready(function () {
                   case 0:
                     user = {
                       vkid: vkid,
-                      process: process1
+                      process: process1 + rand
                     };
-                    _context2.next = 3;
+
+                    if (document.hidden) {
+                      _context2.next = 14;
+                      break;
+                    }
+
+                    _context2.next = 4;
                     return fetch("/progress", {
                       method: 'POST',
                       headers: {
@@ -1125,12 +1141,12 @@ $(document).ready(function () {
                       body: JSON.stringify(user)
                     });
 
-                  case 3:
+                  case 4:
                     answer = _context2.sent;
-                    _context2.next = 6;
+                    _context2.next = 7;
                     return answer.json();
 
-                  case 6:
+                  case 7:
                     response = _context2.sent;
                     width = response.width;
                     info = response.info;
@@ -1148,7 +1164,7 @@ $(document).ready(function () {
                       clearInterval(id);
                     }
 
-                  case 13:
+                  case 14:
                   case "end":
                     return _context2.stop();
                 }
