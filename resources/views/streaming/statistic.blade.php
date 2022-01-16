@@ -987,7 +987,7 @@
   <div class="row">
       <div class="col-md-12 my-5">
         <h4 class="text-center">Список активных авторов</h4>
-        <p class="text-center">Это авторы, которые оставили 3 и более публикации по вашей теме. <br />Всех авторов можно собрать через Фильтры, кнопка "Авторы"</p>
+        <p class="text-center" style="font-size: 13px">Активные авторы — это авторы, которые оставили 3 и более публикации по вашей теме. Всех авторов можно собрать в разделе «Фильтры», нажав на кнопку «Авторы».</p>
         <p class="activnost alert alert-info">Нажмите на цифру в столбике "Активность", чтобы увидеть все активные посты этого автора</p>
         <div class="my-2 p-1 d-flex border rounded justify-content-between align-items-center">
           <div class="form-inline">

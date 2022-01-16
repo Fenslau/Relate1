@@ -308,13 +308,13 @@ class GetUsers {
                       $users_all .= implode(',', $exec['items']).',';
                   }
 
-              }
-            } else {
-                $items_users[1001] = 'limit vk';
-                if ($mode == 'getusers') {
-                  goto ex;
+                } elseif ($j < $count_25000) {
+                  $items_users[1001] = 'limit vk';
+                  if ($mode == 'getusers') {
+                    goto ex;
+                  }
+                  return $items_users;
                 }
-                return $items_users;
               }
           $progress->step();
       }
