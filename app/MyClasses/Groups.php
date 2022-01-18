@@ -158,6 +158,10 @@ class Groups {
         echo $exception->getMessage()."\n";
         die;
       }
+      catch (\VK\Exceptions\VKClientException  $exception) {
+        echo $exception->getMessage()."\n";
+        die;
+      }
     }
 
     $k=1;
@@ -219,7 +223,7 @@ class Groups {
         }
         $code_1 .= '];';
         if ($code_1 == 'return[];') break;
-    retrys:
+retrys:
     try {
       $stat1 = $vk->getRequest()->post('execute', $token, array(
         'code' 			    => $code_1,
@@ -230,8 +234,8 @@ class Groups {
       die;
     }
     catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-      echo $exception->getMessage()."\n";
-      die;
+      sleep(2);
+      goto retrys;
     }
 
       for ($i=0; $i<25; $i++) {
@@ -246,7 +250,7 @@ class Groups {
             $this->groups[$k]['reach_to_sub'] = round(($stat1[$i][0]['reach']['reach']/$stat1[$i][0]['reach']['reach_subscribers']), 2);
             else $this->groups[$k]['reach_to_sub']  = ' ';
           $this->groups[$k]['reach_subscribers'] = $stat1[$i][0]['reach']['reach_subscribers'];
-          if ($this->groups[$k]['reach_to_sub'] <> 0) {
+          if ($this->groups[$k]['reach_to_sub'] <> 0 AND $this->groups[$k]['reach_to_sub'] != ' ') {
             $this->groups[$k]['sub_to_reach'] = round((1/$this->groups[$k]['reach_to_sub']*100), 2);
             $this->groups[$k]['sub_to_reach'] = $this->groups[$k]['sub_to_reach'].'%';
           } else $this->groups[$k]['sub_to_reach'] = ' ';
@@ -306,8 +310,7 @@ class Groups {
           }
           $code_2 .= '];';
           if ($code_2 == 'return[];') break;
-      retrys:
-
+retrys:
       try {
         $wall1 = $vk->getRequest()->post('execute', $token, array(
           'code' 			    => $code_2,
@@ -318,8 +321,8 @@ class Groups {
         die;
       }
       catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-        echo $exception->getMessage()."\n";
-        die;
+        sleep(2);
+        goto retrys;
       }
 
         for ($i=0; $i<25; $i++) {

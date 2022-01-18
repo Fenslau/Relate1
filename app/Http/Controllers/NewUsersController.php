@@ -168,13 +168,18 @@ class NewUsersController extends Controller
       				for ($j=0; $j<=$count1000; $j++) {
       					$new_users1=array_slice($new_users, ($j*1000),1000);
       				  $user_ids = implode(",", $new_users1);
-
+retrys:
+              try {
                 $user_get = $vk->users()->get($token, array(
                   'user_ids'		=> $user_ids,
       						'fields'    	=> 'sex,bdate,city,country,photo_100,online,domain,can_post,can_write_private_message',
       						'v' 			    => '5.101'
                 ));
-
+              }
+              catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+                //sleep(1);
+                goto retrys;
+              }
         				if (!empty($user_get)) foreach ($user_get as $item) {
         					$count++;
 
@@ -215,12 +220,18 @@ class NewUsersController extends Controller
       				for ($j=0; $j<=$count1000; $j++) {
       					$new_users1=array_slice($leave_users,($j*1000),1000);
       				  $user_ids = implode(",",$new_users1);
+retrys2:
+              try {
                 $user_get = $vk->users()->get($token, array(
                   'user_ids'		=> $user_ids,
       						'fields'    	=> 'sex,bdate,city,country,photo_100,online,domain,can_post,can_write_private_message',
       						'v' 			    => '5.101'
                 ));
-
+              }
+              catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+                //sleep(1);
+                goto retrys2;
+              }
       				if (!empty($user_get)) foreach ($user_get as $item) {
       					$count++;
                 if (!isset($item['photo_100'])) $item['photo_100'] = '';

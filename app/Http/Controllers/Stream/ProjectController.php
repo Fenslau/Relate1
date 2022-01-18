@@ -10,6 +10,8 @@ use App\Models\Stream\Projects;
 use App\Models\Stream\Links;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Stream\FileXLS;
+use \App\MyClasses\MyRules;
+use App\Models\Stream\StreamKey;
 
 class ProjectController extends Controller
 {
@@ -46,11 +48,26 @@ class ProjectController extends Controller
     if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
     $projects = new Projects();
     $project = $projects->find($request->del);
+    $stream = new Streamkey();
+    $stream = $stream->find(1);
     if ($project) {
       $links = new Links();
       $user_links = $links->where('vkid', session('vkid'))->where('project_name', $project->project_name)->pluck('id');
       $project_name = $project->project_name;
       $project_to_del = $projects->where('vkid', session('vkid'))->where('project_name', $project->project_name)->pluck('id');
+      $rules_to_del = MyRules::getRules($project_name);
+      foreach (array_column($rules_to_del, 'rule') as $rule_tag) {
+        $ch = curl_init();
+  			curl_setopt($ch, CURLOPT_URL, 'https://'.$stream->endpoint.'/rules?key='.$stream->streamkey);
+  			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  			curl_setopt($ch, CURLOPT_POSTFIELDS, '{"tag":"'.session('vkid').$rule_tag.'"}');
+  			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+  			$out = json_decode(curl_exec($ch), true);
+  			curl_close($ch);
+      }
       Schema::dropIfExists('clouds_'.session('vkid').$project_name);
       Schema::dropIfExists('tags_'.session('vkid').$project_name);
       $projects->destroy($project_to_del);

@@ -47,7 +47,7 @@ class ParseGroups extends Command
       $top1000 = $top->find(1);
       $i_count=1;
       if(empty($top1000->current_group)) $top1000->current_group = 0;
-      for ($j=$top1000->current_group; $j<413408; $j++) {
+      for ($j=$top1000->current_group; $j<env('GROUP_COUNT'); $j++) {
         $group_ids=$i_count;
         for ($i=($i_count+1); $i<=($i_count+499); $i++) {
           $group_ids .= ','.$i;
@@ -64,6 +64,11 @@ retry:  $access_token = env('ACCESS_TOKEN');
               'v' 			     => '5.95'
           ));
         } catch (\VK\TransportClient\TransportRequestException $exception) {
+            echo $exception->getMessage()."\n";
+            sleep(60);
+            goto retry;
+        }
+        catch (\VK\Exceptions\VKClientException $exception) {
             echo $exception->getMessage()."\n";
             sleep(60);
             goto retry;

@@ -160,7 +160,7 @@ class GetUsers {
           }
         $code_1 = $code_1.'];';
         if ($code_1 == 'return[];') break;
-
+retrys:
         try {
           $list_users = $vk->getRequest()->post('execute', $access_token, array(
             'code' 			    => $code_1,
@@ -179,6 +179,10 @@ class GetUsers {
               goto ex;
             }
             return $items_users;
+        }
+        catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+          //sleep(1);
+          goto retrys;
         }
 
             if (!empty($list_users)) foreach ($list_users as $exec) {
@@ -321,6 +325,7 @@ class GetUsers {
     }
     ex:
     if ($mode == 'getusers') {
+      $progress->message('Записывается файл Excel');
       $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
       return $items_users;
     }

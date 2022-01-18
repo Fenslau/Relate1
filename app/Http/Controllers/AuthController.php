@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     $oauth = new VKOAuth();
     $client_id = env('CLIENT_ID');
-    $redirect_uri = 'http://lara.sarby.ru/vk-auth-code';
+    $redirect_uri = env('APP_URL').'/vk-auth-code';
     $display = VKOAuthDisplay::PAGE;
     $scope = array(VKOAuthUserScope::STATS, VKOAuthUserScope::VIDEO);
     if (null !== Request::input('url')) $state = Request::input('url'); else $state = 'home';
@@ -35,7 +35,7 @@ class AuthController extends Controller
     $oauth = new VKOAuth();
     $client_id = env('CLIENT_ID');
     $client_secret = env('CLIENT_SECRET');
-    $redirect_uri = 'http://lara.sarby.ru/vk-auth-code';
+    $redirect_uri = env('APP_URL').'/vk-auth-code';
     $code = Request::input('code');
     if (empty($code)) return redirect()->route(Request::input('state'));
     try {
