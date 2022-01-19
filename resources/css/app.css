@@ -4,6 +4,10 @@
 #progress-text:empty {
 	background-color: white !important;
 }
+#table-search {
+	margin-bottom: 3rem;
+}
+
 .group-name {
 	max-width: 13rem;
 }

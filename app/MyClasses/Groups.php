@@ -132,6 +132,8 @@ class Groups {
         'lang'   		   => 'ru',
         'v' 			     => '5.95'
     );
+
+retry1:
     try {
       $this->groups = $vk->groups()->getById($token, $params);
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
@@ -139,8 +141,9 @@ class Groups {
       die;
     }
     catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-      echo $exception->getMessage()."\n";
-      die;
+      //echo $exception->getMessage()."\n";
+      sleep(1);
+      goto retry1;
     }
     catch (\VK\Exceptions\VKClientException  $exception) {
       echo $exception->getMessage()."\n";
@@ -148,6 +151,8 @@ class Groups {
     }
     if (!empty($group_ids2)) {
       $params['group_ids'] = $group_ids2;
+
+retry2:
       try {
       $this->groups = array_merge($this->groups, $vk->groups()->getById($token, $params));
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
@@ -155,8 +160,9 @@ class Groups {
         die;
       }
       catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-        echo $exception->getMessage()."\n";
-        die;
+        //echo $exception->getMessage()."\n";
+        sleep(1);
+        goto retry2;
       }
       catch (\VK\Exceptions\VKClientException  $exception) {
         echo $exception->getMessage()."\n";
@@ -234,8 +240,12 @@ retrys:
       die;
     }
     catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-      sleep(2);
+      sleep(1);
       goto retrys;
+    }
+    catch (\VK\Exceptions\VKClientException  $exception) {
+      echo $exception->getMessage()."\n";
+      die;
     }
 
       for ($i=0; $i<25; $i++) {
@@ -321,8 +331,12 @@ retrys:
         die;
       }
       catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-        sleep(2);
+        sleep(1);
         goto retrys;
+      }
+      catch (\VK\Exceptions\VKClientException  $exception) {
+        echo $exception->getMessage()."\n";
+        die;
       }
 
         for ($i=0; $i<25; $i++) {

@@ -325,7 +325,8 @@ retrys:
     }
     ex:
     if ($mode == 'getusers') {
-      $progress->message('Записывается файл Excel');
+      unset($progress);
+      $progress = new GetProgress(session('vkid'), $mode.$rand, 'Записывается файл Excel', 1, 1);
       $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
       return $items_users;
     }

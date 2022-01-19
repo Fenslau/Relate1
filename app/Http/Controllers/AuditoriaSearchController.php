@@ -66,7 +66,7 @@ class AuditoriaSearchController extends Controller
     }
     $list_users = explode(',', $list_users);
     $message = 'Идёт сбор информации о группах подписчиков';
-    if (count($list_users) > 30000) $message = 'Вы указали группу более 30 000 подписчиков. Поиск групп с похожей целевой аудиторией может занять более 3х часов, т.к. Вконтакте ограничивает скорость передачи данных';
+    if (count($list_users) > 30000) $message = 'Вы указали группу более 30 000 подписчиков. Поиск групп с похожей целевой аудиторией может занять более трёх часов, т.к. Вконтакте ограничивает скорость передачи данных';
     $count25 = intdiv(count($list_users), 25);
     $array_groups = array();
     $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, $message, $count25, 1);
@@ -86,7 +86,7 @@ retry:   try {
             'v' 			      => '5.95'
           ));}
           catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
-            echo 'Аудитория '.$exception->getMessage()."\n";
+
             goto retry;
           }
           catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
