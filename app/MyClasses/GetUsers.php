@@ -121,7 +121,8 @@ class GetUsers {
     catch (\VK\Exceptions\Api\VKApiAccessException $exception) {
         $items_users[1001] = 'access vk';
         if ($mode == 'getusers') {
-          goto ex;
+          $writer->writeSheetRow('Sheet'.$sheet, ['Руководство группы '.$groupid.' ВК закрыло доступ к списку подписчиков. Ничего собрать не получится']);
+          continue;
         }
         return $items_users;
     }
@@ -297,7 +298,7 @@ retrys:
                 			OR (!empty($request->half2) AND empty($users['half2']))
                 			OR (!empty($request->bday) AND empty($users['bday']))) goto no_write;
       									$count++;
-                        if ($count <= 1000) $items_users[] = $users;
+                        if ($count <= 1000) $items_users[$count-1] = $users;
                         $sheet=(intdiv(($count-1), 1000000)+1);
       									$writer->writeSheetRow('Sheet'.$sheet, $users);
                         if ($info['demo'] === TRUE AND $count > 99) goto ex;
@@ -321,12 +322,13 @@ retrys:
               }
           $progress->step();
       }
+      unset($progress);
     }
     ex:
     if ($mode == 'getusers') {
-      unset($progress);
       $progress = new GetProgress(session('vkid'), $mode.$rand, 'Записывается файл Excel', 1, 1);
       $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
+      ksort($items_users);
       return $items_users;
     }
     if ($mode == 'auditoria' OR $mode == 'new-users') {

@@ -54,8 +54,10 @@ class GetUsersController extends Controller
           }
         }
         if (!empty($items[1001]) AND $items[1001] == 'access vk') {
-          $info['found'] = NULL;
-          $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+          if (count($groupid) == 1) {
+            $info['found'] = NULL;
+            $info['warning'] = 'Руководство группы ВК закрыло доступ к списку подписчиков. Ничего собрать не получится';
+          } else $info['warning'] = 'Примите во внимание: Руководство одной или нескольких групп ВК закрыло доступ к списку подписчиков. Для этих групп собрать их не получится';
         }
         if (!empty($items[1001]) AND $items[1001] == 'auth vk') {
           $info['found'] = NULL;
