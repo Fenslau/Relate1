@@ -30,7 +30,7 @@
   <script src="/js/app.js" type="text/javascript"></script>
   <script src="/js/ajax.js" type="text/javascript"></script>
   <script src="/js/aside.js" type="text/javascript"></script>
-
+@if(env('APP_ENV') == 'production')
   <!-- Yandex.Metrika counter -->
   <script src="//code.jivosite.com/widget.js" data-jv-id="89Nvl6sd5x" async></script>
   <script type="text/javascript" >
@@ -47,5 +47,6 @@
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/53866045" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
+@endif
 </body>
 </html>

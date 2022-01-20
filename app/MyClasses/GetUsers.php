@@ -22,30 +22,29 @@ class GetUsers {
     if (empty($groups)) return NULL;
     $groups_ = array_diff(explode("\n", str_replace(array("\r\n", "\n\r"), "\n", $groups)), array(NULL, 0, ''));
     foreach ($groups_  as $groups)
-    if (!is_numeric($groups)) {
-      $groupid = trim($groups);
-        $groupid = str_replace('https://vk.com/', '', $groupid);
-        $groupid = str_replace('http://vk.com/', '', $groupid);
-        if (strpos($groupid, 'public') === 0) $groupid = str_replace('public', 'club', $groupid);
-        if (strpos($groupid, 'event') === 0) $groupid = str_replace('event', 'club', $groupid);
-        try {
+      if (!is_numeric($groups)) {
+        $groupid = trim($groups);
+          $groupid = str_replace('https://vk.com/', '', $groupid);
+          $groupid = str_replace('http://vk.com/', '', $groupid);
+          if (strpos($groupid, 'public') === 0) $groupid = str_replace('public', 'club', $groupid);
+          if (strpos($groupid, 'event') === 0) $groupid = str_replace('event', 'club', $groupid);
+          $groups_all[] = $groupid;
+      } else $groups_all[] = $groups;
+
+      try {
                   $group_get = $vk->groups()->getById($access_token, array(
-                      'group_ids'		 => $groupid,
+                      'group_ids'		 => implode(',', $groups_all),
                       'lang'   		   => 'ru',
                       'v' 			     => '5.95'
                   ));
-                } catch (\VK\Exceptions\Api\VKApiParamException $exception) {
-                    return NULL;
-                } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
-                    return 'auth vk';
-                }
+            } catch (\VK\Exceptions\Api\VKApiParamException $exception) {
+                return NULL;
+            } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+                return 'auth vk';
+            }
 
-      if (!empty($group_get[0]['id'])) return $group_get[0]['id'];
-      else {
-        return NULL;
-      }
-    } else $groups_all[] = $groups;
-    return $groups_all;
+      if (!empty($group_get[0]['id'])) return (array_column($group_get, 'id'));
+      else return NULL;
   }
 
   public function fromGroup($groupids, $fields, $mode, $request = NULL) {
