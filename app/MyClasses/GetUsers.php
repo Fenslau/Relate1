@@ -33,7 +33,7 @@ class GetUsers {
 
       try {
                   $group_get = $vk->groups()->getById($access_token, array(
-                      'group_ids'		 => implode(',', $groups_all),
+                      'group_ids'		 => implode(',', array_slice($groups_all, 0, 500)),
                       'lang'   		   => 'ru',
                       'v' 			     => '5.95'
                   ));
@@ -112,6 +112,7 @@ class GetUsers {
   foreach ($groupids as $groupid) {
     $sheet=(intdiv(($count-1), 1000000)+1);
     if ($mode == 'getusers') $writer->writeSheetRow('Sheet'.$sheet, ['Подписчики группы '.$groupid]);
+retry:
     try {
       $list_users = $vk->groups()->getMembers($access_token, array(
           'group_id'		 => $groupid,
@@ -122,6 +123,7 @@ class GetUsers {
         $items_users[1001] = 'access vk';
         if ($mode == 'getusers') {
           $writer->writeSheetRow('Sheet'.$sheet, ['Руководство группы '.$groupid.' ВК закрыло доступ к списку подписчиков. Ничего собрать не получится']);
+          unset($progress);
           continue;
         }
         return $items_users;
@@ -140,10 +142,26 @@ class GetUsers {
           }
           return $items_users;
     }
+    catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
+      sleep(1);
+      goto retry;
+    }
+    catch (\VK\Exceptions\Api\VKApiPermissionException $exception) {
+      $items_users[1001] = 'access vk';
+      if ($mode == 'getusers') {
+        $writer->writeSheetRow('Sheet'.$sheet, [$groupid.' — это частное сообщество. Доступ только по приглашениям администраторов.']);
+        unset($progress);
+        continue;
+      }
+      return $items_users;
+    }
 
       if (empty($list_users['count']))
         if ($mode != 'getusers') return FALSE;
-        else continue;
+        else {
+          unset($progress);
+          continue;
+        }
 
 
     if (empty($fields)) $per_time = 25000; else  $per_time = 10000;
@@ -326,6 +344,7 @@ retrys:
     }
     ex:
     if ($mode == 'getusers') {
+      if (isset($progress)) unset($progress);
       $progress = new GetProgress(session('vkid'), $mode.$rand, 'Записывается файл Excel', 1, 1);
       $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
       ksort($items_users);

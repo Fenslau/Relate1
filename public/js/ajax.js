@@ -1016,7 +1016,7 @@ $(document).ready(function () {
                         width_old = response.width;
                         if (width == 0 && info == '') zero_answer++;
 
-                        if (zero_answer > 10) {
+                        if (zero_answer > 30) {
                           clearInterval(id);
                         }
 

@@ -123,7 +123,7 @@ $(document).ready(function () {
             						 elem2.innerHTML = response.info;
                                  }
             					 width_old = response.width;
-            					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 10) {
+            					 if (width == 0 && info == '') zero_answer++; if (zero_answer > 30) {
                                     clearInterval(id);
                                   }
                     }
