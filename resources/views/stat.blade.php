@@ -36,7 +36,7 @@
             <tr class="text-center">
               <td>{{ $visitor->id }}</td>
               <td>{{ $visitor->created_at }}</td>
-              <td><a target="_blank" href="{{ $visitor->vkid }}">{{ $visitor->vkid }}</a></td>
+              <td><a target="_blank" href="https://vk.com/id{{ $visitor->vkid }}">{{ $visitor->vkid }}</a></td>
               <td>{{ $visitor->firstname }}</td>
               <td>{{ $visitor->lastname }}</td>
               <td>{{ $visitor->city }}</td>

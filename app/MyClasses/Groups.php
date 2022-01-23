@@ -15,7 +15,14 @@ class Groups {
 
   public function read($filename) {
 
-    if ( $xlsx = SimpleXLSX::parse($filename) AND count( $xlsx->rows()) > 1 ) {
+    try {
+      $xlsx = new SimpleXLSX($filename);
+    }
+    catch (\Exception $exception) {
+      //unlink($filename);
+      return FALSE;
+    }
+    if ($xlsx->success() AND count( $xlsx->rows()) > 1 ) {
       $iter = true;
       $items=array();
       foreach($xlsx->rows() as $item_) {

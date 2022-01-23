@@ -139,12 +139,19 @@ class NewUsersController extends Controller
             unset($progress);
             $progress = new GetProgress ($vkid, 'new-users'.$rand, 'Идёт подготовка файла Excel', 1, 1);
       			$writer = new XLSXWriter();
-      			if ( $xlsx = SimpleXLSX::parse("storage/new-users/{$vkid}_{$request->id}.xlsx")) {
+            try {
+              $xlsx = new SimpleXLSX("storage/new-users/{$vkid}_{$request->id}.xlsx");
+            }
+            catch (\Exception $exception) {
+              //unlink($filename);
+              goto no_file;
+            }
+      			if ( $xlsx->success()) {
       					foreach ($xlsx->rows() as $row) $writer->writeSheetRow('Sheet1', $row);
       					if (filesize("storage/new-users/{$vkid}_{$request->id}.xlsx") > 8000000) $info['warning'][] = 'Ваш файл с историей отслеживания новичков слишком велик и скоро будет удалён и заменён на новый. Скачайте и сохраните его, если он вам нужен.';
       					if (filesize("storage/new-users/{$vkid}_{$request->id}.xlsx") > 10000000) unlink("storage/new-users/{$vkid}_{$request->id}.xlsx");
       			}
-
+            no_file:
       														$header = array(
 
       														  'id'=>'integer',
