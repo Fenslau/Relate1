@@ -14,7 +14,7 @@ use \App\MyClasses\num;
 class AuditoriaSearchController extends Controller
 {
   public function search(Request $request) {
-
+    $retry = FALSE;
     $info = array();
     $info['found'] = 1;
     $items = array();
@@ -95,7 +95,16 @@ retry:   try {
             $returnHTML = view('layouts.auditoria-ajax', ['items' => $items, 'info' => $info])->render();
             return response()->json( array('success' => true, 'html'=>$returnHTML) );
           }
-
+          catch (\VK\Exceptions\VKClientException $exception) {
+            if (!$retry) {
+              $retry = TRUE;
+              sleep(5);
+              goto retry;
+            }
+            $info['warning'] = 'Во время сбора информации произошел сбой со стороны ВК, поэтому данные могут быть неполными';
+            goto ex;
+          }
+      $retry = FALSE;
 			foreach ($stat1 as $item)
 				if (isset($item['items'])) foreach ($item['items'] as $item1)
 				if (isset($item1['members_count'])) if ($item1['members_count'] > $request->from AND $item1['members_count'] < $request->to)
@@ -103,7 +112,7 @@ retry:   try {
 
 		$progress->step();
 		}
-
+ex:
     unset($progress);
     $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, 'Идёт определение наиболее часто встречающихся групп...', 1, 1);
 

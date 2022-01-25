@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('Parse:Groups')->monthlyOn(10, '18:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
 
         $schedule->command('Top1000:get')->everyTenMinutes()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000.log');
-        $schedule->command('Top1000date:get')->everySixHours()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000date.log');
+        $schedule->command('Top1000date:get')->everySixHours()->withoutOverlapping()->appendOutputTo('storage/logs/Top1000date.log');
 
         $schedule->command('Help:hour')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/HelperHour.log');
 

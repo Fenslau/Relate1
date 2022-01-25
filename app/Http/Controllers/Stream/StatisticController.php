@@ -276,7 +276,7 @@ class StatisticController extends Controller
           	}
 
           $authors = array_reverse ($authors);
-          $male = $female = $group = array();
+          $male = $female = $group = $alls = $date = array();
           foreach ($authors as $item)	{
           	if (!empty($item['males']['values'])) $male[]=$item['males']['values']; else $male[]=0;
           	if (!empty($item['females']['values'])) $female[]=$item['females']['values']; else $female[]=0;
@@ -312,7 +312,7 @@ class StatisticController extends Controller
           		$authors[$i]['groups']['values'] = $week[$i]['groups'];
           	}
           $authors = array_reverse ($authors);
-          $male = $female = $group = array();
+          $male = $female = $group = $alls = $date = array();
           foreach ($authors as $item)	{
           	if (!empty($item['males']['values'])) $male[]=$item['males']['values']; else $male[]=0;
           	if (!empty($item['females']['values'])) $female[]=$item['females']['values']; else $female[]=0;
@@ -347,7 +347,7 @@ class StatisticController extends Controller
           		$authors[$i]['groups']['values'] = $month[$i]['groups'];
           	}
           $authors = array_reverse ($authors);
-          $male = $female = $group = array();
+          $male = $female = $group = $alls = $date = array();
           foreach ($authors as $item)	{
           	if (!empty($item['males']['values'])) $male[]=$item['males']['values']; else $male[]=0;
           	if (!empty($item['females']['values'])) $female[]=$item['females']['values']; else $female[]=0;
