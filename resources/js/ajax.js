@@ -67,6 +67,7 @@ $(document).ready(function () {
         $('#table-search').removeClass('d-none');
         var _this = $(this);
         var rand = getRandomInt(9999);
+        var id = 0;
       if (process1 == 'simple_search' && $('#group-name').val().length < 3) {
             var groupname = document.getElementById("group-name");
             groupname.setAttribute('placeholder', 'Минимум 3 символа');
@@ -98,7 +99,7 @@ $(document).ready(function () {
 				var width_old = -1;
                 var width = 0;
                 var info = '';
-                var id = setInterval(frame, 500);
+                id = setInterval(frame, 500);
                async function frame() {
 
                    let user = {
@@ -163,6 +164,9 @@ $(document).ready(function () {
                   $('.toast').toast('show');
                 }
             },
+            complete: function () {
+              clearInterval(id);
+            },
 
         });
       }
@@ -175,6 +179,7 @@ $(document).ready(function () {
     e.preventDefault();
     var _this = $(this);
     var rand = getRandomInt(9999);
+    var id = 0;
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         type: 'POST',
@@ -201,7 +206,7 @@ $(document).ready(function () {
       				var width_old = -1;
               var width = 0;
               var info = '';
-              var id = setInterval(frame, 500);
+              id = setInterval(frame, 500);
               async function frame() {
 
                          let user = {
@@ -256,6 +261,9 @@ $(document).ready(function () {
               $('.toast-body').html('Что-то пошло не так. Попробуйте ещё раз или сообщите нам');
               $('.toast').toast('show');
             }
+        },
+        complete: function () {
+          clearInterval(id);
         },
 
     });

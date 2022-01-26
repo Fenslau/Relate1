@@ -76,7 +76,7 @@ class StatisticController extends Controller
 
       $progress->message('Собирается статистика распределения авторов по городам');
       $items = $posts->getPost($vkid, $project_name, $request, NULL, 1);
-      $region_score = $items->leftJoin('russias', 'authors.city_id', '=', 'russias.city_id')->select(DB::raw("region, (Count(authors.city_id)) as region_score"))->whereNotNull('region')->groupBy('region')->orderBy('region_score', 'desc')->get()->toArray();
+      $region_score = $items->leftJoin('russias', 'authors.city_id', '=', 'russias.city_id')->select(DB::raw("region, (Count(authors.city_id)) as region_score"))->groupBy('region')->orderBy('region_score', 'desc')->get()->toArray();
 
       $region_count = count($region_score);
     	$other_regions = 0;

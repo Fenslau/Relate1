@@ -102,7 +102,8 @@ retry:   try {
               goto retry;
             }
             $info['warning'] = 'Во время сбора информации произошел сбой со стороны ВК, поэтому данные могут быть неполными';
-            goto ex;
+            $retry = FALSE;
+            continue;
           }
       $retry = FALSE;
 			foreach ($stat1 as $item)
@@ -112,7 +113,7 @@ retry:   try {
 
 		$progress->step();
 		}
-ex:
+
     unset($progress);
     $progress = new GetProgress(session('vkid'), 'auditoria'.$rand, 'Идёт определение наиболее часто встречающихся групп...', 1, 1);
 

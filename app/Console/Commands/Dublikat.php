@@ -67,7 +67,7 @@ $time_start = microtime(true);
             $dub_id = array();
             $i = 0;
 
-              while ($i < 1000 AND $rel != 0 AND ($dublikaty[$i]['search_score']/$rel) > 0.2) {
+              while ($i < 1000 AND $rel != 0 AND ($dublikaty[$i]['search_score']/$rel) > 0.1) {
                 similar_text($post_data, substr($dublikaty[$i]['data'], 0, 1024), $dup_per);
                 if ($dup_per > 90 AND $dublikaty[$i]['id'] != $post->id) {
                   $dub_id[] = $dublikaty[$i]['id'];
@@ -86,7 +86,7 @@ $time_start = microtime(true);
 
             if (!empty($dub_id)) {
               $dub_id[] = $post->id;
-              $posts->whereIn('id', $dub_id)->update(['dublikat' => implode(',', $dub_id)]);    
+              $posts->whereIn('id', $dub_id)->update(['dublikat' => implode(',', $dub_id)]);
             }
             else $posts->where('id', $post->id)->update(['dublikat' => 'ch']);
 
