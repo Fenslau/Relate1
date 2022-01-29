@@ -381,7 +381,7 @@
       $(".chosen-select").chosen();
     });
 </script>
-<script src="/js/post.js" type="text/javascript"></script>
+<script src="{{ mix('/js/post.js') }}" type="text/javascript"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" type="text/javascript"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js" type="text/javascript"></script>

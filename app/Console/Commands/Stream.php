@@ -104,7 +104,7 @@ $time_start = microtime(true);
           			case 'doc': $doc = $doc.$att['doc']['url'].','; break;
           			case 'photo': $photo = $photo.$att['photo']['photo_604'].','; break;
           			case 'video': $video_player = $video_player.$att['video']['owner_id'].'_'.$att['video']['id'].'_'.$att['video']['access_key'].','; break;
-          			case 'audio': $audio = $audio.$att['audio']['artist'].' — '.$att['audio']['title'].'9GZVNyidgk';
+          			case 'audio': $audio = $audio.'<div class="d-flex align-items-center justify-content-between">'.$att['audio']['artist'].' — '.$att['audio']['title'].'<audio src="'.$att['audio']['url'].'" controls></audio></div>'.'9GZVNyidgk';
           			}
           		}
           		if (!empty($info['event']['action'])) $action = $info['event']['action']; else $action = '';

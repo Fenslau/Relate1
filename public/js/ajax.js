@@ -1071,6 +1071,11 @@ $(document).ready(function () {
           },
           complete: function complete() {
             clearInterval(id);
+            var elem = document.getElementById("progress");
+            var elem2 = document.getElementById("progress-text");
+            elem.style.width = '0%';
+            elem.innerHTML = 0;
+            elem2.innerHTML = '';
           }
         });
       }
@@ -1208,6 +1213,11 @@ $(document).ready(function () {
       },
       complete: function complete() {
         clearInterval(id);
+        var elem = document.getElementById("progress");
+        var elem2 = document.getElementById("progress-text");
+        elem.style.width = '0%';
+        elem.innerHTML = 0;
+        elem2.innerHTML = '';
       }
     });
   });

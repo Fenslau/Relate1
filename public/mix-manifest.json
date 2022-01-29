@@ -1,9 +1,9 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/ajax.js": "/js/ajax.js",
-    "/js/aside.js": "/js/aside.js",
-    "/js/readmore.js": "/js/readmore.js",
-    "/js/post.js": "/js/post.js",
-    "/js/stat.js": "/js/stat.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=7d26e4e7db1345423278",
+    "/js/ajax.js": "/js/ajax.js?id=d224e9443f7d6fd730c1",
+    "/js/aside.js": "/js/aside.js?id=141ad31738f8c26a12c1",
+    "/js/readmore.js": "/js/readmore.js?id=afdc0debbd09a107ea82",
+    "/js/post.js": "/js/post.js?id=bc0b8b4e01108a5924b3",
+    "/js/stat.js": "/js/stat.js?id=4da7182f8999f6b95c07",
+    "/css/app.css": "/css/app.css?id=2d5e9f3c4dc95213a4f3"
 }

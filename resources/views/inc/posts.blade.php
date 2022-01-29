@@ -173,8 +173,9 @@ class="">
 
           @if (!empty($item['audio']))
             <div class="p-2 text-info">
+              <p class="mb-0">В записи используется аудио: </p>
               @foreach (explode("9GZVNyidgk", $item['audio']) as $audio)
-      					@if (!empty($audio)) <p class="text-truncate">В записи используется аудио: {{ $audio }}</p>
+      					@if (!empty($audio)) {!! $audio !!}
                 @endif
       				@endforeach
             </div>
@@ -260,7 +261,7 @@ class="">
     {{ $items->onEachSide(4)->links() }}
 
   @if (!empty($cut))
-    <script src="/js/readmore.js" type="text/javascript"></script>
+    <script src="{{ mix('/js/readmore.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
     		$(".textdata").readmore ({
     				maxHeight: 200,

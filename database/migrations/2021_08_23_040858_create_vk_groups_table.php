@@ -17,7 +17,7 @@ class CreateVkGroupsTable extends Migration
             $table->id();
             $table->integer('group_id')->unique();
             $table->string('name');
-            $table->string('city', 64);
+            $table->string('city', 64)->index();
             $table->integer('members_count');
             $table->enum('type', ['group', 'page', 'event']);
             $table->smallInteger('wall');

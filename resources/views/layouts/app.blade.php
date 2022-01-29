@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" >
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 
   @include('inc.footer')
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-  <script src="/js/app.js" type="text/javascript"></script>
-  <script src="/js/ajax.js" type="text/javascript"></script>
-  <script src="/js/aside.js" type="text/javascript"></script>
+  <script src="{{ mix('/js/app.js') }}" type="text/javascript"></script>
+  <script src="{{ mix('/js/ajax.js') }}" type="text/javascript"></script>
+  <script src="{{ mix('/js/aside.js') }}" type="text/javascript"></script>
 @if(env('APP_ENV') == 'production')
   <!-- Yandex.Metrika counter -->
   <script src="//code.jivosite.com/widget.js" data-jv-id="89Nvl6sd5x" async></script>
