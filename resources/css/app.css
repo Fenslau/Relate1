@@ -236,3 +236,12 @@ table.dataTable thead th, table.dataTable thead td {
 .like :empty, .comment :empty, .repost :empty, .view :empty {
 	display: none;
 }
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #004aad;
+    border-color: white;
+}
+.text-pink {
+	color: #ee3ec9;
+}

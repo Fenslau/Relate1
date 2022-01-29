@@ -8,7 +8,7 @@
   <h2 class="m-3 text-center text-uppercase">Собрать и анализировать посты</h2>
     <div class="row">
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           1
         </div>
         <div class="lh-m font-weight-light mb-3 text-justify">
@@ -21,7 +21,7 @@
       </div>
 
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           2
         </div>
         <div class="lh-m font-weight-light mb-3 text-justify">
@@ -35,7 +35,7 @@
       </div>
 
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           3
         </div>
         <div class="lh-m font-weight-light mb-3 text-justify">

@@ -102,7 +102,7 @@
 
 
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           1
         </div>
         <div class="font-weight-light mb-3">
@@ -110,7 +110,7 @@
           Определите ключевое слово и введите его в поле «Название группы», если в названиях групп присутствует название города, то укажите его здесь. Если вам требуется найти группы ВК, указавшие в настройках профиля название города, то введите его в поле «Город», во всех других случаях оставьте это поле пустым.
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           2
         </div>
         <div class="font-weight-light mb-3">
@@ -118,7 +118,7 @@
           Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать все группы по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           3
         </div>
         <div class="font-weight-light mb-3">

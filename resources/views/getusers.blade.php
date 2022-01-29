@@ -107,7 +107,7 @@ https://vk.com/club1
 
 
       <div class="col-md-4">
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           1
         </div>
         <div class="font-weight-light mb-3">
@@ -115,7 +115,7 @@ https://vk.com/club1
           Если вам нужно собрать только короткие адреса страниц пользователей, вставьте список групп ВК в поле в правой части этой страницы. Далее не отмечая никаких дополнительных критериев, нажмите кнопку «Начать поиск».
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           2
         </div>
         <div class="font-weight-light mb-3">
@@ -123,7 +123,7 @@ https://vk.com/club1
           Если вам нужно собрать подписчиков, которые указали в своем профиле: сайт, контакты, профили соц.сетей, отношения, ссылку на партнера или день рождения, вставьте список групп Вк в поле в правой части этой страницы. Далее выберите нужные критерии и нажмите кнопку «Начать поиск».
         </div>
 
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           3
         </div>
         <div class="font-weight-light mb-3">
@@ -131,7 +131,7 @@ https://vk.com/club1
           Если вас интересует общая информация обо всех пользователях из определенного списка групп, вставьте список групп ВК, в поле в левой части этой страницы. ОБРАТИТЕ ВНИМАНИЕ! Далее выберите критерий «Общая информация» и нажмите кнопку «Начать поиск».
         </div>
         <hr />
-        <div class="font-weight-bold text-info h1 float-left px-3 pt-0 m-0">
+        <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           4
         </div>
         <div class="font-weight-light mb-3">
