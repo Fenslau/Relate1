@@ -241,6 +241,7 @@ table.dataTable thead th, table.dataTable thead td {
 
 .table .thead-dark th {
     color: #fff;
+		border-bottom: none;
     background-color: #004aad;
     border-color: white;
 }
