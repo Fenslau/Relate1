@@ -50,7 +50,7 @@ class Top1000date extends Command
 
         $group->read('public/temp/top1000.xlsx');
 
-        $group->getLastPostDate($token);
+        $group->getLastPostDate($token, NULL, 'toppost');
 
         $group->write("public/temp/top1000.xlsx");
     }

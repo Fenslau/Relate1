@@ -50,7 +50,7 @@
                   <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo'] }}" /></td>
                   <td class="group-name text-truncate text-nowrap text-left"><a target="_blank" href="https://vk.com/public{{ $item['group_id'] }}">{{ $item['name'] }}</a></td>
                   <td>{{ $item['city'] }}</td>
-                  <td>{{ $item['members_count'] }}</td>
+                  <td>@dec($item['members_count'])</td>
                   <td class="group-name text-truncate text-nowrap text-left">{{ $item['site'] }}</td>
                   <td>
                     @if($item['wall'] == 'открытая')

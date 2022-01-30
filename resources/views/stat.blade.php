@@ -46,7 +46,6 @@
               <td>{{ $visitor->visit_number }}</td>
               <td>{{ $visitor->downloads }}</td>
               <td>{{ $visitor->downloads_anon }}</td>
-              <td {{ $visitor->oplata_class }}>{{ date('d.m.y', strtotime($visitor->oplata_date)) }}</td>
               <td {{ $visitor->oplata_class }}> @isset($visitor->oplata_date){{ date('d.m.y', strtotime($visitor->oplata_date)) }} @endisset</td>
             </tr>
           @endforeach

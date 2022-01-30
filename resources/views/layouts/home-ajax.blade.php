@@ -2,7 +2,7 @@
   <div class="w-100 alert alert-success">
     {!! $info['found'] !!}
   </div>
-@elseif (@empty($info['token']))
+@elseif (@empty($info['token']) &&  @isset ($info['search']))
   <div class="w-100 alert alert-warning">
     По вашему запросу не нашлось ни одной групы. Может быть вы допустили в нём ошибку?
   </div>
@@ -15,17 +15,19 @@
 
 @include('inc.obsolete-token')
 
-<div class="w-100 m-0 alert alert-info">
+
   @isset ($info['search'])
-  <strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong>
+    @isset($info['found'])
+      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
+    @endisset
   @else
     @if(Session::has('vkid'))
-      <strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong>
+      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
     @else
-      <strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong>
+      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
     @endif
   @endisset
-</div>
+
 
 @isset ($items)
 <table class="lh-sm table table-striped table-bordered table-hover table-sm table-responsive">
@@ -57,23 +59,23 @@
           <td>{{ $item['id'] }}</td>
           <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_50'] }}" /></td>
           <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
-          <td>{{ $item['members_count'] }}</td>
+          <td>@if(!empty($item['members_count'])) @dec($item['members_count'])@endif</td>
           <td>
             @if($item['grouth'] > 0)
-            <div class="text-success">+{{ $item['grouth'] }}
+            <div class="text-success">+@dec($item['grouth'])
             </div>
             @elseif ($item['grouth'] < 0)
-            <div class="text-danger">{{ $item['grouth'] }}
+            <div class="text-danger">@dec($item['grouth'])
             @endif
             </div>
           </td>
-          <td>{{ $item['reach'] }}<br /><small>{{ $item['reach_to_sub'] }}</small></td>
-          <td>{{ $item['reach_subscribers'] }}<br /><small>{{ $item['sub_to_reach'] }}</small></td>
-          <td>{{ $item['female'] }}<br /><small>{{ $item['female_proc'] }}</small></td>
-          <td>{{ $item['male'] }}<br /><small>{{ $item['male_proc'] }}</small></td>
-          <td>{{ $item['visitors'] }}<br /><small>{{ $item['views_to_visit'] }}</small></td>
-          <td>{{ $item['over_18'] }}<br /><small>{{ $item['over_18_procent'] }}</small></td>
-          <td>{{ $item['cities'] }}<br /><small>{{ $item['cities_count'] }}{{ $item['max_visitors'] }}</small></td>
+          <td>@if(!empty($item['reach'])) @dec($item['reach'])@endif<br /><small>{{ $item['reach_to_sub'] }}</small></td>
+          <td>@if(!empty($item['reach_subscribers'])) @dec($item['reach_subscribers'])@endif<br /><small>{{ $item['sub_to_reach'] }}</small></td>
+          <td>@if(!empty($item['female'])) @dec($item['female'])@endif<br /><small>{{ $item['female_proc'] }}</small></td>
+          <td>@if(!empty($item['male'])) @dec($item['male'])@endif<br /><small>{{ $item['male_proc'] }}</small></td>
+          <td>@if(!empty($item['visitors'])) @dec($item['visitors'])@endif<br /><small>{{ $item['views_to_visit'] }}</small></td>
+          <td>@if(!empty($item['over_18'])) @dec($item['over_18'])@endif<br /><small>{{ $item['over_18_procent'] }}</small></td>
+          <td>{{ $item['cities'] }}<br /><small>@if(!empty($item['cities_count'])) @dec($item['cities_count']) @endif{{ $item['max_visitors'] }}</small></td>
           <td>
             @if($item['wall'] == 'открытая')
             <div class="text-success">открытая</div>

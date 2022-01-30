@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
       Paginator::useBootstrap();
 
       Blade::directive('dec', function ($expression) {
-        return "<?php echo ($expression)->number_format($expression, 0, ',', ' '); ?>";
+        return "<?php echo number_format((float)$expression, 0, ',', ' '); ?>";
       });
     }
 }

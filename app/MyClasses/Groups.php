@@ -31,23 +31,23 @@ class Groups {
           $item['num'] = $item_[0];
           $item['id'] = $item_[1];
           $item['name'] = $item_[2];
-          if (is_numeric($item_[3])) $item['members_count']=number_format($item_[3], 0, '.', ' '); else $item['members_count']='';
-          if (is_numeric($item_[4])) $item['grouth']=number_format($item_[4], 0, '.', ' '); else $item['grouth']='';
+          if (is_numeric($item_[3])) $item['members_count'] = $item_[3]; else $item['members_count']='';
+          if (is_numeric($item_[4])) $item['grouth'] = $item_[4]; else $item['grouth']='';
 
-          if (is_numeric($item_[5])) $item['reach']=number_format($item_[5], 0, '.', ' '); else $item['reach']='';
+          if (is_numeric($item_[5])) $item['reach'] = $item_[5]; else $item['reach']='';
           $item['reach_to_sub'] = $item_[6];
-          if (is_numeric($item_[7])) $item['reach_subscribers']=number_format($item_[7], 0, '.', ' '); else $item['reach_subscribers']='';
+          if (is_numeric($item_[7])) $item['reach_subscribers'] = $item_[7]; else $item['reach_subscribers']='';
           $item['sub_to_reach'] = $item_[8];
-          if (is_numeric($item_[9])) $item['female']=number_format($item_[9], 0, '.', ' '); else $item['female']='';
+          if (is_numeric($item_[9])) $item['female'] = $item_[9]; else $item['female']='';
           $item['female_proc'] = $item_[10];
-          if (is_numeric($item_[11])) $item['male']=number_format($item_[11], 0, '.', ' '); else $item['male']='';
+          if (is_numeric($item_[11])) $item['male'] = $item_[11]; else $item['male']='';
           $item['male_proc'] = $item_[12];
-          if (is_numeric($item_[13])) $item['visitors']=number_format($item_[13], 0, '.', ' '); else $item['visitors']='';
+          if (is_numeric($item_[13])) $item['visitors'] = $item_[13]; else $item['visitors']='';
           $item['views_to_visit'] = $item_[14];
-          if (is_numeric($item_[15])) $item['over_18']=number_format($item_[15], 0, '.', ' '); else $item['over_18']='';
+          if (is_numeric($item_[15])) $item['over_18'] = $item_[15]; else $item['over_18']='';
           $item['over_18_procent'] = $item_[16];
           $item['cities'] = $item_[17];
-          if (is_numeric($item_[18])) $item['cities_count']=number_format($item_[18], 0, '.', ' '); else $item['cities_count']='';
+          if (is_numeric($item_[18])) $item['cities_count'] = $item_[18]; else $item['cities_count']='';
           $item['max_visitors'] = $item_[19];
           $item['can_post'] = $item_[20];
           $item['wall'] = $item_[21];
@@ -310,7 +310,7 @@ retrys:
   }
 
 
-  public function getLastPostDate($token, $rand = NULL) {
+  public function getLastPostDate($token, $rand = NULL, $toppost = NULL) {
     $vk = new VKApiClient();
     $group_ids_all = array_column($this->groups, 'id');
 
