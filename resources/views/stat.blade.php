@@ -33,9 +33,11 @@
 
         <tbody>
           @foreach ($visitors as $visitor)
-            <tr class="text-center">
+            @if((date('U')-12*60*60) < strtotime($visitor->created_at)) <tr class="text-center table-warning">
+            @else <tr class="text-center">
+            @endif
               <td>{{ $visitor->id }}</td>
-              <td>{{ $visitor->created_at }}</td>
+              <td>{{ date('d.m.y H:i', strtotime($visitor->created_at)) }}</td>
               <td><a target="_blank" href="https://vk.com/id{{ $visitor->vkid }}">{{ $visitor->vkid }}</a></td>
               <td>{{ $visitor->firstname }}</td>
               <td>{{ $visitor->lastname }}</td>
@@ -44,7 +46,7 @@
               <td>{{ $visitor->visit_number }}</td>
               <td>{{ $visitor->downloads }}</td>
               <td>{{ $visitor->downloads_anon }}</td>
-              <td {{ $visitor->oplata_class }}>{{ $visitor->oplata_date }}</td>
+              <td {{ $visitor->oplata_class }}> @isset($visitor->oplata_date){{ date('d.m.y', strtotime($visitor->oplata_date)) }} @endisset</td> 
             </tr>
           @endforeach
         </tbody>
