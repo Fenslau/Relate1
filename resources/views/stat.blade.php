@@ -46,11 +46,8 @@
               <td>{{ $visitor->visit_number }}</td>
               <td>{{ $visitor->downloads }}</td>
               <td>{{ $visitor->downloads_anon }}</td>
-<<<<<<< HEAD
               <td {{ $visitor->oplata_class }}>{{ date('d.m.y', strtotime($visitor->oplata_date)) }}</td>
-=======
-              <td {{ $visitor->oplata_class }}> @isset($visitor->oplata_date){{ date('d.m.y', strtotime($visitor->oplata_date)) }} @endisset</td> 
->>>>>>> dc0cbbc857a697e2549c194bcb793e686f01e3f8
+              <td {{ $visitor->oplata_class }}> @isset($visitor->oplata_date){{ date('d.m.y', strtotime($visitor->oplata_date)) }} @endisset</td>
             </tr>
           @endforeach
         </tbody>
