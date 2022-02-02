@@ -104,7 +104,7 @@ class OldPost extends Command
 
         		$post_id = $post['id'];
         		$usertag = $demand['user'];
-        		$text = $data = $post['text'];
+        		$text = $data = str_replace("\n", '<br />', $post['text']);
         		$event_type = $post['post_type'];
         		$action_time = $post['date'];
         		$author_id = $post['from_id'];
@@ -136,9 +136,9 @@ class OldPost extends Command
           			case 'note': $note = $att['note']['text'];
           			case 'link': $linkr = $linkr.$att['link']['url'].','; break;
           			case 'doc': $doc = $doc.$att['doc']['url'].','; break;
-          			case 'photo': foreach ($att['photo']['sizes'] as $photosize) if ($photosize['type'] == 'q') $photo = $photo.$photosize['url'].','; break;
+          			case 'photo': foreach ($att['photo']['sizes'] as $photosize) if ($photosize['type'] == 'x') $photo = $photo.$photosize['url'].','; break;
           			case 'video': $video_player = $video_player.$att['video']['owner_id'].'_'.$att['video']['id'].'_'.$att['video']['access_key'].','; break;
-          			case 'audio': $audio = $audio.$att['audio']['artist'].' — '.$att['audio']['title'].'9GZVNyidgk';
+          			case 'audio': $audio = $audio.'<div class="d-flex align-items-center justify-content-between">'.$att['audio']['artist'].' — '.$att['audio']['title'].'</div>'.'9GZVNyidgk';
         			}
         		}
 

@@ -65,7 +65,7 @@
             <div class="text-success">+@dec($item['grouth'])
             </div>
             @elseif ($item['grouth'] < 0)
-            <div class="text-danger">@dec($item['grouth'])
+            <div class="text-danger">@if(!empty($item['grouth'])) @dec($item['grouth']) @endif
             @endif
             </div>
           </td>
@@ -82,7 +82,14 @@
             @else
             {{ $item['wall'] }}
             @endif
-            <em>{{ $item['can_post'] }}</em></td>
+            <em>
+              @if($item['can_post'] == 'посты и комменты')
+              <div class="text-success">посты и комменты</div>
+              @else
+              {{ $item['can_post'] }}
+              @endif
+            </em>
+          </td>
           <td>{{ $item['is_closed'] }}<br /><em>{{ $item['type'] }}</em></td>
           <td>
 

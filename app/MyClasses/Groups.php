@@ -6,6 +6,7 @@ use \XLSXWriter;
 use \SimpleXLSX;
 use \App\MyClasses\GetProgress;
 use App\Models\Progress;
+use App\Models\Toppost;
 
 class Groups {
 
@@ -312,6 +313,9 @@ retrys:
 
   public function getLastPostDate($token, $rand = NULL, $toppost = NULL) {
     $vk = new VKApiClient();
+    $posts = new Toppost();
+    $data_post = array();
+    $count_post = 0;
     $group_ids_all = array_column($this->groups, 'id');
 
 	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Собираются даты последних постов', count($group_ids_all), 25);
@@ -322,7 +326,10 @@ retrys:
 
           for ($i=0; $i<25; $i++) {
             $k=($j-1)*25+$i;
-            if (isset($group_ids_all[$k])) $code_2 = $code_2.'API.wall.get({"owner_id":-'.$group_ids_all[$k].',"v":5.95,"count":2}),';
+            if (isset($group_ids_all[$k])) {
+              if ($toppost) $code_2 = $code_2.'API.wall.get({"owner_id":-'.$group_ids_all[$k].',"v":5.95,"count":50}),';
+              else $code_2 = $code_2.'API.wall.get({"owner_id":-'.$group_ids_all[$k].',"v":5.95,"count":2}),';
+            }
             else break;
           }
           $code_2 .= '];';
@@ -343,18 +350,64 @@ retrys:
       }
       catch (\VK\Exceptions\VKClientException  $exception) {
         echo $exception->getMessage()."\n";
-        die;
+        continue;
       }
 
         for ($i=0; $i<25; $i++) {
           $k=($j-1)*25+$i;
             if (!empty($this->groups[$k]['id'])) {
-
               if (!empty($wall1[$i]['items'][1]['date'])) {
                   $this->groups[$k]['date'] = date('d.m.Y', max($wall1[$i]['items'][1]['date'], $wall1[$i]['items'][0]['date']));
                }
             }
+            if ($toppost) {
+              if (isset($wall1[$i]['items'])) {
+                foreach ($wall1[$i]['items'] as $post) {
+                  if(empty($post['is_pinned']) AND $post['marked_as_ads'] == 0 AND (date('U') - $post['date']) < 5*24*60*60) {
+                      $data = array();
+                      if (!empty($post['copy_history'])) {
+                        $post['text'] = $post['copy_history'][0]['text'];
+                        $post['attachments'] = $post['copy_history'][0]['attachments'];
+                        $post['post_type'] = 'repost';
+                      }
+                      $data['post_id'] = $post['id'];
+                  		$data['data'] =  str_replace("\n", '<br />', $post['text']);
+                  		$data['event_type'] = $post['post_type'];
+                  		$data['action_time'] = $post['date'];
+                  		$data['author_id'] = $post['from_id'];
+                  			$event_url = '';
+                  			if ($post['post_type'] == 'post') $data['event_url'] = 'https://vk.com/wall'.$post['owner_id'].'_'.$post['id'];
+                  			if ($post['post_type'] == 'reply') $data['event_url'] = 'https://vk.com/wall' .$post['owner_id'].'_'.$post['post_id'].'?reply='.@$post['parents_stack'][0];
+
+                  		$data['video_player'] =	$data['photo'] = $data['link'] = $data['audio'] = $data['doc'] = $data['note'] = '';
+                      $data['comments'] = $data['views'] = $data['likes'] = $data['reposts'] = 0;
+                  		if (isset($post['attachments'])) foreach ($post['attachments'] as $att) {
+
+                  			switch($att['type']) {
+                    			case 'note': $data['note'] = $att['note']['text'];
+                    			case 'link': $data['link'] = $data['link'].$att['link']['url'].','; break;
+                    			case 'doc': $data['doc'] = $data['doc'].$att['doc']['url'].','; break;
+                    			case 'photo': foreach ($att['photo']['sizes'] as $photosize) if ($photosize['type'] == 'x') $data['photo'] = $data['photo'].$photosize['url'].','; break;
+                    			case 'video': $data['video_player'] = $data['video_player'].$att['video']['owner_id'].'_'.$att['video']['id'].'_'.$att['video']['access_key'].','; break;
+                    			case 'audio': $data['audio'] = $data['audio'].'<div class="d-flex align-items-center justify-content-between">'.$att['audio']['artist'].' — '.$att['audio']['title'].'</div>'.'9GZVNyidgk';
+                  			}
+                  		}
+
+                      if (isset($post['comments']['count'])) $data['comments'] = $post['comments']['count'];
+                      if (isset($post['views']['count']) )$data['views'] = $post['views']['count'];
+                      if (isset($post['likes']['count'])) $data['likes'] = $post['likes']['count'];
+                      if (isset($post['reposts']['count'])) $data['reposts'] = $post['reposts']['count'];
+                      $data_post[] = $data;
+                      $count_post++;
+                  }
+
+                }
+              }
+            }
           }
+          $posts->upsert($data_post, ['author_id', 'post_id'], ['video_player', 'photo', 'link', 'audio', 'doc', 'data', 'comments', 'likes', 'views', 'reposts']);
+          $data_post = array();
+          $count_post = 0;
       }
   ex:
   }

@@ -27,6 +27,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent1">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item bg-white rounded px-2 my-1">
+            <a class="nav-link" href="{{ route('toppost') }}">Топ-посты из групп ВКонтакте</a>
+          </li>
+          <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
           </li>
           <li class="nav-item bg-white rounded px-2 my-1">
@@ -49,8 +52,12 @@
 
     <nav class="d-none d-sm-flex justify-content-around align-items-start navbar">
       <div class="m-1 service">
+        <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Топ&#8209;посты из&nbsp;групп ВКонтакте</a>
+        <div class="d-none d-md-block text-center lh-sm"><small><small>лента самых популярных постов из самых популярных групп</small></small></div>
+      </div>
+      <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
-        <div class="d-none d-md-block text-center lh-sm"><small><small>поможет вам найти группы Вк по различным критериям (город, название, количество подписчиков и пр.) и скачать в файле</small></small></div>
+        <div class="d-none d-md-block text-center lh-sm"><small><small>поможет вам найти группы ВК по различным критериям (город, название, количество подписчиков и пр.) и скачать в файле</small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('auditoria') }}">Группы с&nbsp;похожей ЦА</a>
@@ -66,7 +73,7 @@
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('stream') }}">Собрать и&nbsp;анализировать посты</a>
-        <p class="d-none d-md-block text-center lh-sm"><small><small>инструмент помогает собрать посты Вк по ключевым словам, следить за упоминаниями о компании в соцсети, собрать активных авторов, провести анализ постов по количеству упоминаний, следить за репутацией компании и многое другое</small></small></p>
+        <p class="d-none d-md-block text-center lh-sm"><small><small>инструмент помогает собрать посты ВК по ключевым словам, следить за упоминаниями о компании в соцсети, собрать активных авторов, провести анализ постов по количеству упоминаний, следить за репутацией компании и многое другое</small></small></p>
       </div>
     </nav>
 

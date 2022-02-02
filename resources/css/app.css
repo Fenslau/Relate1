@@ -139,8 +139,8 @@ input:checked + label.check_cut  {
 	display: none;
 }
 
-.aside .btn {
-    min-width: 2rem;
+.icon {
+    min-width: 1rem;
 }
 
 .modal-body h6 {

@@ -3,7 +3,7 @@
 query_string="{{ serialize($request->all()) }}"
 @endif
 class="">
-@if (empty($dublikat_render))
+@if (empty($dublikat_render) && empty($info['toppost']))
 @include('inc.breadcrumbs')
 @endif
 <div id="ajax"> </div>
@@ -121,13 +121,13 @@ class="">
 
 
 
-
+        @if(empty($info['toppost']))
           <input id="{{ $item['id'] }}_trash" class="d-none check_trash check" type="checkbox"	{{ ($item['check_trash'] == 1 ? "checked":"") }} name="{{ $item['id'] }}" url="trash">
           <label for="{{ $item['id'] }}_trash" data-toggle="tooltip" title="В корзину" class="mx-1 m-0 check_trash cursor-pointer"><i class="fa fa-trash"></i></label>
 
   				<input id="{{ $item['id'] }}_flag" class="d-none check_flag check" type="checkbox" {{ ($item['check_flag'] == 1 ? "checked":"") }} name="{{ $item['id'] }}" url="flag">
           <label for="{{ $item['id'] }}_flag" data-toggle="tooltip" title="В избранное" class="mx-1 m-0 check_flag cursor-pointer"><i class="fa fa-star"></i></label>
-
+        @endif
           <span class="text-danger font-weight-bold">{{ $items->firstItem()+$loop->index }}</span>
 
         </div>
@@ -245,7 +245,10 @@ class="">
             @endif
           </div>
           <div class="text-truncate">
-            <span class="d-none d-md-inline">Правило: </span><mark><a class="text-muted ajax-post" data-toggle="tooltip" title="Показать записи только с этой меткой" href = "{{ route('stream') }}/{{ $info['project_name'] }}/?rule={{ str_replace(session('vkid'), '', $item['user']) }}">{{ str_replace(session('vkid'), '', $item['user']) }}</a></mark>
+            @if(empty($info['toppost']))
+              <span class="d-none d-md-inline">Правило: </span><mark><a class="text-muted ajax-post" data-toggle="tooltip" title="Показать записи только с этой меткой" href = "{{ route('stream') }}/{{ $info['project_name'] }}/?rule={{ str_replace(session('vkid'), '', $item['user']) }}">{{ str_replace(session('vkid'), '', $item['user']) }}</a></mark>
+            @else <span class="d-none d-md-inline"> {{ $item['popular'] }} </span>
+            @endif
           </div>
         </div>
 
