@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Visitors;
 use App\Models\Top;
 use App\Models\Stream\OldPosts;
+use \App\MyClasses\VKUser;
 
 class AuthController extends Controller
 {
@@ -77,10 +78,12 @@ class AuthController extends Controller
     $token=session('token');
     if (!empty($token)) {
       $vk = new VKApiClient();
+      $user = new VKUser(session('vkid'));
       try {
         $user_profile = $vk->users()->get($token, array(
           'fields' => 'photo_50, city'
         ));
+        if (!empty($user->demo)) $user_profile[0]['paid_until'] = $user->date;
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
           Session::flush();
           return back()->with('danger', 'Ваша сессия устарела. Залогиньтесь заново');

@@ -19,6 +19,13 @@
       <div class="d-none text-truncate d-md-block p-2">
         Сейчас у вас бесплатный доступ к сайту. Действуют ограничения.
       </div>
+    @elseif (!empty($user_profile->paid_until))
+    <div class="d-none text-truncate d-md-block p-2">
+      Доступ оплачен до
+      @if (strtotime($user_profile->paid_until) - date('U') < (3600*24) AND strtotime($user_profile->paid_until) - date('U') > 0)<span class="text-warning">{{ date('d.m.y H:i', strtotime($user_profile->paid_until)) }}</span> @endif
+      @if (strtotime($user_profile->paid_until) - date('U') > (3600*24))<span class="text-success">{{ date('d.m.y', strtotime($user_profile->paid_until)) }}</span> @endif 
+      @if (strtotime($user_profile->paid_until) - date('U') < 0)<span class="text-danger">{{ date('d.m.y H:i', strtotime($user_profile->paid_until)) }}</span> @endif
+    </div>
     @endif
     <div class="p-2">
       <a href="{{ route('tarifs') }}" type="button" class="btn btn-sm btn-primary vk-top-bg text-white">Оплатить&nbsp;доступ</a>

@@ -367,8 +367,8 @@ retrys:
                       $data = array();
                       if (!empty($post['copy_history'])) {
                         $post['text'] = $post['copy_history'][0]['text'];
-                        $post['attachments'] = $post['copy_history'][0]['attachments'];
-                        $post['post_type'] = 'repost';
+                        if (isset($post['copy_history'][0]['attachments'])) $post['attachments'] = $post['copy_history'][0]['attachments'];
+                        $post['post_type'] = 'share';
                       }
                       $data['post_id'] = $post['id'];
                   		$data['data'] =  str_replace("\n", '<br />', $post['text']);
@@ -376,7 +376,7 @@ retrys:
                   		$data['action_time'] = $post['date'];
                   		$data['author_id'] = $post['from_id'];
                   			$event_url = '';
-                  			if ($post['post_type'] == 'post') $data['event_url'] = 'https://vk.com/wall'.$post['owner_id'].'_'.$post['id'];
+                  			if ($post['post_type'] == 'post' OR $post['post_type'] == 'share') $data['event_url'] = 'https://vk.com/wall'.$post['owner_id'].'_'.$post['id'];
                   			if ($post['post_type'] == 'reply') $data['event_url'] = 'https://vk.com/wall' .$post['owner_id'].'_'.$post['post_id'].'?reply='.@$post['parents_stack'][0];
 
                   		$data['video_player'] =	$data['photo'] = $data['link'] = $data['audio'] = $data['doc'] = $data['note'] = '';

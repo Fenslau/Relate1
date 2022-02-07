@@ -32,7 +32,8 @@ $notificationData = [
     if ($billPayments->checkNotificationSignature($validSignatureFromNotificationServer, $notificationData, $merchantSecret) === TRUE) {
   		$vkid = $data['bill']['customer']['account'];
       $oplata = new Oplata();
-      $result = $oplata->where('vkid', $vkid)->orderBy('id', 'desc')->first()->toArray();
+      $result = $oplata->where('vkid', $vkid)->orderBy('id', 'desc')->first();
+      if ($result) $result = $result->toArray();
       $project_limit = $rules_limit = $old_post_limit = 0;
   		$demo = 1;
 		if (!empty($result['date'])) $date = strtotime($result['date']);
@@ -47,14 +48,14 @@ $notificationData = [
     	case '1273.00': if (!empty($date) AND $date > date ('U')) $date += 8380800;
     					else $date = date('U')+8380800; break;
 
-    	case '342.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
+    	case '342.00': if (!empty($result['demo']) AND (strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
     					else $date = date ('U')+(60*60*24*7);
     					$project_limit = 1;
     					$rules_limit = 2;
     					$old_post_limit = 100;
     					$demo = 'streaming1';
     					break;
-    	case '539.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
+    	case '539.00': if (!empty($result['demo']) AND (strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
     					else $date = date ('U')+(60*60*24*7);
     					$project_limit = 2;
     					$rules_limit = 5;
@@ -62,7 +63,7 @@ $notificationData = [
     					$demo = 'streaming2';
 						print_r ($result['demo']);
     					break;
-    	case '979.00': if ((strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*30);
+    	case '979.00': if (!empty($result['demo']) AND (strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*30);
     					else $date = date ('U')+(60*60*24*30);
     					$project_limit = 2;
     					$rules_limit = 5;

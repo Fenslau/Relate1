@@ -26,9 +26,11 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent1">
         <ul class="navbar-nav mr-auto">
+          @if ((session('vkid') == 151103777 || session('realvkid') == 151103777 || session('vkid') == 409899462 || session('realvkid') == 409899462))
           <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('toppost') }}">Топ-посты из групп ВКонтакте</a>
           </li>
+          @endif
           <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
           </li>
@@ -51,10 +53,12 @@
 
 
     <nav class="d-none d-sm-flex justify-content-around align-items-start navbar">
+      @if ((session('vkid') == 151103777 || session('realvkid') == 151103777 || session('vkid') == 409899462 || session('realvkid') == 409899462))
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Топ&#8209;посты из&nbsp;групп ВКонтакте</a>
         <div class="d-none d-md-block text-center lh-sm"><small><small>лента самых популярных постов из самых популярных групп</small></small></div>
       </div>
+      @endif
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
         <div class="d-none d-md-block text-center lh-sm"><small><small>поможет вам найти группы ВК по различным критериям (город, название, количество подписчиков и пр.) и скачать в файле</small></small></div>
