@@ -2,7 +2,7 @@
   <div class="col-md-5 align-self-center">
     <div class="mb-3 form-inline justify-content-center">
       <div class="p-2">
-        <a href="{{ route('home') }}" type="button" class="btn btn-sm btn-secondary text-white">На&nbsp;главную</a>
+        <a href="{{ route('home') }}" class="btn btn-sm btn-secondary text-white">На&nbsp;главную</a>
       </div>
 
       <button id="js-load" disabled class="btn btn-sm btn-primary vk-top-bg" type="submit" name="submit"><i class="fa fa-search"></i><span class="spinner-border spinner-border-sm text-light d-none"></span> {{$button}}</button>
@@ -11,7 +11,7 @@
   </div>
   <div class="col-md-7">
     @if(Session::has('vkid'))
-    <script type="text/javascript">
+    <script>
       var vkid={{ session('vkid') }};
       var url='{{ route($link) }}';
       var process1='{{ $link }}';

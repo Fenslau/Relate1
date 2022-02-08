@@ -148,7 +148,7 @@ class="">
             <div class="my-2">
       				@foreach (explode(",https:", $item['photo']) as $photo)
                 <div class="mx-1 my-2">
-                	<img loading="lazy" class="rounded img-fluid" src="{{ $photo }}" />
+                	<img loading="lazy" class="rounded img-fluid" alt="Post photo" src="{{ $photo }}" />
                 </div>
       				@endforeach
             </div>
@@ -264,8 +264,8 @@ class="">
     {{ $items->onEachSide(4)->links() }}
 
   @if (!empty($cut))
-    <script src="{{ mix('/js/readmore.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
+    <script src="{{ mix('/js/readmore.js') }}"></script>
+    <script>
     		$(".textdata").readmore ({
     				maxHeight: 200,
     				heightMargin: 200,
@@ -325,7 +325,7 @@ class="">
 
 @if (($request->apply_filter == 'Показать записи' || empty($request->apply_filter)))
   <div id_id="{{ serialize(array_column($items->items(), 'id')) }}" author_id="{{ serialize(array_column($items->items(), 'original_author_id')) }}" post_id="{{ serialize(array_column($items->items(), 'post_id')) }}" event_type="{{ serialize(array_column($items->items(), 'event_type')) }}" event_url="{{ serialize(array_column($items->items(), 'event_url')) }}" video_player="{{ serialize(array_column($items->items(), 'video_player')) }}" id="serialize"></div>
-  <script type="text/javascript">
+  <script>
       $(document).ready(function () {
 
         var id_id = $('#serialize').attr('id_id');

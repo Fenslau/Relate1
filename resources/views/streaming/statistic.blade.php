@@ -72,7 +72,7 @@
           <button type="button" query_string="{{ serialize($request) }}" class="my-2 btn btn-sm btn-primary vk-top-bg text-white period no-outline"  name="period" mode = "week"><i class="icon fas fa-calendar-week"></i><span class="spinner-border spinner-border-sm d-none"></span> 12 недель</button>
           <button type="button" query_string="{{ serialize($request) }}" class="my-2 btn btn-sm btn-primary vk-top-bg text-white period no-outline"  name="period" mode = "month"><i class="icon fas fa-calendar-alt"></i><span class="spinner-border spinner-border-sm d-none"></span> 12 месяцев</button>
       </div>
-      <script type="text/javascript">
+      <script>
           $(document).ready( function () {
             $(document).on('click', '.period', function (e) {
               e.preventDefault();
@@ -119,7 +119,7 @@
             <p class="highcharts-description">
             </p>
         </figure>
-        <script type="text/javascript">
+        <script>
           Highcharts.chart('container1', {
               chart: {
                   plotBackgroundColor: null,
@@ -178,7 +178,7 @@
             <p class="highcharts-description">
             </p>
         </figure>
-        <script type="text/javascript">
+        <script>
           Highcharts.chart('container2', {
               chart: {
                   plotBackgroundColor: null,
@@ -245,7 +245,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
         Highcharts.chart('container3', {
             chart: {
                 plotBackgroundColor: null,
@@ -338,7 +338,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
         Highcharts.chart('container4', {
             chart: {
                 plotBackgroundColor: null,
@@ -429,7 +429,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
         Highcharts.chart('container5', {
           chart: {
               plotBackgroundColor: null,
@@ -511,7 +511,7 @@
     <div class="col-md-12 my-5">
       <div id="container6">
       </div>
-      <script type="text/javascript">
+      <script>
           var elevationData = [
             @php $j = 1; @endphp
           @for ($i = 13; $i <= 118; $i++)
@@ -621,7 +621,7 @@
     <div class="col-md-12 my-5">
       <div id="container9">
       </div>
-      <script type="text/javascript">
+      <script>
 
           var data = [
             @foreach ($country_score1 as $code => $value)
@@ -679,7 +679,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
           Highcharts.chart('container7', {
               chart: {
                   type: 'column'
@@ -795,7 +795,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
           Highcharts.chart('container8', {
               chart: {
                   type: 'column'
@@ -912,7 +912,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
           var data = [];
           @for ($i=0; $i<count($weight_cloud); $i++)
             data[{{ $i }}] = {
@@ -952,7 +952,7 @@
           <p class="highcharts-description">
           </p>
       </figure>
-      <script type="text/javascript">
+      <script>
           var data = [];
           @for ($i=0; $i<count($weight_tag); $i++)
             data[{{ $i }}] = {
@@ -999,7 +999,7 @@
             </div>
           </div>
           <button id="ignored_authors_btn" data-toggle="popover-ignore" class="btn btn-sm btn-outline-info no-outline">Игнор-лист</button>
-          <script type="text/javascript">
+          <script>
             $(function () {
                 $('[data-toggle="popover-ignore"]').popover({
                 container: 'body',
@@ -1177,7 +1177,7 @@
                 </tbody>
               </table>
             </div>
-          <script type="text/javascript">
+          <script>
               $(document).ready( function () {
                 $(".author").click(function() {
                   _this = $(this);
@@ -1214,7 +1214,7 @@
             	} );
           </script>
 
-          <script type="text/javascript">
+          <script>
               $(document).ready( function () {
                 	$("#all_checkbox").click(function(){
                 		if ($(this).is(":checked")){

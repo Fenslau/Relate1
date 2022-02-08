@@ -10,7 +10,7 @@
 
 
     @if (empty($items))
-      <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" src="/images/create1.png"></h4>
+      <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" alt="Create Project" src="/images/create1.png"></h4>
       <div class="text-center m-5"><a class="btn btn-success text-uppercase" href="/streamdemo">Демо-версия</a></div>
     @endif
 
@@ -56,7 +56,7 @@
             @foreach ($items as $item)
               <tr class="lh-md text-center">
                 <td>{{ $loop->iteration }}</td>
-                <td class="text-left"><a href="{{ route('stream') }}/{{ $item['project_name'] }}">{{ $item['project_name'] }}</a></td>
+                <td class="text-left"><a href="{{ route('post', $item['project_name']) }}">{{ $item['project_name'] }}</a></td>
                 <td>{{ $item['rules_count'] }}</td>
                 <td>{{ $item['count_stream_records'] }}</td>
                 <td><button onclick="return confirm('Вы уверены?')" class="btn btn-sm btn-outline-danger" type="submit" name="del" value="{{ $item['id'] }}"><i class="fa fa-trash"></i> Удалить</button></td>

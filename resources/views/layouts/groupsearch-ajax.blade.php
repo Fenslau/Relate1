@@ -69,7 +69,7 @@
     </div>
   </div>
 
-<script type="text/javascript">
+<script>
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })

@@ -33,7 +33,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="common_info"><h3 class="h5 font-weight-bold text-uppercase">Общая информация*</h3>
+            <label for="common_info"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Общая информация*</span>
               Имя и фамилия, пол, возраст, страна, город <br />
               сейчас онлайн <br />
               "короткий" адрес страницы <br />
@@ -51,7 +51,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="site"><h3 class="h5 font-weight-bold text-uppercase">Сайт</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан сайт</small></label>
+            <label for="site"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Сайт</span><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан сайт</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="site" type="checkbox" name="site" value="site">
@@ -60,7 +60,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="contacts"><h3 class="h5 font-weight-bold text-uppercase">Контакты</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указано что-нибудь в контактах (обычно это телефон)</small></label>
+            <label for="contacts"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Контакты</span><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указано что-нибудь в контактах (обычно это телефон)</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="contacts" type="checkbox" name="contacts" value="contacts">
@@ -69,7 +69,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="social"><h3 class="h5 font-weight-bold text-uppercase">Профили соц-сетей</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан хотя-бы один профиль из соц-сетей</small></label>
+            <label for="social"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Профили соц-сетей</span><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, у которых указан хотя-бы один профиль из соц-сетей</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="social" type="checkbox" name="social" value="social">
@@ -78,7 +78,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="relation"><h3 class="h5 font-weight-bold text-uppercase">Отношения</h3><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, которые указали, что состоят с кем-то в отношениях</small></label>
+            <label for="relation"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Отношения</span><small class="lh-sm d-inline-flex">Будут собраны только те подписчики, которые указали, что состоят с кем-то в отношениях</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="relation" type="checkbox" name="relation" value="relation">
@@ -87,7 +87,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="half2"><h3 class="h5 font-weight-bold text-uppercase">Вторая половина</h3><small class="lh-sm d-inline-flex">Данный параметр собирается, если пользователь на своей стене указал с кем состоит в отношениях</small></label>
+            <label for="half2"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">Вторая половина</span><small class="lh-sm d-inline-flex">Данный параметр собирается, если пользователь на своей стене указал с кем состоит в отношениях</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="half2" type="checkbox" name="half2" value="half2">
@@ -96,7 +96,7 @@ https://vk.com/club1
 
         <div class="row">
           <div class="col-md-8 bg-secondary text-white text-right p-3">
-            <label for="bday"><h3 class="h5 font-weight-bold text-uppercase">День рождения</h3><small class="lh-sm d-inline-flex">Был или будет в ближайшие 14 дней</small></label>
+            <label for="bday"><span class="h5 d-block mb-0 font-weight-bold text-uppercase">День рождения</span><small class="lh-sm d-inline-flex">Был или будет в ближайшие 14 дней</small></label>
           </div>
           <div class="col-md-4">
               <input class="mt-3 mb-5 form-control select_options" id="bday" type="checkbox" name="bday" value="bday">

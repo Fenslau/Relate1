@@ -57,7 +57,7 @@
         <tr class="lh-md text-center">
           <td>{{ $item['num'] }}</td>
           <td>{{ $item['id'] }}</td>
-          <td class="ava-group"><img loading="lazy" class="ava-group" src="{{ $item['photo_50'] }}" /></td>
+          <td class="ava-group"><img loading="lazy" class="ava-group" alt="Ava" src="{{ $item['photo_50'] }}" /></td>
           <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
           <td>@if(!empty($item['members_count'])) @dec($item['members_count'])@endif</td>
           <td>
@@ -66,8 +66,8 @@
             </div>
             @elseif ($item['grouth'] < 0)
             <div class="text-danger">@if(!empty($item['grouth'])) @dec($item['grouth']) @endif
-            @endif
             </div>
+            @endif  
           </td>
           <td>@if(!empty($item['reach'])) @dec($item['reach'])@endif<br /><small>{{ $item['reach_to_sub'] }}</small></td>
           <td>@if(!empty($item['reach_subscribers'])) @dec($item['reach_subscribers'])@endif<br /><small>{{ $item['sub_to_reach'] }}</small></td>

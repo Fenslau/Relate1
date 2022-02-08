@@ -102,7 +102,7 @@
 </div>
 </form>
 
-  <script type="text/javascript">
+  <script>
     mode = 0;
     $("input[name=mode]").click(function(){
       var target = $("#block-" + $(this).val());
@@ -175,7 +175,7 @@
   </div>
   </form>
 
-    <script type="text/javascript">
+    <script>
       mode_{{ $rule['id'] }} = 0;
       $("input[name=mode_{{ $rule['id'] }}]").click(function(){
         var target_{{ $rule['id'] }} = $("#block-" + $(this).val() + {{ $rule['id'] }});
@@ -189,7 +189,7 @@
         target_{{ $rule['id'] }}.fadeIn(500);
       });
     </script>
-    <script type="text/javascript">
+    <script>
       document.getElementById("edit_{{ $rule['id'] }}").onclick = function() {
         if ($("#brand_{{ $rule['id'] }}").val().length) {
           $("input[name=mode_{{ $rule['id'] }}][value=1]").trigger("click");

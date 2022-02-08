@@ -5,7 +5,7 @@
 
     <div class="d-flex justify-content-around">
       <div class="mr-auto p-2">
-        <a href="{{ route('home') }}"><img class="img-fluid" src="/images/logo.jpg"></a>
+        <a href="{{ route('home') }}"><img class="img-fluid" alt="Logo Toppost" src="/images/logo.jpg"></a>
         <div class="text-uppercase lh-sm mt-n2 text-right">
           <small><small><a class="text-white" href="mailto:vktoppost@sphere-market.ru">vktoppost@sphere-market.ru</a><br />
           техподдержка</small></small>

@@ -51,7 +51,7 @@
 
 
           <button class="m-1 btn btn-lg btn-outline-success no-outline" data-toggle="popover-file"><i class="far fa-file-excel"></i> <span class="d-none d-md-inline">Excel</span></button>
-          <script type="text/javascript">
+          <script>
             $('body').on('click', '#file_submit', function(e) {
               e.preventDefault();
               var query_string = $('#query_request').attr('query_string');
@@ -92,7 +92,7 @@
 
 
         <button class="m-1 btn btn-lg btn-outline-warning no-outline" data-toggle="popover-old"><i class="fas fa-history"></i> <span class="d-none d-md-inline">Прошлые посты</span></button>
-        <script type="text/javascript">
+        <script>
           $(function () {
               $('[data-toggle="popover-old"]').popover({
               container: 'body',
@@ -126,7 +126,7 @@
             @csrf
             <input type="hidden" name="query_string" value="{{ serialize($request->all()) }}">
             <button disabled query_string="{{ serialize($request->all()) }}" class="m-1 btn btn-lg btn-outline-info statistic" type="submit"><i class="icon fas fa-chart-pie"></i><span style="width: 1.2rem; height: 1.2rem" class="mb-1 spinner-border spinner-border-sm d-none"></span> <span class="d-none d-md-inline">Статистика</span></button>
-            <script type="text/javascript">
+            <script>
                 $(document).ready( function () {
                   $(".statistic").click(function() {
                     _this = $(this);
@@ -372,7 +372,7 @@
 <section>
     @include('inc.modal-aside')
 </section>
-<script type="text/javascript">
+<script>
     if (window.location.hash) {}
     else
     $('#start') [0].scrollIntoView (1)
@@ -381,10 +381,10 @@
       $(".chosen-select").chosen();
     });
 </script>
-<script src="{{ mix('/js/post.js') }}" type="text/javascript"></script>
+<script src="{{ mix('/js/post.js') }}"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js"></script>
 
 <script src="//code.highcharts.com/highcharts.src.js"></script>
 <script src="//code.highcharts.com/modules/data.src.js"></script>

@@ -30,6 +30,8 @@ class GetPostInfo{
           if(empty($request) OR $request->ajax()) return FALSE;
           else return redirect()->route('stream');
       }
+      $re = '/\[(.+)\|(.+)\]/U';
+      $subst = '<a rel="nofollow" target="_blank" href="https://vk.com/$1">$2</a>';
 
       foreach ($items as &$item) {
 
@@ -46,7 +48,7 @@ class GetPostInfo{
                 else $video[$item['id']][$i]['player'] = '';
                 if (!empty($videos['items'][$index_of_videos]['title'])) $video[$item['id']][$i]['title'] = $videos['items'][$index_of_videos]['title'];
                 else $video[$item['id']][$i]['title'] = '';
-                if (!empty($videos['items'][$index_of_videos]['description'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['description'];
+                if (!empty($videos['items'][$index_of_videos]['description'])) $video[$item['id']][$i]['description'] = preg_replace($re, $subst, $videos['items'][$index_of_videos]['description']);
                 elseif (!empty($videos['items'][$index_of_videos]['content_restricted'])) $video[$item['id']][$i]['description'] = $videos['items'][$index_of_videos]['content_restricted_message'];
                 else $video[$item['id']][$i]['description']  = '';
               } else {
@@ -85,14 +87,14 @@ class GetPostInfo{
   public function authorName($items) {
     foreach ($items as &$item) {
       $item['original_author_id'] = $item['author_id'];
-      if ($item['author_id'] > 0) $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/id'.$item['author_id'];
-      else $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/public'.-$item['author_id'];
+      if ($item['author_id'] > 0) $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/id'.$item['author_id'].'"';
+      else $item['author_id'] = '<a rel="nofollow" target="_blank" href="https://vk.com/public'.-$item['author_id'].'"';
       if (!empty($item['name'])) {
         if (empty($request->apply_filter) OR $request->apply_filter == 'Показать записи')
-          $item['author_id'] .= '" data-toggle="tooltip" title="Автор"';
-        $item['author_id'] .= '">'.$item['name'].'</a>';
+          $item['author_id'] .= ' data-toggle="tooltip" title="Автор"';
+        $item['author_id'] .= '>'.$item['name'].'</a>';
       }
-      else $item['author_id'] .= '">Автор</a>';
+      else $item['author_id'] .= '>Автор</a>';
 
       if (!empty($item['sex']) AND $item['sex'] == 1) $item['sex'] = 'жен';
       if (!empty($item['sex']) AND $item['sex'] == 2) $item['sex'] = 'муж';

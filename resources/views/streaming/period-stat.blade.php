@@ -2,7 +2,7 @@
     <div id="container12">
     </div>
 </figure>
-<script type="text/javascript">
+<script>
     Highcharts.chart("container12", {
         chart: {
             type: "line"

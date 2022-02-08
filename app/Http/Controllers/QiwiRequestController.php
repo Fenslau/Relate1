@@ -41,12 +41,12 @@ $notificationData = [
       switch($data['bill']['amount']['value']) {
     	case '1.00': if (!empty($date) AND $date > date ('U')) $date += 1296;
     					else $date = date('U')+1296; break;
-    	case '194.00': if (!empty($date) AND $date > date ('U')) $date += 259200;
-    					else $date = date('U')+259200; break;
-    	case '538.00': if (!empty($date) AND $date > date ('U')) $date += 2764800;
-    					else $date = date('U')+2764800; break;
-    	case '1273.00': if (!empty($date) AND $date > date ('U')) $date += 8380800;
-    					else $date = date('U')+8380800; break;
+    	case '194.00': if (!empty($date) AND $date > date ('U')) $date += 60*60*24*3;
+    					else $date = date('U')+60*60*24*3; break;
+    	case '538.00': if (!empty($date) AND $date > date ('U')) $date += 60*60*24*30;
+    					else $date = date('U')+60*60*24*30; break;
+    	case '1273.00': if (!empty($date) AND $date > date ('U')) $date += 60*60*24*(90+7);
+    					else $date = date('U')+60*60*24*(90+7); break;
 
     	case '342.00': if (!empty($result['demo']) AND (strpos($result['demo'], 'streaming') !== FALSE) AND !empty($date) AND $date > date ('U')) $date += (60*60*24*7);
     					else $date = date ('U')+(60*60*24*7);
@@ -73,8 +73,8 @@ $notificationData = [
 
 
 
-    	default: if (!empty($date) AND $date > date ('U')) $date += 86400;
-    					else $date = date ('U')+86400; break;
+    	default: if (!empty($date) AND $date > date ('U')) $date += 60*60*24;
+    					else $date = date ('U')+60*60*24; break;
     	}
 
       $result = new Oplata();

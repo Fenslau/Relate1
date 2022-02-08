@@ -10,7 +10,7 @@
   <div class="row">
 
     @if(Session::has('vkid'))
-    <script type="text/javascript">
+    <script>
       var vkid={{ session('vkid') }};
       var url='{{ route('search') }}';
       var process1='simple_search';

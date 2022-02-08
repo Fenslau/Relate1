@@ -17,7 +17,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="name"><h3 class="h5 font-weight-bold text-uppercase">Название группы</h3>
+            <label for="name"><span class="h5 d-block font-weight-bold text-uppercase">Название группы</span>
             Введите название группы или его часть в виде ключевого слова для поиска, Если вы хотите найти группы, указавшие город в своем назваии, то вводите название города в этой строке</label>
           </div>
           <div class="col-md-4 form-inline w-100 flex-nowrap align-items-baseline">
@@ -28,7 +28,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="city"><h3 class="h5 font-weight-bold text-uppercase">Город</h3>
+            <label for="city"><span class="h5 d-block font-weight-bold text-uppercase">Город</span>
             Название города нужно вводить, если вы ищете группы, ЗАРЕГИСТРИРОВАННЫЕ в каком-то конкретном городе. Если город - это часть названия группы, при необходимости введите его в строку "название группы", а это поле оставьте пустым</label>
           </div>
           <div class="col-md-4">
@@ -38,7 +38,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="members_count_from"><h3 class="h5 font-weight-bold text-uppercase">Количество подписчиков</h3></label>
+            <label for="members_count_from"><span class="h5 d-block font-weight-bold text-uppercase">Количество подписчиков</span></label>
           </div>
           <div class="col-md-4">
             <div class="row">
@@ -50,7 +50,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="wall"><h3 class="h5 font-weight-bold text-uppercase">Группы с открытой стеной</h3>
+            <label for="wall"><span class="h5 d-block font-weight-bold text-uppercase">Группы с открытой стеной</span>
             Поиск групп, на стене которых любой пользователь может создавать посты и осталять комментарии</label>
           </div>
           <div class="col-md-4">
@@ -60,7 +60,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="comments"><h3 class="h5 font-weight-bold text-uppercase">Группы с открытыми комментариями к постам</h3>
+            <label for="comments"><span class="h5 d-block font-weight-bold text-uppercase">Группы с открытыми комментариями к постам</span>
             Поиск групп, на стенах которых можно осталять только комментарии</label>
           </div>
           <div class="col-md-4">
@@ -70,7 +70,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="verify"><h3 class="h5 font-weight-bold text-uppercase">Верифицированное сообщество</h3>
+            <label for="verify"><span class="h5 d-block font-weight-bold text-uppercase">Верифицированное сообщество</span>
             Это официальные группы известых личностей, музыкантов и компаний, подтвердившие свой статус и помеченные специальным символом "V"</label>
           </div>
           <div class="col-md-4">
@@ -80,7 +80,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="market"><h3 class="h5 font-weight-bold text-uppercase">Группы с магазином</h3>
+            <label for="market"><span class="h5 d-block font-weight-bold text-uppercase">Группы с магазином</span>
             Поиск групп, на стене которых есть раздел с продажей товаров или услуг</label>
           </div>
           <div class="col-md-4">
@@ -90,7 +90,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="open"><h3 class="h5 font-weight-bold text-uppercase">Открытое сообщество</h3>
+            <label for="open"><span class="h5 d-block font-weight-bold text-uppercase">Открытое сообщество</span>
             Группы, в которые можно вступать всем	</label>
           </div>
           <div class="col-md-4">
@@ -106,7 +106,7 @@
           1
         </div>
         <div class="font-weight-light mb-3">
-          <span class="h5 font-weight-bold">Сформулируйте запрос</span><br />
+          <span class="h5 d-block font-weight-bold">Сформулируйте запрос</span><br />
           Определите ключевое слово и введите его в поле «Название группы», если в названиях групп присутствует название города, то укажите его здесь. Если вам требуется найти группы ВК, указавшие в настройках профиля название города, то введите его в поле «Город», во всех других случаях оставьте это поле пустым.
         </div>
 
@@ -114,7 +114,7 @@
           2
         </div>
         <div class="font-weight-light mb-3">
-          <span class="h5 font-weight-bold">Задайте критерии для поиска групп</span><br />
+          <span class="h5 d-block font-weight-bold">Задайте критерии для поиска групп</span><br />
           Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать все группы по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
         </div>
 
@@ -122,7 +122,7 @@
           3
         </div>
         <div class="font-weight-light mb-3">
-          <span class="h5 font-weight-bold">Поиск групп</span><br />
+          <span class="h5 d-block font-weight-bold">Поиск групп</span><br />
           Нажмите кнопку «Поиск групп». После того как система соберет все группы, в верхней части экрана появится ссылка на скачивание Excel-таблицы, а внизу экрана отобразится первая 1000 групп из файла. ВАЖНО! В бесплатной версии система показывает на экране и в файле только 10 групп из общего количества найденных. Чтобы скачать все группы, оплатите доступ на 3 дня, 1 месяц или 3 месяца. Информацию о тарифах вы можете найти <a href="{{ route('tarifs') }}">здесь</a> или в самом верху экрана.
         </div>
       </div>

@@ -10,13 +10,16 @@
 @if(!Session::has('token'))
   <h4 class="h5 text-center alert alert-warning">Авторизуйтесь ВК для полноценного просмотра ленты</h4>
 @endif
+<div class="alert alert-warning font-weight-bold text-center">
+  Ссылка на этот раздел доступна пока только для админов ресурса
+</div>
   <div id="begin" class="form-group d-flex flex-wrap justify-content-around align-items-center">
 
       <button type="button" class="my-2 btn btn-sm btn-info text-white mode no-outline" name="period" mode = "new"><i class="icon fas fa-hourglass-half"></i><span class="spinner-border spinner-border-sm d-none"></span> Свежие</button>
       <button type="button" class="my-2 btn btn-sm btn-danger text-white mode no-outline"  name="period" mode = "hot"><i class="icon fab fa-hotjar"></i><span class="spinner-border spinner-border-sm d-none"></span> Горячие</button>
       <button type="button" class="my-2 btn btn-sm btn-success text-white mode no-outline"  name="period" mode = "best"><i class="icon fas fa-thumbs-up"></i><span class="spinner-border spinner-border-sm d-none"></span> Лучшие</button>
   </div>
-  <script type="text/javascript">
+  <script>
       $(document).ready( function () {
         $(document).on('click', '.mode', function (e) {
           e.preventDefault();
@@ -53,5 +56,5 @@
   <div id="posts">@include('inc.posts')</div>
 </div>
 
-<script src="{{ mix('/js/post.js') }}" type="text/javascript"></script>
+<script src="{{ mix('/js/post.js') }}"></script>
 @endsection

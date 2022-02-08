@@ -27,13 +27,13 @@
 
   @include('inc.footer')
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-  <script src="{{ mix('/js/app.js') }}" type="text/javascript"></script>
-  <script src="{{ mix('/js/ajax.js') }}" type="text/javascript"></script>
-  <script src="{{ mix('/js/aside.js') }}" type="text/javascript"></script>
+  <script src="{{ mix('/js/app.js') }}"></script>
+  <script src="{{ mix('/js/ajax.js') }}"></script>
+  <script src="{{ mix('/js/aside.js') }}"></script>
 @if(env('APP_ENV') == 'production')
   <!-- Yandex.Metrika counter -->
   <script src="//code.jivosite.com/widget.js" data-jv-id="89Nvl6sd5x" async></script>
-  <script type="text/javascript" >
+  <script>
      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
      m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
