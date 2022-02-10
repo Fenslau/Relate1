@@ -90,6 +90,10 @@ class="">
           <span class="mx-1 text-info text-truncate">{{ strftime ('%d %b %yг.  %R', $item['action_time']) }}</span>
 
           <div class="mx-1 d-inline text-truncate">
+            @if(!empty($info['toppost']) && (session('vkid') == 151103777 || session('realvkid') == 151103777 || session('vkid') == 409899462 || session('realvkid') == 409899462))
+              <input id="{{ $item['id'] }}_ignore" class="d-none check_ignore check" type="checkbox" name="{{ $item['id'] }}" url="ignore">
+              <label for="{{ $item['id'] }}_ignore" data-toggle="tooltip" title="Игнор этого автора навсегда" class="mx-1 m-0 check_trash cursor-pointer text-danger"><i class="fa fa-ban"></i></label>
+            @endif
             {!! $item['author_id'] !!}
           </div>
 
@@ -354,7 +358,7 @@ class="">
                       const entries = Object.entries(value)
                       entries.forEach(function(entry) {
                           $('#video'+entry[0]+'_'+key+' .video-title').text(entry[1].title);
-                          $('#video'+entry[0]+'_'+key+' .video-description').text(entry[1].description);
+                          $('#video'+entry[0]+'_'+key+' .video-description').html(entry[1].description);
                           if (entry[1].player) $('#video'+entry[0]+'_'+key+' .embed-responsive-item').prop('src', entry[1].player);
                       });
                   })

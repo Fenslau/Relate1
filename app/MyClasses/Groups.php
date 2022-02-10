@@ -7,6 +7,7 @@ use \SimpleXLSX;
 use \App\MyClasses\GetProgress;
 use App\Models\Progress;
 use App\Models\Toppost;
+use App\Models\IgnoredGroups;
 
 class Groups {
 
@@ -315,10 +316,10 @@ retrys:
     $vk = new VKApiClient();
     $posts = new Toppost();
     $data_post = array();
-    $count_post = 0;
     $group_ids_all = array_column($this->groups, 'id');
 
 	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Собираются даты последних постов', count($group_ids_all), 25);
+    $ignored = IgnoredGroups::pluck('group_id')->toArray();
 
     for ($j=1; $j<=40; $j++) {
 		$progress->step();
@@ -363,7 +364,7 @@ retrys:
             if ($toppost) {
               if (isset($wall1[$i]['items'])) {
                 foreach ($wall1[$i]['items'] as $post) {
-                  if(empty($post['is_pinned']) AND $post['marked_as_ads'] == 0 AND (date('U') - $post['date']) < 5*24*60*60) {
+                  if(empty($post['is_pinned']) AND $post['marked_as_ads'] == 0 AND (date('U') - $post['date']) < 5*24*60*60 AND !in_array($post['from_id'], $ignored)) {
                       $data = array();
                       if (!empty($post['copy_history'])) {
                         $post['text'] = $post['copy_history'][0]['text'];
@@ -398,16 +399,16 @@ retrys:
                       if (isset($post['likes']['count'])) $data['likes'] = $post['likes']['count'];
                       if (isset($post['reposts']['count'])) $data['reposts'] = $post['reposts']['count'];
                       $data_post[] = $data;
-                      $count_post++;
                   }
 
                 }
               }
             }
           }
-          $posts->upsert($data_post, ['author_id', 'post_id'], ['video_player', 'photo', 'link', 'audio', 'doc', 'data', 'comments', 'likes', 'views', 'reposts']);
-          $data_post = array();
-          $count_post = 0;
+          if ($toppost) {
+            $posts->upsert($data_post, ['author_id', 'post_id'], ['video_player', 'photo', 'link', 'audio', 'doc', 'data', 'comments', 'likes', 'views', 'reposts']);
+            $data_post = array();
+          }
       }
   ex:
   }

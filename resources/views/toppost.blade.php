@@ -53,6 +53,7 @@
         });
       } );
   </script>
+  <div class="text-right">@include('inc.ignore-list-script')</div>
   <div id="posts">@include('inc.posts')</div>
 </div>
 

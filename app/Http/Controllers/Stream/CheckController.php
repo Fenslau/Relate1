@@ -6,12 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stream\Projects;
 use App\Models\Stream\StreamData;
+use App\Models\IgnoredGroups;
+use App\Models\Toppost;
+use App\Models\Stream\Authors;
 
 class CheckController extends Controller
 {
     public function check($check_name, Request $request) {
       $message = 'Функция выполнена некорректно';
 
+      if ($check_name == 'ignore') {
+        $author_id = Toppost::find($request->name)->author_id;
+        if ($author_id) {
+          IgnoredGroups::updateOrCreate(['group_id' => $author_id], ['group_id' => $author_id]);
+          $name = Authors::where('author_id', $author_id)->first()->name;
+          $message = 'Постов автора <b>'.$name.'</b> больше не будет в ленте после <a class="cursor-pointer text-link" onclick="location.reload();">перезагрузки</a> страницы';
+        } else $message = 'Такой автор не найден';
+
+
+      }
 
       if ($check_name == 'trash') {
           $posts = new StreamData;

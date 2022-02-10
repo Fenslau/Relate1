@@ -12,6 +12,7 @@ use App\Models\Stream\Authors;
 use App\Http\Controllers\Stream\PostController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Models\IgnoredGroups;
 
 class StatisticController extends Controller
 {
@@ -215,18 +216,24 @@ class StatisticController extends Controller
     }
 
     public function ignoreList($project_name) {
-      $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', session('vkid'))->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['']);
+      if ($project_name == 'Toppost2409') {
+        $ignore_list = IgnoredGroups::pluck('group_id')->toArray();
+      } else {
+        $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', session('vkid'))->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['']);
+      }
       $ignore_list = Authors::whereIn('author_id', $ignore_list)->pluck('name', 'author_id');
       $returnHTML = view('inc.ignore-list', ['ignore_list' => $ignore_list])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
 
     public function delIgnore ($project_name, Request $request) {
-      $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['', $request->id]);
+      if ($project_name == 'Toppost2409') {
+        IgnoredGroups::where('group_id', $request->id)->delete();       
+      } else {
+        $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['', $request->id]);
+        Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNull('rule')->update(['ignore_authors' => implode(',', $ignore_list)]);
+      }
       $name = Authors::where('author_id', $request->id)->first()->name;
-
-      Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNull('rule')->update(['ignore_authors' => implode(',', $ignore_list)]);
-
       return response()->json(array('success' => 'Автор <b>'.$name.'</b> удалён из игнор-листа'));
     }
 

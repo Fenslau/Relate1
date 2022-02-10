@@ -16,7 +16,7 @@ $(document).ready(function () {
               $('.toast-body').html(data.success);
               $('.toast').toast('show');
               if (url == 'trash')  _this.parent().parent().remove();
-
+              if (url == 'ignore')  _this.parent().parent().parent().remove();
 
             } else {
               $('.toast-header').addClass('bg-danger');
