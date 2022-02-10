@@ -53,7 +53,9 @@
         });
       } );
   </script>
+@if(!empty($info['toppost']) && (session('vkid') == 151103777 || session('realvkid') == 151103777 || session('vkid') == 409899462 || session('realvkid') == 409899462))
   <div class="text-right">@include('inc.ignore-list-script')</div>
+@endif
   <div id="posts">@include('inc.posts')</div>
 </div>
 
