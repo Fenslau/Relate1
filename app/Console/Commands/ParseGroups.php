@@ -45,7 +45,8 @@ class ParseGroups extends Command
       $top = New Top();
 
       $top1000 = $top->find(1);
-      $i_count=1;
+      $i_count = 1;
+      $lock = 0;
       if(empty($top1000->current_group)) $top1000->current_group = 0;
       for ($j=$top1000->current_group; $j<env('GROUP_COUNT'); $j++) {
         $group_ids=$i_count;
@@ -131,7 +132,14 @@ retry:  $access_token = env('ACCESS_TOKEN');
             }
           }
         }
-        $vk_group->upsert($data_500, ['group_id'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
+        try {
+  lock: $vk_group->upsert($data_500, ['group_id'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
+        } catch (Illuminate\Database\QueryException $exception) {
+          echo $exception->message();
+          if ($lock++ < 3) goto lock;
+          else die;
+        }
+
         $top1000->current_group=$j;
         $top1000->save();
       }
