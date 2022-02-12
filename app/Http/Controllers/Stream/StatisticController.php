@@ -77,7 +77,7 @@ class StatisticController extends Controller
 
       $progress->message('Собирается статистика распределения авторов по городам');
       $items = $posts->getPost($vkid, $project_name, $request, NULL, 1);
-      $region_score = $items->leftJoin('russias', 'authors.city_id', '=', 'russias.city_id')->select(DB::raw("region, (Count(authors.city_id)) as region_score"))->groupBy('region')->orderBy('region_score', 'desc')->get()->toArray();
+      $region_score = $items->leftJoin('russias', 'authors.city_id', '=', 'russias.city_id')->select(DB::raw("region, (Count(authors.city_id)) as region_score"))->whereNotNull('region')->groupBy('region')->orderBy('region_score', 'desc')->get()->toArray();
 
       $region_count = count($region_score);
     	$other_regions = 0;
@@ -228,7 +228,7 @@ class StatisticController extends Controller
 
     public function delIgnore ($project_name, Request $request) {
       if ($project_name == 'Toppost2409') {
-        IgnoredGroups::where('group_id', $request->id)->delete();       
+        IgnoredGroups::where('group_id', $request->id)->delete();
       } else {
         $ignore_list = array_diff(explode(',', implode(',', Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNotNull('ignore_authors')->pluck('ignore_authors')->toArray())), ['', $request->id]);
         Projects::where('vkid', $request->vkid)->where('project_name', $project_name)->whereNull('rule')->update(['ignore_authors' => implode(',', $ignore_list)]);

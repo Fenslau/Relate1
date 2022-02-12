@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('Stream:get')->everyMinute()->withoutOverlapping(365*24*60)->runInBackground()->appendOutputTo('storage/logs/Stream.log');
 
-        $schedule->command('Parse:Groups')->monthlyOn(10, '18:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
+        $schedule->command('Parse:Groups')->monthlyOn(10, '06:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
 
         $schedule->command('Top1000date:get')->everySixHours()->withoutOverlapping()->appendOutputTo('storage/logs/Top1000date.log');
         $schedule->command('Top1000:get')->everyTenMinutes()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000.log');
@@ -58,7 +58,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('old:post')->everyMinute()->withoutOverlapping()->appendOutputTo('storage/logs/OldPosts.log');
 
-        $schedule->command('Cloud:get')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Cloud.log');
+        $schedule->command('Cloud:get')->hourly()->withoutOverlapping()->appendOutputTo('storage/logs/Cloud.log');
 
         $schedule->command('Dublikat:find')->everyMinute()->withoutOverlapping(365*24*60)->runInBackground()->appendOutputTo('storage/logs/Dublikats.log');
 
