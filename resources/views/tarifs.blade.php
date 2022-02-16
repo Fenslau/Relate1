@@ -224,7 +224,7 @@
         </div>
     </div>
     <div class="row">
-      @if (session('vkid') == 151103777 || session('vkid') == 409899462)
+      @if (!Session::has('demo') && (session('vkid') == 151103777 || session('realvkid') == 151103777 || session('vkid') == 409899462 || session('realvkid') == 409899462))
       <div class="m-auto d-flex flex-md-nowrap flex-wrap justify-content-center align-content-around text-center">
         <div class="tarif">
             <div class="tarif-name">

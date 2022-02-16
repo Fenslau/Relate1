@@ -10,7 +10,8 @@ class VKUser {
     public $vkid;
 
     public function __construct($vkid) {
-      $this->vkid = $vkid;
+      if (session('demo')) $this->vkid = session('realvkid');
+      else $this->vkid = $vkid;
       $oplata = new Oplata();
       $tarif = $oplata->where('vkid', $this->vkid)->orderBy('id', 'desc')->first();
       if (isset($tarif->date)) {

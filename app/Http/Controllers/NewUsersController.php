@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 class NewUsersController extends Controller
 {
     public function main() {
+      if (session('demo')) session(['demo' => 0, 'vkid' => session('realvkid')]);
       session()->flash('previous-route', Route::current()->getName());
       $list_new_groups = new ListNewGroups();
       $items = $list_new_groups->getFollowList();

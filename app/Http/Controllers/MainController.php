@@ -11,7 +11,7 @@ use \App\MyClasses\num;
 class MainController extends Controller
 {
     public function main() {
-
+      if (session('demo')) session(['demo' => 0, 'vkid' => session('realvkid')]);
       $group = new Groups();
       $group->read('temp/top1000.xlsx');
 
