@@ -46,6 +46,7 @@ class ProjectController extends Controller
 
   public function del(Request $request) {
     if (empty(session('vkid'))) return back()->with('error', 'Ваша сессия устарела, необходимо авторизоваться заново');
+    if (session('demo')) return back()->with('error', 'В демо-режиме нельзя удалять проекты');
     $projects = new Projects();
     $project = $projects->find($request->del);
     $stream = new Streamkey();

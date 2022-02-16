@@ -136,7 +136,7 @@ lock: try {
              $vk_group->upsert($data_500, ['group_id'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
         } catch (Illuminate\Database\QueryException $exception) {
           echo $exception->message();
-          if ($lock++ < 30) goto lock;
+          if ($lock++ < 3) goto lock;
           else die;
         }
 
