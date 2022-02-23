@@ -119,10 +119,6 @@ class PostController extends Controller
       if (empty($request->rule)) $posts->whereIn('user', $all_rules);
       else $posts->where('user', $vkid.$request->rule);
 
-      if(!empty($request->author_id)) {
-        $posts->where('stream_data.author_id', $request->author_id);
-      }
-
       if (!empty($request->followers_from) AND is_numeric($request->followers_from)) $posts->where('members_count', '>=', $request->followers_from);
       if (!empty($request->followers_to) AND is_numeric($request->followers_to)) $posts->where('members_count', '<=', $request->followers_to);
 
@@ -180,6 +176,10 @@ class PostController extends Controller
       	$posts = new StreamData();
       	$posts = $posts->leftJoin('authors', 'stream_data.author_id', '=', 'authors.author_id')->select(['*', 'stream_data.author_id as author_id','stream_data.id as id'])->whereIn('user', $all_rules)->where('user_links', $request->user_link);
       }
+
+      if(!empty($request->author_id)) {
+        $posts->where('stream_data.author_id', $request->author_id);
+      }      
 
       if (empty($request->stat)) {
       	//if (empty($request->flag)) $posts->where('check_flag', 0);

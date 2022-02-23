@@ -65,7 +65,7 @@ cycle:
           $projects = new Projects();
         	$ignore = $projects->whereNotNull('ignore_authors')->get()->toArray();
         	if (!empty($info['error']))	print_r ($info);
-        	if ($info['code'] == 100) {
+        	if (!empty($info['code']) AND $info['code'] == 100) {
 $time_start = microtime(true);
         //	file_put_contents('stream.str', serialize($info), FILE_APPEND | LOCK_EX);
           	foreach ($info['event']['tags'] as $tag) {

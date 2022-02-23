@@ -59,8 +59,13 @@ class MainController extends Controller
         $info['demo']=TRUE;
       }
       $info['search']=TRUE;
-      $groups = $vk->groups()->search(session('token'), $params);
-
+      try {
+        $groups = $vk->groups()->search(session('token'), $params);
+      } catch (\VK\Exceptions\Api\VKApiParamException $exception) {
+        $info['warning'] = 'Укажите что-нибудь в названии группы для поиска';
+        $returnHTML = view('layouts.home-ajax', ['items' => NULL, 'info' => $info])->render();
+        return response()->json( array('success' => true, 'html'=>$returnHTML) );
+      }
       if (min($params['count'], $groups['count']) > 0) {
         $info['found']='Всего по вашему запросу <b>'.$request->group_name.'</b> нашлось <b> '.num::declension ($groups['count'], (array('группа</b>', 'группы</b>', 'групп</b>')));
         if (!empty($city['id'])) $info['found'] .= ' из города <b>'.$city['title'].'</b>';
