@@ -3,7 +3,7 @@ namespace App\MyClasses;
 
 use \VK\Client\VKApiClient;
 use \XLSXWriter;
-use \Shuchkin\SimpleXLSX;
+use \SimpleXLSX;
 use \App\MyClasses\GetProgress;
 use App\Models\Progress;
 use App\Models\Toppost;

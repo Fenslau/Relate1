@@ -7,7 +7,7 @@ use App\Models\VkGroups;
 use App\Models\NewUsers;
 use \VK\Client\VKApiClient;
 use \XLSXWriter;
-use \Shuchkin\SimpleXLSX;
+use \SimpleXLSX;
 use \App\MyClasses\GetProgress;
 use \App\MyClasses\GetUsers;
 use \App\MyClasses\VKUser;
