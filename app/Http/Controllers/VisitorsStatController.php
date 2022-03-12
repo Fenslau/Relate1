@@ -56,7 +56,7 @@ class VisitorsStatController extends Controller
        $temp = $oplata->where([
         ['vkid', '=', $visitor->vkid],
         ['date', '>=', $visitor->created_at],
-      ])->whereNotNull('demo')->first();
+      ])->whereNotNull('demo')->orderBy('created_at', 'desc')->first();
       if (isset($temp->date)) $visitor->oplata_date = $temp->date;
 	    else $visitor->oplata_date = NULL;
       if (strtotime($visitor->oplata_date)>date('U')) $visitor->oplata_class='class=text-success';

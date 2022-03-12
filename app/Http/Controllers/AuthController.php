@@ -69,6 +69,9 @@ class AuthController extends Controller
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         Session::flush();
         return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
+    } catch (\VK\Exceptions\Api\VKClientException $exception) {
+        Session::flush();
+        return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
     }
     session(['token' => $response['access_token'], 'vkid' => $response['user_id']]);
     return redirect()->route(Request::input('state'));

@@ -16,7 +16,7 @@ class TarifController extends Controller
         'currency' => 'RUB',
         'comment' => $request->comment,
         'expirationDateTime' => $lifetime,
-        'customFields' => ['themeCode'  =>  'Evgenyi-KRvq8Ldyhy'],
+        'customFields' => ['themeCode'  =>  'Larysa-M6SbjURGdu'],
         'account' => $request->vkid
       ];
       $response = $billPayments->createBill($billId, $fields);

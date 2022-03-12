@@ -38,6 +38,8 @@ retrywall:
       $comments = $vk->wall()->getComments(session('token'), $params);
     } catch (\VK\Exceptions\Api\VKApiTooManyException $exception) {
       goto retrywall;
+    } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
+      return FALSE;
     }
       if (!empty($comments['items'])) {
     		foreach ($comments['items'] as $comment) {
