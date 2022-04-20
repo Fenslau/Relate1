@@ -4,7 +4,7 @@
         <div class="">
           Проекты:
           <form id="project_form" name="project">
-            <select class="text-truncate w-100" id="choose_project_name" name="choose_project_name" onchange="if (this.value) window.location.href = this.value">>
+            <select class="text-truncate w-100" id="choose_project_name" name="choose_project_name" onchange="if (this.value) window.location.href = this.value">
               <option value="#">Выберите проект</option>
               @forelse ($projects as $project)
                 <option {{ ($project == $info['project_name'] ? "selected":"") }} value="{{ $project }}">{{ $project }}</option>

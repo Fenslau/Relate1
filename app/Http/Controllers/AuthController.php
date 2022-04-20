@@ -69,7 +69,7 @@ class AuthController extends Controller
     } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
         Session::flush();
         return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
-    } catch (\VK\Exceptions\Api\VKClientException $exception) {
+    } catch (\VK\Exceptions\VKClientException $exception) {
         Session::flush();
         return redirect()->route(Request::input('state'))->with('warning', 'Что-то в авторизации пошло не так, попробуйте снова.');
     }
@@ -82,6 +82,7 @@ class AuthController extends Controller
     if (!empty($token)) {
       $vk = new VKApiClient();
       $user = new VKUser(session('vkid'));
+retry:
       try {
         $user_profile = $vk->users()->get($token, array(
           'fields' => 'photo_50, city'
@@ -90,6 +91,10 @@ class AuthController extends Controller
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
           Session::flush();
           return back()->with('danger', 'Ваша сессия устарела. Залогиньтесь заново');
+      }
+      catch (\VK\Exceptions\Api\VKApiRateLimitException $exception) {
+          sleep(1);
+          goto retry;
       }
       return (object)($user_profile[0]);
     }

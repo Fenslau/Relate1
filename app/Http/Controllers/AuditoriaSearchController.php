@@ -122,13 +122,14 @@ retry:   try {
     $maxi = 0;
     $group_ids=array();
     $index=array();
-    if ((count($popular))<3) {
+    if ((count($popular)) < 3) {
       $info['warning'] = 'Исходная группа слишком мала.';
+      if ((count($popular)) < 2) goto ex;
     }
     while ($max > 1) {
       $maxi++;
       if ($maxi>500) break;
-      $max = max($popular);
+      if (!empty($popular)) $max = max($popular);
       $result = array_search($max, $popular);
 
       $group_ids[] = $result;

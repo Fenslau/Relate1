@@ -116,7 +116,7 @@
                   <div class="input-group">
                     <input class="w-100 mt-2 btn btn-sm btn-outline-danger" type="submit" name="get_old_stop" value="Остановить сбор">
                   </div>
-                @endif
+                @endisset
               </form>`
               })
           });
