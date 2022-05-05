@@ -389,7 +389,8 @@ retrys:
                     			case 'link': $data['link'] = $data['link'].$att['link']['url'].','; break;
                     			case 'doc': $data['doc'] = $data['doc'].$att['doc']['url'].','; break;
                     			case 'photo': foreach ($att['photo']['sizes'] as $photosize) if ($photosize['type'] == 'x') $data['photo'] = $data['photo'].$photosize['url'].','; break;
-                    			case 'video': $data['video_player'] = $data['video_player'].$att['video']['owner_id'].'_'.$att['video']['id'].'_'.$att['video']['access_key'].','; break;
+                    			case 'video': if(isset($att['video']['access_key'])) $data['video_player'] = $data['video_player'].$att['video']['owner_id'].'_'.$att['video']['id'].'_'.$att['video']['access_key'].',';
+                          else $data['video_player'] = $data['video_player'].$att['video']['owner_id'].'_'.$att['video']['id'].','; break;
                     			case 'audio': $data['audio'] = $data['audio'].'<div class="d-flex align-items-center justify-content-between">'.$att['audio']['artist'].' — '.$att['audio']['title'].'</div>'.'9GZVNyidgk';
                   			}
                   		}
