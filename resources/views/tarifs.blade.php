@@ -33,12 +33,16 @@
                           <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                           @if(Session::has('token'))
                           <input class="kupit" type="submit" name="submit199" value="Купить">
+                        </form>
                           @else
-                          <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                          <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit199" value="Купить">
+                          </form>
+                          <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                            <form action="{{ route('auth-vk') }}" method="get">
+                              <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                              <button type="submit" class="kupit">Купить</button>
+                            </form>
                           </span>
                           @endif
-                        </form>
                         <div class="price">
                             199₽
                         </div>
@@ -66,12 +70,16 @@
                         <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                         @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit549" value="Купить">
+                        </form>
                         @else
-                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit549" value="Купить">
+                        </form>
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                          <form action="{{ route('auth-vk') }}" method="get">
+                            <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                            <button type="submit" class="kupit">Купить</button>
+                          </form>
                         </span>
                         @endif
-                      </form>
                         <div class="price">
                             549₽
                         </div>
@@ -97,12 +105,16 @@
                         <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                         @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit1299" value="Купить">
+                      </form>
                         @else
-                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit1299" value="Купить">
+                        </form>
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                          <form action="{{ route('auth-vk') }}" method="get">
+                            <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                            <button type="submit" class="kupit">Купить</button>
+                          </form>
                         </span>
                         @endif
-                      </form>
                         <div class="price">
                             1299₽
                         </div>
@@ -138,12 +150,16 @@
                         <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                         @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit349" value="Купить">
+                      </form>
                         @else
-                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit349" value="Купить">
+                        </form>
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                          <form action="{{ route('auth-vk') }}" method="get">
+                            <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                            <button type="submit" class="kupit">Купить</button>
+                          </form>
                         </span>
                         @endif
-                      </form>
                         <div class="price">
                             349₽
                         </div>
@@ -175,12 +191,16 @@
                         <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                         @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit549" value="Купить">
+                      </form>
                         @else
-                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit549" value="Купить">
+                        </form>
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                          <form action="{{ route('auth-vk') }}" method="get">
+                            <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                            <button type="submit" class="kupit">Купить</button>
+                          </form>
                         </span>
                         @endif
-                      </form>
                         <div class="price">
                             549₽
                         </div>
@@ -209,12 +229,16 @@
                         <input type="hidden" name="vkid" value="{{ session('vkid') }}">
                         @if(Session::has('token'))
                         <input class="kupit" type="submit" name="submit999" value="Купить">
+                      </form>
                         @else
-                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Авторизуйтесь ВК">
-                        <input style="pointer-events: none;" class="kupit" disabled type="submit" name="submit999" value="Купить">
+                        </form>
+                        <span class="d-block" tabindex="0" data-toggle="tooltip" title="Оплата после авторизации ВК">
+                          <form action="{{ route('auth-vk') }}" method="get">
+                            <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
+                            <button type="submit" class="kupit">Купить</button>
+                          </form>
                         </span>
                         @endif
-                      </form>
                         <div class="price">
                             999₽
                         </div>
