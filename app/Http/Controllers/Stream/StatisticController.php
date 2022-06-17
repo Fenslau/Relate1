@@ -83,7 +83,7 @@ class StatisticController extends Controller
         if ($score['region'] == null) unset($region_score[$i]);
         $i++;
       }
-      array_values($region_score);
+      $region_score = array_values($region_score);
       $region_count = count($region_score);
     	$other_regions = 0;
     	if ($region_count > region_quantity) for ($i=region_quantity; $i<$region_count; $i++) $other_regions += $region_score[$i]["region_score"];
