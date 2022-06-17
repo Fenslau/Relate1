@@ -78,7 +78,12 @@ class StatisticController extends Controller
       $progress->message('Собирается статистика распределения авторов по городам');
       $items = $posts->getPost($vkid, $project_name, $request, NULL, 1);
       $region_score = $items->leftJoin('russias', 'authors.city_id', '=', 'russias.city_id')->select(DB::raw("region, (Count(authors.city_id)) as region_score"))->groupBy('region')->orderBy('region_score', 'desc')->get()->toArray();
-
+      $i = 0;
+      foreach ($region_score as $score) {
+        if ($score['region'] == null) unset($region_score[$i]);
+        $i++;
+      }
+      array_values($region_score);
       $region_count = count($region_score);
     	$other_regions = 0;
     	if ($region_count > region_quantity) for ($i=region_quantity; $i<$region_count; $i++) $other_regions += $region_score[$i]["region_score"];
