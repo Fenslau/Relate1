@@ -16,7 +16,7 @@ class CreateOldPostsTable extends Migration
         Schema::create('old_posts', function (Blueprint $table) {
             $table->id();
             $table->integer('vkid');
-            $table->string('token', 128)->nullable();
+            $table->string('token')->nullable();
             $table->string('user', 128)->nullable();
             $table->integer('start_date')->nullable();
             $table->integer('end_date')->nullable();

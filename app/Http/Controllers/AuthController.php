@@ -55,7 +55,7 @@ class AuthController extends Controller
         if(isset($user_profile['0']['photo_50'])) $visitor->photo = $user_profile['0']['photo_50'];
         $visitor->save();
 
-        if (strlen($response['access_token']) <= 128) {
+        if (strlen($response['access_token']) <= 255) {
           $top = New Top;
             if ($top1000 = $top->find(1)) {
         			$top1000->token = $response['access_token'];
