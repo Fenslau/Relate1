@@ -38,7 +38,7 @@ class GroupSearchController extends Controller
     $info = array();
     $user = new VKUser(session('vkid'));
     if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
-      $limit=10;
+      $limit=100000;
       $info['demo']=TRUE;
     } else $limit = 100000;
 
@@ -66,7 +66,7 @@ class GroupSearchController extends Controller
     $info['found'] = '';
     if($result->num_rows > 0) {
       $info['found'] .= 'Всего найдено <b> '.num::declension ($result->num_rows, (array('группа</b>', 'группы</b>', 'групп</b>')));
-      if ($result->num_rows >= 100000) {
+      if ($result->num_rows >= 100000 AND !isset($info['demo'])) {
         $info['found'] = '<span class="text-danger"><b>Слишком много групп за раз. </b></span>	Найдено более <b>100 000</b> групп. Группы упорядочены по количеству подписчиков. Если вам нужны остальные (которые не вошли в эти 100 000) , то задайте ограничение в графе "Подписчиков...до" ';
       }
       $info['found'] .= '. Полный список найденных групп находится в файле Excel. ';
@@ -102,6 +102,7 @@ class GroupSearchController extends Controller
       $writer->writeSheetRow('Sheet1', $sheet);
       $count++;
       if ($count<=1000) $items[] = $item;
+      if (isset($info['demo']) AND $count > 10) break;
     }
     $writer->writeToFile('storage/open_wall_search/'.session('vkid').'_open_wall_search.xlsx');
 

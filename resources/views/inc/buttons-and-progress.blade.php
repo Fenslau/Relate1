@@ -5,7 +5,7 @@
         <a href="{{ route('home') }}" class="btn btn-sm btn-secondary text-white">На&nbsp;главную</a>
       </div>
 
-      <button id="js-load" disabled class="btn btn-sm btn-primary vk-top-bg" type="submit" name="submit"><i class="fa fa-search"></i><span class="spinner-border spinner-border-sm text-light d-none"></span> {{$button}}</button>
+      <button id="js-load" disabled class="btn btn-sm btn-primary vk-top-bg" type="submit" name="submit" @auth @else disabled data-toggle="tooltip" title="Авторизуйтесь ВК" @endauth><i class="fa fa-search"></i><span class="spinner-border spinner-border-sm text-light d-none"></span> {{$button}}</button>
       <button id="new-search" class="d-none btn btn-sm btn-primary vk-top-bg" type="submit" name="new-search"><i class="fa fa-search"></i><span class="spinner-border spinner-border-sm text-light d-none"></span> Новый поиск</button>
     </div>
   </div>
@@ -27,3 +27,10 @@
     @endif
   </div>
 </div>
+@auth
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(":submit:not(.enabled)").prop('disabled', false);
+    });
+  </script>
+@endauth

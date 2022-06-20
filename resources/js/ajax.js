@@ -1,8 +1,6 @@
 var audio = new Audio('/sounds/ding.mp3');
 
-$(document).ready(function () {
-  $(":submit:not(.enabled)").prop('disabled', false);
-});
+
 
 $('body').tooltip({
         selector: '[data-toggle="tooltip"], [title]:not([data-toggle="popover"])',
