@@ -58,6 +58,11 @@
       </div>
       <div id="progress-text" class="px-2 mt-2 bg-secondary text-white"></div>
     </div>
+    <script type="text/javascript">
+  		$(document).ready(function () {
+  		  $(":submit:not(.enabled)").prop('disabled', false);
+  		});
+	  </script>
     @else
     <div class="w-100 alert alert-warning">
       <strong>Зарегистрируйтесь или авторизуйтесь через ВК, чтобы протестировать возможности в демо-режиме или получить полный доступ к ресурсам сайта.</strong>
