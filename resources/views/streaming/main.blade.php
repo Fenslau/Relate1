@@ -381,6 +381,11 @@
       $(".chosen-select").chosen();
     });
 </script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(":submit:not(.enabled)").prop('disabled', false);
+  });
+</script>
 <script src="{{ mix('/js/post.js') }}"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
