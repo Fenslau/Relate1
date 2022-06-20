@@ -41,7 +41,8 @@ class GetPostInfo{
             foreach ($video_players as $video_player) {
               preg_match_all("'_(.+?)_'", $video_player, $matches);
 
-              $index_of_videos = array_search($matches[1][0], (array_column($videos['items'], 'id')));
+              if (isset($matches[1][0])) $index_of_videos = array_search($matches[1][0], (array_column($videos['items'], 'id')));
+              
 
               if ($index_of_videos !== FALSE) {
                 if (!empty($videos['items'][$index_of_videos]['player'])) $video[$item['id']][$i]['player'] = $videos['items'][$index_of_videos]['player'];
