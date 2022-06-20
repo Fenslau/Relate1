@@ -102,7 +102,7 @@ class GroupSearchController extends Controller
       $writer->writeSheetRow('Sheet1', $sheet);
       $count++;
       if ($count<=1000) $items[] = $item;
-      if (isset($info['demo']) AND $count > 10) break;
+      if (isset($info['demo']) AND $count > 9) break;
     }
     $writer->writeToFile('storage/open_wall_search/'.session('vkid').'_open_wall_search.xlsx');
 
