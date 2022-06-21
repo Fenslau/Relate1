@@ -20,6 +20,7 @@ class CreateVkGroupsTable extends Migration
             $table->string('city', 64)->index();
             $table->integer('members_count');
             $table->enum('type', ['group', 'page', 'event']);
+            $table->smallInteger('age_limits');
             $table->smallInteger('wall');
             $table->string('site', 128);
             $table->tinyInteger('verified');

@@ -60,7 +60,7 @@ retry:  $access_token = env('ACCESS_TOKEN');
         try {
           $group_get = $vk->groups()->getById($access_token, array(
               'group_ids'		 => $group_ids,
-              'fields'    	 => 'status,description,public_date_label,start_date,finish_date,contacts,site,verified,wall,city,market,members_count',
+              'fields'    	 => 'status,description,public_date_label,start_date,finish_date,contacts,site,verified,wall,city,market,members_count,age_limits',
               'lang'   		   => 'ru',
               'v' 			     => '5.95'
           ));
@@ -90,6 +90,7 @@ retry:  $access_token = env('ACCESS_TOKEN');
 
               $data['group_id'] = $group_get[$i]['id'];
               if (isset($group_get[$i]['name'])) $data['name'] = strip_tags($group_get[$i]['name']); else $data['name'] = '';
+              if (isset($group_get[$i]['age_limits'])) $data['age_limits'] = $group_get[$i]['age_limits']; else $data['age_limits'] = 0;
               $tags = '';
               $tag_desc=$tag_status=0;
               if (isset($group_get[$i]['description'])) {
@@ -138,7 +139,7 @@ retry:  $access_token = env('ACCESS_TOKEN');
           }
         }
 lock: try {
-             $vk_group->upsert($data_500, ['group_id'], ['group_id', 'name', 'city', 'members_count', 'type', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
+             $vk_group->upsert($data_500, ['group_id'], ['group_id', 'name', 'city', 'members_count', 'type', 'age_limits', 'wall', 'site', 'verified', 'market', 'is_closed', 'contacts', 'public_date_label', 'start_date', 'finish_date', 'tags']);
         } catch (Illuminate\Database\QueryException $exception) {
           echo $exception->message();
           if ($lock++ < 3) goto lock;
