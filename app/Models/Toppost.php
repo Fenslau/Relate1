@@ -15,6 +15,6 @@ class Toppost extends Model
 
     public function prunable()
     {
-        return static::where('action_time', '<', date('U')-50*24*60*60);
+        return static::where('action_time', '<', date('U')-30*24*60*60);
     }
 }

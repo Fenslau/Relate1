@@ -25,7 +25,7 @@ class TopPostController extends Controller
       switch ($mode) {
         case 'new': $items = $posts->select(DB::raw("*, topposts.id AS id, likes/views AS popular"))->where('likes', '>', 100)->where('action_time', '>', date('U')-60*60*13); break;
         case 'hot': $items = $posts->select(DB::raw("*, topposts.id AS id, (likes+comments+reposts)/views/(UNIX_TIMESTAMP(topposts.updated_at)-action_time) AS popular"))->where('likes', '>', 1000)->where('action_time', '>', date('U')-60*60*48); break;
-        case 'best': $items = $posts->select(DB::raw("*, topposts.id AS id, (likes+comments+reposts)/views AS popular"))->where('likes', '>', 10000); break;
+        case 'best': $items = $posts->select(DB::raw("*, topposts.id AS id, (likes+comments+reposts)/views AS popular"))->where('likes', '>', 10000)->where('action_time', '>', date('U')-60*60*24*5); break;
 
         case '6hour': $items = $posts->select(DB::raw("*, topposts.id AS id, comments AS popular"))->where('action_time', '>', date('U')-60*60*6); break;
         case 'day': $items = $posts->select(DB::raw("*, topposts.id AS id, comments AS popular"))->where('action_time', '>', date('U')-60*60*24); break;
