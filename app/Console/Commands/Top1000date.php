@@ -52,7 +52,7 @@ class Top1000date extends Command
 
         $group->getLastPostDate($token, NULL, 'toppost');
 
-        //$group->getReactions();
+        $group->getReactions();
 
         $group->write("public/temp/top1000.xlsx");
     }
