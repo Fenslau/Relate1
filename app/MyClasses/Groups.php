@@ -58,7 +58,11 @@ class Groups {
           $item['type'] = $item_[23];
           $item['date'] = $item_[24];
           $item['photo_50'] = $item_[25];
-
+          if (isset($item_[26])) $item['comments'] = $item_[26];
+          if (isset($item_[27])) $item['views'] = $item_[27];
+          if (isset($item_[28])) $item['likes'] = $item_[28];
+          if (isset($item_[29])) $item['reposts'] = $item_[29];
+          if (isset($item_[30])) $item['reactions'] = $item_[30];
           $this->groups[] = $item;
         }
       }
@@ -95,6 +99,13 @@ class Groups {
 														  'Дата'=>'string',
 														  'Аватарка'=>'string',
 														);
+                            if (isset($this->groups[0]['comments'])) {
+                              $header['Комментарии'] = 'integer';
+                              $header['Просмотры'] = 'integer';
+                              $header['Лайки'] = 'integer';
+                              $header['Репосты'] = 'integer';
+                              $header['Реакции'] = 'integer';
+                            }
 														$writer->writeSheetHeader('Sheet1', $header );
 
       foreach($this->groups as $row) {
@@ -124,11 +135,17 @@ class Groups {
         $item['type'] = $row['type'];
         if (!empty($row['date'])) $item['date'] = $row['date']; else $item['date'] = '';
         $item['photo_50'] = $row['photo_50'];
-
+          if (isset($row['comments'])) $item['comments'] = $row['comments'];
+          if (isset($row['views'])) $item['views'] = $row['views'];
+          if (isset($row['likes'])) $item['likes'] = $row['likes'];
+          if (isset($row['reposts'])) $item['reposts'] = $row['reposts'];
+          if (isset($row['reactions'])) $item['reactions'] = $row['reactions'];
         $writer->writeSheetRow('Sheet1', $item);
       }
       $writer->writeToFile($filename);
   }
+
+
 
   public function get1000Groups($group_ids, $token, $rand = NULL) {
     if (empty($group_ids)) return FALSE;
@@ -414,5 +431,24 @@ retrys:
       }
   ex:
   }
+
+  public function getReactions() {
+      $posts = new Toppost();
+      $group_ids_all = array_column($this->groups, 'id');
+      foreach ($group_ids_all as $group_id) {
+        $comments = array_sum($posts->where('author_id', -$group_id)->pluck('comments')->toArray());
+        $views = array_sum($posts->where('author_id', -$group_id)->pluck('views')->toArray());
+        $likes = array_sum($posts->where('author_id', -$group_id)->pluck('likes')->toArray());
+        $reposts = array_sum($posts->where('author_id', -$group_id)->pluck('reposts')->toArray());
+
+          $index = array_search($group_id, array_column($this->groups, 'id'));
+          $this->groups[$index]['comments'] = $comments;
+          $this->groups[$index]['views'] = $views;
+          $this->groups[$index]['likes'] = $likes;
+          $this->groups[$index]['reposts'] = $reposts;
+          $this->groups[$index]['reactions'] = $this->groups[$index]['comments'] + $this->groups[$index]['likes'] + $this->groups[$index]['reposts'];
+      }
+  }
+
 }
 ?>

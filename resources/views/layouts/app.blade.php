@@ -30,6 +30,7 @@
   <script src="{{ mix('/js/app.js') }}"></script>
   <script src="{{ mix('/js/ajax.js') }}"></script>
   <script src="{{ mix('/js/aside.js') }}"></script>
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 @if(env('APP_ENV') == 'production')
   <!-- Yandex.Metrika counter -->
   <script src="//code.jivosite.com/widget.js" data-jv-id="89Nvl6sd5x" async></script>

@@ -401,6 +401,5 @@
 <script src="//code.highcharts.com/modules/accessibility.src.js"></script>
 <script src="//code.highcharts.com/maps/modules/map.js"></script>
 <script src="//code.highcharts.com/mapdata/custom/world-robinson-highres.js"></script>
-<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
 @endsection

@@ -15,6 +15,7 @@ class AuditoriaSearchController extends Controller
 {
   public function search(Request $request) {
     $retry = FALSE;
+    if ($request->to > 100000) $request->to = 100000;
     $info = array();
     $info['found'] = 1;
     $items = array();

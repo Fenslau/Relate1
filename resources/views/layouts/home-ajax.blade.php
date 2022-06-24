@@ -30,7 +30,31 @@
 
 
 @isset ($items)
-<table class="lh-sm table table-striped table-bordered table-hover table-sm table-responsive">
+@isset ($items[0]['comments'])
+<div class="sticky-top text-center alert alert-light m-0">
+  Статистика
+  <div class="d-inline-block custom-control custom-switch">
+    <input type="checkbox" name="table_mode" class="custom-control-input" id="table_mode">
+    <label class="custom-control-label" for="table_mode"></label>Реакции
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $("#table_mode").click(function(){
+      if ($('#table_mode').prop('checked')) {
+        $('.table-statistic').addClass('d-none');
+        $('.table-reactions').removeClass('d-none');
+        $('.table-reactions').addClass('d-md-table');
+      } else {
+        $('.table-statistic').removeClass('d-none');
+        $('.table-reactions').addClass('d-none');
+        $('.table-reactions').removeClass('d-md-table');
+      }
+    });
+  })
+</script>
+@endisset
+<table class="lh-sm table table-striped table-bordered table-hover table-sm table-responsive table-statistic">
     <thead class="thead-dark">
       <tr class="text-center">
         <th>№</th>
@@ -67,7 +91,7 @@
             @elseif ($item['grouth'] < 0)
             <div class="text-danger">@if(!empty($item['grouth'])) @dec($item['grouth']) @endif
             </div>
-            @endif  
+            @endif
           </td>
           <td>@if(!empty($item['reach'])) @dec($item['reach'])@endif<br /><small>{{ $item['reach_to_sub'] }}</small></td>
           <td>@if(!empty($item['reach_subscribers'])) @dec($item['reach_subscribers'])@endif<br /><small>{{ $item['sub_to_reach'] }}</small></td>
@@ -106,4 +130,73 @@
       @endforeach
     </tbody>
 </table>
+@isset ($items[0]['comments'])
+<table class="lh-sm table d-none d-md-table table-striped table-bordered table-hover table-sm table-responsive table-reactions">
+    <thead class="thead-dark">
+      <tr class="text-center">
+        <th class="p-3">№</th>
+        <th class="p-3">id группы</th>
+        <th> </th>
+        <th class="p-3">Название</th>
+        <th class="p-3">Подписчики</th>
+        <th class="p-3">Просмотры</th>
+        <th class="p-3">Комментарии</th>
+        <th class="p-3">Лайки</th>
+        <th class="p-3">Репосты</th>
+        <th class="p-3">Сумма реакций</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @foreach ($items as $item)
+        <tr class="lh-md text-center">
+          <td>{{ $item['num'] }}</td>
+          <td>{{ $item['id'] }}</td>
+          <td class="ava-group"><img loading="lazy" class="ava-group" alt="Ava" src="{{ $item['photo_50'] }}" /></td>
+          <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
+          <td>@if(!empty($item['members_count'])) {{ $item['members_count'] }} @endif</td>
+          <td>{{ $item['views'] }}</td>
+          <td>{{ $item['comments'] }}</td>
+          <td>{{ $item['likes'] }}</td>
+          <td>{{ $item['reposts'] }}</td>
+          <td>{{ $item['reactions'] }}</td>
+        </tr>
+      @endforeach
+    </tbody>
+</table>
+<script>
+    $(document).ready( function () {
+          $(".table-reactions").DataTable({
+          "language": {
+                  "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Russian.json",
+                  "thousands": "&nbsp;"
+              },
+          "responsive": true,
+          "paging": false,
+          "info": false,
+          "searching": false,
+          "order": [[6, 'desc']],
+          "columnDefs": [ {
+            "targets": 1,
+            "orderable": false
+            },
+            {
+              "targets": 2,
+              "orderable": false
+            },
+            {
+              "targets": 3,
+              "orderable": false
+            },
+          ],
+          "autoWidth": true
+        });
+    } );
+</script>
+<style>
+td {
+  padding: inherit !important;
+}
+</style>
+@endisset
 @endisset

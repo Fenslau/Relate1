@@ -68,7 +68,7 @@
       <strong>Зарегистрируйтесь или авторизуйтесь через ВК, чтобы протестировать возможности в демо-режиме или получить полный доступ к ресурсам сайта.</strong>
     </div>
     @endif
-    <div class="table-responsive" id="table-search">
+    <div class="table-responsive position-relative" id="table-search">
 
     @include('layouts.home-ajax')
 
