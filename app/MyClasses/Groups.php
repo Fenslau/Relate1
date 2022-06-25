@@ -446,7 +446,7 @@ retrys:
           $this->groups[$index]['views'] = $views;
           $this->groups[$index]['likes'] = $likes;
           $this->groups[$index]['reposts'] = $reposts;
-          $this->groups[$index]['reactions'] = $this->groups[$index]['comments'] + $this->groups[$index]['likes'] + $this->groups[$index]['reposts'];
+          $this->groups[$index]['reactions'] = $comments + $likes + $reposts;
       }
   }
 
