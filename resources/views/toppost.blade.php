@@ -8,7 +8,7 @@
 <div class="container-lg pb-5">
   @include('inc.toast')
 @if(!Session::has('token'))
-  <h4 class="h5 text-center alert alert-warning">Нажмите кнопку "Войти" для просмотра полной версии ленты</h4>
+  <h4 class="h5 text-center alert alert-warning">Нажмите кнопку "Вход" для просмотра полной версии ленты</h4>
 @endif
 
   <div id="begin" class="form-group d-flex flex-wrap justify-content-around align-items-center">
