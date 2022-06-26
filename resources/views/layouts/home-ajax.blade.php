@@ -158,10 +158,10 @@
           <td>@if(!empty($item['members_count'])) {{ $item['members_count'] }} @endif</td>
           <td>
             @if($item['grouth'] > 0)
-            <div class="text-success">+{{ $item['grouth'] }}
+            <div class="text-success">+@dec($item['grouth'])
             </div>
             @elseif ($item['grouth'] < 0)
-            <div class="text-danger">@if(!empty($item['grouth'])) {{ $item['grouth'] }}) @endif
+            <div class="text-danger">@if(!empty($item['grouth'])) @dec($item['grouth']) @endif
             </div>
             @endif
           </td>
@@ -196,6 +196,10 @@
             },
             {
               "targets": 3,
+              "orderable": false
+            },
+            {
+              "targets": 4,
               "orderable": false
             },
           ],
