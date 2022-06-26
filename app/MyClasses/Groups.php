@@ -104,7 +104,7 @@ class Groups {
                               $header['Просмотры'] = 'integer';
                               $header['Лайки'] = 'integer';
                               $header['Репосты'] = 'integer';
-                              $header['Реакции'] = 'integer';
+                              $header['Вовлечённость'] = 'integer';
                             }
 														$writer->writeSheetHeader('Sheet1', $header );
 
@@ -323,6 +323,7 @@ retrys:
             $this->groups[$k]['max_visitors'] = round(($stat1[$i][0]['visitors']['cities'][0]['count']/$stat1[$i][0]['visitors']['visitors']*100), 2);
             $this->groups[$k]['max_visitors'] = ' ('.$this->groups[$k]['max_visitors'].'%)';
           } else $this->groups[$k]['max_visitors'] = ' ';
+
         }
       }
     }

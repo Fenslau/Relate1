@@ -143,7 +143,7 @@
         <th class="p-3">Комментарии</th>
         <th class="p-3">Лайки</th>
         <th class="p-3">Репосты</th>
-        <th class="p-3">Сумма реакций</th>
+        <th class="p-3">Вовлечённость</th>
       </tr>
     </thead>
 
