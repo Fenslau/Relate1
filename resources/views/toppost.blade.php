@@ -15,9 +15,9 @@
 </div>
   <div id="begin" class="form-group d-flex flex-wrap justify-content-around align-items-center">
 
-      <button type="button" class="my-2 btn btn-sm btn-info text-white mode no-outline" name="period" mode = "new"><i class="icon fas fa-hourglass-half"></i><span class="spinner-border spinner-border-sm d-none"></span> Свежие</button>
+      <!-- <button type="button" class="my-2 btn btn-sm btn-info text-white mode no-outline" name="period" mode = "new"><i class="icon fas fa-hourglass-half"></i><span class="spinner-border spinner-border-sm d-none"></span> Свежие</button>
       <button type="button" class="my-2 btn btn-sm btn-danger text-white mode no-outline"  name="period" mode = "hot"><i class="icon fab fa-hotjar"></i><span class="spinner-border spinner-border-sm d-none"></span> Горячие</button>
-      <button type="button" class="my-2 btn btn-sm btn-success text-white mode no-outline"  name="period" mode = "best"><i class="icon fas fa-thumbs-up"></i><span class="spinner-border spinner-border-sm d-none"></span> Лучшие</button>
+      <button type="button" class="my-2 btn btn-sm btn-success text-white mode no-outline"  name="period" mode = "best"><i class="icon fas fa-thumbs-up"></i><span class="spinner-border spinner-border-sm d-none"></span> Лучшие</button> -->
 
       <button type="button" class="my-2 btn btn-sm btn-info text-white mode no-outline" name="period" mode = "6hour"><i class="icon fas fa-clock"></i><span class="spinner-border spinner-border-sm d-none"></span> 6 часов</button>
       <button type="button" class="my-2 btn btn-sm btn-info text-white mode no-outline"  name="period" mode = "day"><i class="icon fas fa-calendar-day"></i><span class="spinner-border spinner-border-sm d-none"></span> Сутки</button>
