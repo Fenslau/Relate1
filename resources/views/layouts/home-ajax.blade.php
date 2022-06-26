@@ -35,7 +35,7 @@
   Статистика
   <div class="d-inline-block custom-control custom-switch">
     <input type="checkbox" name="table_mode" class="custom-control-input" id="table_mode">
-    <label class="custom-control-label" for="table_mode"></label>Реакции
+    <label class="custom-control-label" for="table_mode"></label>Вовлечённость
   </div>
 </div>
 <script>
