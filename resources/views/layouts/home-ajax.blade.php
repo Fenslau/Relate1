@@ -139,6 +139,7 @@
         <th> </th>
         <th class="p-3">Название</th>
         <th class="p-3">Подписчики</th>
+        <th class="p-3">Прирост</th>
         <th class="p-3">Просмотры</th>
         <th class="p-3">Комментарии</th>
         <th class="p-3">Лайки</th>
@@ -155,6 +156,15 @@
           <td class="ava-group"><img loading="lazy" class="ava-group" alt="Ava" src="{{ $item['photo_50'] }}" /></td>
           <td class="group-name text-truncate text-nowrap text-left"><a rel="nofollow" target="_blank" href="https://vk.com/public{{ $item['id'] }}">{{ $item['name'] }}</a></td>
           <td>@if(!empty($item['members_count'])) {{ $item['members_count'] }} @endif</td>
+          <td>
+            @if($item['grouth'] > 0)
+            <div class="text-success">+@dec($item['grouth'])
+            </div>
+            @elseif ($item['grouth'] < 0)
+            <div class="text-danger">@if(!empty($item['grouth'])) @dec($item['grouth']) @endif
+            </div>
+            @endif
+          </td>
           <td>{{ $item['views'] }}</td>
           <td>{{ $item['comments'] }}</td>
           <td>{{ $item['likes'] }}</td>
