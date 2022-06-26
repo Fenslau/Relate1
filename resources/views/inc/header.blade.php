@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="p-2 mt-4 text-center">
-        <h1 class="h3 text-uppercase">Мониторинг соцсети вконтакте</h1>
+        <h1 class="h3 text-uppercase">МОНИТОРИНГ И АНАЛИЗ СОЦСЕТИ ВКОНТАКТЕ</h1>
         <p>TOPPOST — площадка для smm-специалистов и всех, кто работает с группами и подписчиками в соцсетях.</p>
       </div>
     </div>
