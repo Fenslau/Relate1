@@ -104,7 +104,7 @@ class Groups {
                               $header['Просмотры'] = 'integer';
                               $header['Лайки'] = 'integer';
                               $header['Репосты'] = 'integer';
-                              $header['Вовлечённость'] = 'integer';
+                              $header['Вовлеченность'] = 'integer';
                             }
 														$writer->writeSheetHeader('Sheet1', $header );
 

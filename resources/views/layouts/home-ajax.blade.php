@@ -35,7 +35,7 @@
   Статистика
   <div class="d-inline-block custom-control custom-switch">
     <input type="checkbox" name="table_mode" class="custom-control-input" id="table_mode">
-    <label class="custom-control-label" for="table_mode"></label>Вовлечённость
+    <label class="custom-control-label" for="table_mode"></label>Вовлеченность
   </div>
 </div>
 <script>
@@ -144,7 +144,7 @@
         <th class="p-3">Комментарии</th>
         <th class="p-3">Лайки</th>
         <th class="p-3">Репосты</th>
-        <th class="p-3">Вовлечённость</th>
+        <th class="p-3">Вовлеченность</th>
       </tr>
     </thead>
 
