@@ -185,7 +185,7 @@
           "paging": false,
           "info": false,
           "searching": false,
-          "order": [[6, 'desc']],
+          "order": [[7, 'desc']],
           "columnDefs": [ {
             "targets": 1,
             "orderable": false
