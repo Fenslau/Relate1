@@ -57,11 +57,7 @@ class Top1000 extends Command
 		foreach ($group->groups as &$row) {
 			$id = array_search($row['id'], array_column($group_date->groups, 'id'));
       if (!empty($group_date->groups[$id]['date'])) $row['date'] = $group_date->groups[$id]['date'];
-			if (!empty($group_date->groups[$id]['comments'])) $row['comments'] = $group_date->groups[$id]['comments'];
-			if (!empty($group_date->groups[$id]['views'])) $row['views'] = $group_date->groups[$id]['views'];
-			if (!empty($group_date->groups[$id]['likes'])) $row['likes'] = $group_date->groups[$id]['likes'];
-			if (!empty($group_date->groups[$id]['reposts'])) $row['reposts'] = $group_date->groups[$id]['reposts'];
-			if (!empty($group_date->groups[$id]['reactions'])) $row['reactions'] = $group_date->groups[$id]['reactions'];
+
 		}
 
         $group->write('public/temp/top1000.xlsx');
