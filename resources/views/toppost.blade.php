@@ -24,6 +24,7 @@
   <script>
       $(document).ready( function () {
         $(document).on('click', '.mode', function (e) {
+          $('.mode').removeClass('active');
           e.preventDefault();
           _this = $(this);
           var mode = $(this).attr("mode");
@@ -44,6 +45,7 @@
                   .prop('disabled', false)
                   .find('.icon').removeClass('d-none');
                   _this.find('.spinner-border-sm').addClass('d-none');
+                  _this.addClass('active');
                 $("#posts").html(data.html);
               } else {
                 $('.toast-header').addClass('bg-danger');
