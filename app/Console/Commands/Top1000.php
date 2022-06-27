@@ -55,13 +55,14 @@ class Top1000 extends Command
         $group->getStats($token);
 
 		foreach ($group->groups as &$row) {
+
 			$id = array_search($row['id'], array_column($group_date->groups, 'id'));
       if (!empty($group_date->groups[$id]['date'])) $row['date'] = $group_date->groups[$id]['date'];
-			if (!empty($group_date->groups[$id]['comments'])) $row['comments'] = $group_date->groups[$id]['comments'];
-			if (!empty($group_date->groups[$id]['views'])) $row['views'] = $group_date->groups[$id]['views'];
-			if (!empty($group_date->groups[$id]['likes'])) $row['likes'] = $group_date->groups[$id]['likes'];
-			if (!empty($group_date->groups[$id]['reposts'])) $row['reposts'] = $group_date->groups[$id]['reposts'];
-			if (!empty($group_date->groups[$id]['reactions'])) $row['reactions'] = $group_date->groups[$id]['reactions'];
+			if (!empty($group_date->groups[$id]['comments'])) $row['comments'] = $group_date->groups[$id]['comments']; else $row['comments'] = 0;
+			if (!empty($group_date->groups[$id]['views'])) $row['views'] = $group_date->groups[$id]['views']; else $row['views'] = 0;
+			if (!empty($group_date->groups[$id]['likes'])) $row['likes'] = $group_date->groups[$id]['likes']; else $row['likes'] = 0;
+			if (!empty($group_date->groups[$id]['reposts'])) $row['reposts'] = $group_date->groups[$id]['reposts']; else $row['reposts'] = 0;
+			if (!empty($group_date->groups[$id]['reactions'])) $row['reactions'] = $group_date->groups[$id]['reactions']; else $row['reactions'] = 0;
 		}
 
         $group->write('public/temp/top1000.xlsx');
