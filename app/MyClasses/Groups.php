@@ -437,6 +437,7 @@ retrys:
       $posts = new Toppost();
       $group_ids_all = array_column($this->groups, 'id');
       foreach ($group_ids_all as $group_id) {
+        $comments = $views = $likes = $reposts = 0;
         $comments = array_sum($posts->where('author_id', -$group_id)->pluck('comments')->toArray());
         $views = array_sum($posts->where('author_id', -$group_id)->pluck('views')->toArray());
         $likes = array_sum($posts->where('author_id', -$group_id)->pluck('likes')->toArray());
