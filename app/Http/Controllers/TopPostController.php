@@ -16,7 +16,7 @@ class TopPostController extends Controller
       $info['project_name'] = 'Toppost2409';
       $info['toppost'] = TRUE;
       if (!empty($request->mode)) $mode = $request->mode;
-      else $mode = 'new';
+      else $mode = '6hour';
 
       $ignored = IgnoredGroups::pluck('group_id')->toArray();
       $posts = new Toppost();
