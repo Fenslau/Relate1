@@ -134,7 +134,7 @@
     </tbody>
 </table>
 @isset ($items[0]['comments'])
-<table class="lh-sm table d-none d-md-table table-striped table-bordered table-hover table-sm table-responsive table-reactions">
+<table class="lh-sm table d-none table-striped table-bordered table-hover table-sm table-responsive table-reactions">
     <thead class="thead-dark">
       <tr class="text-center">
         <th class="p-3">№</th>
