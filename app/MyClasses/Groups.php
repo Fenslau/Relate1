@@ -144,7 +144,7 @@ class Groups {
           if (isset($row['likes'])) $item['likes'] = $row['likes'];
           if (isset($row['reposts'])) $item['reposts'] = $row['reposts'];
           if (isset($row['reactions'])) $item['reactions'] = $row['reactions'];
-        if (isset($info['demo']) AND $item['num']%10 != 0) continue;
+  
         $writer->writeSheetRow('Sheet1', $item);
       }
       $writer->writeToFile($filename);
