@@ -30,8 +30,7 @@ class StreamController extends Controller
         			'.num::declension ($user->rules_limit, array('</b>правила в проекте', '</b>правил в проекте', '</b>правил в проекте')).
         			' и закачка <b>'.num::declension ($user->old_post_limit-$user->old_post_fact, array('"</b>старого" поста', '</b>"старых" постов', '</b>"старых" постов')).' из '.$user->old_post_limit.'.</p>';
         			}
-      } else $info['warning'] = '<p class="text-uppercase text-center">Ваш <a href="'.route('tarifs').'">тариф</a> не подходит
-      для этой услуги. Ознакомьтесь с тарифами семейства POST</p>';
+      } else $info['warning'] = '<p class="text-uppercase text-center">Для доступа к полной версии подключте <a href="'.route('tarifs').'">тариф</a> семейства POST</p>';
       $projects = new Projects();
       $my_projects = $projects->where('vkid', session('vkid'))->whereNull('rule')->get()->toArray();
       foreach ($my_projects as &$my_project) {

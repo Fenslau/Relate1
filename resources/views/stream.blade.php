@@ -11,7 +11,7 @@
 
     @if (empty($items))
       <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" alt="Create Project" src="/images/create1.png"></h4>
-      <div class="text-center m-5"><a class="btn btn-success text-uppercase" href="/streamdemo">Демо-версия</a></div>
+      <div class="text-center m-5"><a class="btn btn-success text-uppercase" href="/streamdemo">Посмотреть Демо-версию</a><br /><small>бесплатно</small></div>
     @endif
 
 @if(Session::has('vkid'))
@@ -25,7 +25,7 @@
         {!! $info['warning'] !!}
       </div>
     @endisset
-
+    @isset($info['success'])
       <form action="{{ route('stream-add-project') }}" method="post">
         @csrf
         <div class="input-group mb-3">
@@ -35,7 +35,7 @@
           <input type="text" class="border-success border-left-0 form-control" name="project_name" placeholder="Название">
         </div>
       </form>
-
+    @endisset
     @if (!empty($items))
       <h4>Мои проекты:</h4>
       <div class="pb-3 table-responsive">
