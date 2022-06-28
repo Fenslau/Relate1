@@ -7,6 +7,7 @@ use \VK\Client\VKApiClient;
 use \App\MyClasses\VKUser;
 use \App\MyClasses\Groups;
 use \App\MyClasses\num;
+use App\Models\Top;
 
 class MainController extends Controller
 {
@@ -14,9 +15,9 @@ class MainController extends Controller
       if (session('demo')) session(['demo' => 0, 'vkid' => session('realvkid')]);
       $group = new Groups();
       $group->read('temp/top1000.xlsx');
-
+      $time = date('d.m.y H:i', Top::find(1)->pluck('time'));
       if (count($group->groups)>0) {
-        return view('home', ['items' => $group->groups]);
+        return view('home', ['items' => $group->groups, 'time' => $time]);
       } else return view('home')->with('danger', 'На данный момент невозможно отобразить список топ1000 груп ВК, попробуйте через 5 минут.');
     }
 

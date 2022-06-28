@@ -18,6 +18,7 @@ class CreateTopsTable extends Migration
             $table->string('token')->nullable();
             $table->text('top1000')->nullable();
             $table->integer('current_group')->nullable();
+            $table->integer('time')->nullable();
             $table->timestamps();
         });
     }

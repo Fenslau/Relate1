@@ -31,12 +31,15 @@
 
 @isset ($items)
 @isset ($items[0]['comments'])
-<div class="sticky-top text-center alert alert-light m-0">
+<div class="text-center alert alert-light m-0">
   Статистика
   <div class="d-inline-block custom-control custom-switch">
     <input type="checkbox" name="table_mode" class="custom-control-input" id="table_mode">
     <label class="custom-control-label" for="table_mode"></label>Вовлеченность
   </div>
+</div>
+<div class="text-right">
+  Последнее обновление: {{ $time }}
 </div>
 <script>
   $(document).ready(function () {
