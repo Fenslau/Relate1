@@ -34,7 +34,7 @@ class TopPostController extends Controller
       }
       $items = $items->whereNotIn('topposts.author_id', $ignored)->orderBy('popular', 'desc')->paginate(100)->withQueryString();
       $items = $post_control->authorName($items);
-      $time = date('d.m.y H:i', Top::find(1)->pluck('time'));
+      $time = date('d.m.y H:i', Top::find(1)->time);
       if($request->ajax()) {
         $returnHTML = view('inc.posts', ['dublikat_render' => NULL, 'cut' => 1, 'request' => $request, 'info' => $info, 'items' => $items])->render();
         return response()->json( array('success' => true, 'html'=>$returnHTML) );
