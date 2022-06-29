@@ -70,10 +70,6 @@ class Groups {
   }
   public function write($filename, $rand = NULL) {
 	$progress = new GetProgress(session('vkid'), 'simple_search'.$rand, 'Записывается файл Excel', count($this->groups), 1);
-  $user = new VKUser(session('vkid'));
-  if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
-    $info['demo']=TRUE;
-  }
     $writer = new XLSXWriter();
 														$header = array(
 														  '№'=>'integer',
@@ -144,10 +140,25 @@ class Groups {
           if (isset($row['likes'])) $item['likes'] = $row['likes'];
           if (isset($row['reposts'])) $item['reposts'] = $row['reposts'];
           if (isset($row['reactions'])) $item['reactions'] = $row['reactions'];
-  
+
         $writer->writeSheetRow('Sheet1', $item);
       }
       $writer->writeToFile($filename);
+      try {
+        $xlsx = new SimpleXLSX($filename);
+      }
+      catch (\Exception $exception) {
+        //unlink($filename);
+        //return FALSE;
+      }
+      if ($xlsx->success() AND count( $xlsx->rows()) > 1 ) {
+        $items=array();
+        $writer = new XLSXWriter();
+        foreach($xlsx->rows() as $item_) {
+          if ($item_['num'] % 10 == 0) $writer->writeSheetRow('Sheet1', $item_);
+        }
+        $writer->writeToFile(str_replace('.xlsx', '_.xlsx', $filename));
+      }
   }
 
 

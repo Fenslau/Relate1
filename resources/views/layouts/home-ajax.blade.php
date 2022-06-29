@@ -18,13 +18,25 @@
 
   @isset ($info['search'])
     @isset($info['found'])
-      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
+      @isset ($info['demo'])
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search_') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
+      @else
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
+      @endisset
     @endisset
   @else
     @if(Session::has('vkid'))
-      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @isset ($info['demo'])
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @else
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @endisset
     @else
-      <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @isset ($info['demo'])
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @else
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+      @endisset
     @endif
   @endisset
 
@@ -38,7 +50,7 @@
     <label class="custom-control-label" for="table_mode"></label>Вовлеченность
   </div>
 </div>
-<div class="text-right">
+<div class="">
   Последнее обновление: {{ $time }}
 </div>
 <script>
