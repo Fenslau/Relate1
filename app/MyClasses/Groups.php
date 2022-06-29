@@ -155,7 +155,7 @@ class Groups {
         $items=array();
         $writer = new XLSXWriter();
         foreach($xlsx->rows() as $item_) {
-          if (isset($item_['num']) AND $item_['num'] % 10 != 0) continue;
+          if (is_numeric($item_[0]) AND $item_[0] % 10 != 0) continue;
           $writer->writeSheetRow('Sheet1', $item_);
         }
         $writer->writeToFile(str_replace('.xlsx', '_.xlsx', $filename));
