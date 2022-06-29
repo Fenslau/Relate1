@@ -16,7 +16,7 @@ class MainController extends Controller
       $user = new VKUser(session('vkid'));
       if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
         $info['demo']=TRUE;
-      }
+      } else $info['demo']=NULL;
       $group = new Groups();
       $group->read('temp/top1000.xlsx');
       $time = date('d.m.y H:i', Top::find(1)->time);
