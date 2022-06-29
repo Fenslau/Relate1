@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use \VK\Client\VKApiClient;
 use \XLSXWriter;
 use App\Models\Top;
+use App\Models\VkGroups;
 use \App\MyClasses\Groups;
 
 
