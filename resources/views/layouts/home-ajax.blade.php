@@ -7,11 +7,11 @@
     По вашему запросу не нашлось ни одной групы. Может быть вы допустили в нём ошибку?
   </div>
 @endisset
-@isset ($info['demo'])
+@if (@empty($info['search']) && isset ($info['demo'])
   <div class="w-100 alert alert-warning">
     Демо-поиск: максимум <b>10</b> групп; для просмотра 1000 групп, оплатите полный доступ. В разделе <a href="{{ route('groupsearch') }}">"Группы с открытой стеной"</a> можно скачивать до 100 000 групп.
   </div>
-@endisset
+@endif
 
 @include('inc.obsolete-token')
 
