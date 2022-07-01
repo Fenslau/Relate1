@@ -12,7 +12,7 @@
     <h2 itemprop="headline" class="m-3 text-center text-uppercase" >Поиск групп вконтакте</h2>
     @include('inc.buttons-and-progress', ['link' => 'groupsearch', 'button' => 'Найти группы'])
 
-    <div itemscope itemtype="http://schema.org/Article" class="search-form row pb-5">
+    <div  class="search-form row pb-5">
       <meta itemprop="identifier" content="groupsearch">
       <div class="col-md-8 ">
 
@@ -102,7 +102,7 @@
       </div>
 
 
-      <div class="col-md-4">
+      <div itemscope itemtype="http://schema.org/Article" class="col-md-4">
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           1
         </div>
