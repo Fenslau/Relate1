@@ -50,7 +50,7 @@
         </div>
 
         <div class="row">
-          <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+          <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="wall"><span class="h5 d-block font-weight-bold text-uppercase">Группы с открытой стеной</span>
             Поиск групп, на стене которых любой пользователь может создавать посты и осталять комментарии</label>
           </div>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="row">
-          <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+          <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="comments"><span class="h5 d-block font-weight-bold text-uppercase">Группы с открытыми комментариями к постам</span>
             Поиск групп, на стенах которых можно осталять только комментарии</label>
           </div>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="row">
-          <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+          <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="verify"><span class="h5 d-block font-weight-bold text-uppercase">Верифицированное сообщество</span>
             Это официальные группы известых личностей, музыкантов и компаний, подтвердившие свой статус и помеченные специальным символом "V"</label>
           </div>
@@ -80,7 +80,7 @@
         </div>
 
         <div class="row">
-          <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+          <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="market"><span class="h5 d-block font-weight-bold text-uppercase">Группы с магазином</span>
             Поиск групп, на стене которых есть раздел с продажей товаров или услуг</label>
           </div>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="row">
-          <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
+          <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="open"><span class="h5 d-block font-weight-bold text-uppercase">Открытое сообщество</span>
             Группы, в которые можно вступать всем	</label>
           </div>
@@ -114,7 +114,7 @@
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           2
         </div>
-        <div itemprop="articleBody" class="font-weight-light mb-3">
+        <div  class="font-weight-light mb-3">
           <span class="h6 d-block font-weight-bold">Задайте критерии для поиска групп</span>
           Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать все группы по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
         </div>
