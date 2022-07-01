@@ -102,7 +102,7 @@
       </div>
 
 
-      <div itemscope itemtype="http://schema.org/Article" class="col-md-4">
+      <div  class="col-md-4">
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           1
         </div>
@@ -122,7 +122,7 @@
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           3
         </div>
-        <div itemprop="articleBody" class="font-weight-light mb-3">
+        <div itemscope itemtype="http://schema.org/Article" itemprop="articleBody" class="font-weight-light mb-3">
           <span class="h6 d-block font-weight-bold">Поиск групп</span>
           Нажмите кнопку «Поиск групп». После того как система соберет все группы, в верхней части экрана появится ссылка на скачивание Excel-таблицы, а внизу экрана отобразится первая 1000 групп из файла. ВАЖНО! В бесплатной версии система показывает на экране и в файле только 10 групп из общего количества найденных. Чтобы скачать все группы, оплатите доступ на 3 дня, 1 месяц или 3 месяца. Информацию о тарифах вы можете найти <a href="{{ route('tarifs') }}">здесь</a> или в самом верху экрана.
         </div>
