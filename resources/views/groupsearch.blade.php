@@ -13,6 +13,7 @@
     @include('inc.buttons-and-progress', ['link' => 'groupsearch', 'button' => 'Найти группы'])
 
     <div itemscope itemtype="http://schema.org/Article" class="search-form row pb-5">
+      <meta itemprop="identifier" content="groupsearch">
       <div class="col-md-8 ">
 
         <div class="row">
