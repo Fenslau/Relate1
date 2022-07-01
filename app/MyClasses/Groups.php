@@ -155,7 +155,7 @@ class Groups {
         $items=array();
         $writer = new XLSXWriter();
         $item_[0] = 'Полный список доступен в платной версии';
-        $writer->writeSheetRow('Sheet1', $item_);
+        $writer->writeSheetRow('Sheet1', $item_, array('font-style'=>'bold'));
         foreach($xlsx->rows() as $item_) {
           if (is_numeric($item_[0]) AND $item_[0] % 10 != 0) continue;
           $writer->writeSheetRow('Sheet1', $item_);
