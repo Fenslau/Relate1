@@ -5,6 +5,11 @@
 @section('content')
 
 <div class="container-lg">
+  @if ($info['project_name'] == 'Demo')
+    <div class="alert alert-warning">
+      <p class="text-uppercase text-center">Для доступа к полной версии подключте <a href="{{ route('tarifs') }}">тариф</a> семейства POST</p>
+    </div>
+  @endif
   <h2 class="m-3 text-center text-uppercase">Собрать и анализировать посты</h2>
     <div class="row">
       <div class="col-md-4">

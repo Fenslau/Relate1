@@ -69,7 +69,7 @@ class GroupSearchController extends Controller
       if ($result->num_rows >= 100000 AND !isset($info['demo'])) {
         $info['found'] = '<span class="text-danger"><b>Слишком много групп за раз. </b></span>	Найдено более <b>100 000</b> групп. Группы упорядочены по количеству подписчиков. Если вам нужны остальные (которые не вошли в эти 100 000) , то задайте ограничение в графе "Подписчиков...до" ';
       }
-      $info['found'] .= '. Полный список найденных групп находится в файле Excel. ';
+      if (!isset($info['demo'])) $info['found'] .= '. Полный список найденных групп находится в файле Excel. '; else $info['found'] .= '. Оплатите <a href="'.route('tarifs').'">доступ</a>, чтобы система показала полный список групп по вашему запросу.';
     } else $info['found'] = NULL;
 
     $items = array();

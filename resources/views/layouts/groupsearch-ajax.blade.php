@@ -3,7 +3,7 @@
   <div class="row">
     @isset ($info['found'])
       <div class="w-100 alert alert-success">
-        {!! $info['found'] !!}
+        {! $info['found'] !}
       </div>
     @else
       <div class="w-100 alert alert-warning">

@@ -23,12 +23,12 @@
   @else
     @if(Session::has('vkid'))
       @isset ($info['demo'])
-        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+        <div class="w-100 m-0 alert alert-info" data-toggle="tooltip" title="Полный список доступен в платной версии"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
       @else
         <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
       @endisset
     @else
-        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
+        <div class="w-100 m-0 alert alert-info" data-toggle="tooltip" title="Полный список доступен в платной версии"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать таблицу топ1000групп в формате Excel</a></strong></div>
     @endif
   @endisset
 

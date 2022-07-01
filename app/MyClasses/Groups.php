@@ -154,6 +154,8 @@ class Groups {
       if ($xlsx->success() AND count( $xlsx->rows()) > 1 ) {
         $items=array();
         $writer = new XLSXWriter();
+        $item_[0] = 'Полный список доступен в платной версии';
+        $writer->writeSheetRow('Sheet1', $item_);
         foreach($xlsx->rows() as $item_) {
           if (is_numeric($item_[0]) AND $item_[0] % 10 != 0) continue;
           $writer->writeSheetRow('Sheet1', $item_);
