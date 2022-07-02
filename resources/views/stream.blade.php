@@ -16,7 +16,11 @@
 
     @if (empty($items))
 
-      <div class="text-center m-4"><a class="btn btn-success text-uppercase" href="/streamdemo">Посмотреть Демо-версию</a><br /><small>бесплатно</small></div>
+      <div class="text-center m-4"><a
+        @if(Session::has('vkid'))
+        data-toggle="tooltip" title="Нажмите кнопку 'Вход' и авторизуйтесь через ВК, чтобы протестировать Демо-версию или получить полный доступ к данному разделу"
+        @endif
+        class="btn btn-success text-uppercase" href="/streamdemo">Посмотреть Демо-версию</a><br /><small>бесплатно</small></div>
       <div class="d-flex flex-md-nowrap">
         <img class="w-50" src="/images/H0.jpg" alt="Фильтры по критериям">
         <img class="w-50" src="/images/H01.jpg" alt="Теги, активные авторы, количество запросов">
@@ -25,7 +29,7 @@
         <img class="w-50" src="/images/H02.jpg" alt="Распределение по регионам">
         <img class="w-50" src="/images/H03.jpg" alt="Статистика по авторам">
       </div>
-      <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" alt="Create Project" src="/images/create1.png"></h4>      
+      <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" alt="Create Project" src="/images/create1.png"></h4>
     @endif
 
 @if(Session::has('vkid'))
@@ -117,7 +121,6 @@
       </div>
     @endif
 
-@else <h5 class="text-center">Нажмите кнопку "Вход" и авторизуйтесь через ВК, чтобы протестировать Демо-версию или получить полный доступ к данному разделу</h5>
 @endif
 
   <div class="pb-5">
