@@ -6,6 +6,11 @@
 @section('content')
 
 <div class="container">
+  @isset($info['tarif'])
+    <div class="alert alert-warning">
+      {!! $info['tarif'] !!}
+    </div>
+  @endisset
   <h2 class="m-3 text-center text-uppercase">Собрать и анализировать посты</h2>
 
 
