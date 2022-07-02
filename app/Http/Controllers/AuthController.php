@@ -88,7 +88,10 @@ retry:
         $user_profile = $vk->users()->get($token, array(
           'fields' => 'photo_50, city'
         ));
-        if (!empty($user->demo)) $user_profile[0]['paid_until'] = $user->date;
+        if (!empty($user->demo)) {
+          $user_profile[0]['paid_until'] = $user->date;
+          session(['user_profile' => $user_profile[0]]);
+        }
       } catch (\VK\Exceptions\Api\VKApiAuthException $exception) {
           Session::flush();
           return back()->with('danger', 'Ваша сессия устарела. Залогиньтесь заново');
