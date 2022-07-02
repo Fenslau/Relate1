@@ -15,12 +15,16 @@
 
 
     @if (empty($items))
-
-      <div class="text-center m-4"><a
-        @if(!Session::has('vkid'))
-        data-toggle="tooltip" title="Нажмите кнопку 'Вход' и авторизуйтесь через ВК, чтобы протестировать Демо-версию или получить полный доступ к данному разделу"
-        @endif
-        class="btn btn-success text-uppercase" href="/streamdemo">Посмотреть Демо-версию</a><br /><small>бесплатно</small></div>
+      <div class="d-flex justify-content-between align-items-baseline">
+        <a href="{{ route('home') }}" class="btn btn-sm btn-secondary text-white">На&nbsp;главную</a>
+        <div class="d-flex flex-grow-1 justify-content-center">
+            <div class="text-center m-4"><a
+            @if(!Session::has('vkid'))
+            data-toggle="tooltip" title="Нажмите кнопку 'Вход' и авторизуйтесь через ВК, чтобы протестировать Демо-версию или получить полный доступ к данному разделу"
+            @endif
+            class="btn btn-success text-uppercase" href="/streamdemo"><span class="d-md-inline-block d-none">Посмотреть Демо-версию</span><span class="d-md-none">Демо-версия</span></a><br /><small>бесплатно</small></div>
+          </div>
+      </div>
       <div class="row">
         <img class="col-md-6" src="/images/H0.jpg" alt="Фильтры по критериям">
         <img class="col-md-6" src="/images/H01.jpg" alt="Теги, активные авторы, количество запросов">
