@@ -10,9 +10,9 @@ use \App\MyClasses\VKUser;
 
 class GetUsers {
 
-  //protected $group = array();
+  protected $members_count;
   public function __construct() {
-
+    $this->members_count = 0;
   }
 
   public function groupId($groups = NULL) {
@@ -35,6 +35,7 @@ class GetUsers {
                   $group_get = $vk->groups()->getById($access_token, array(
                       'group_ids'		 => implode(',', array_slice($groups_all, 0, 500)),
                       'lang'   		   => 'ru',
+                      'fields'       => 'members_count',
                       'v' 			     => '5.95'
                   ));
             } catch (\VK\Exceptions\Api\VKApiParamException $exception) {
@@ -43,7 +44,10 @@ class GetUsers {
                 return 'auth vk';
             }
 
-      if (!empty($group_get[0]['id'])) return (array_column($group_get, 'id'));
+      if (!empty($group_get[0]['id'])) {
+        $this->$members_count = array_sum(array_column($group_get, 'members_count'));
+        return (array_column($group_get, 'id'));
+      }
       else return NULL;
   }
 
