@@ -10,7 +10,7 @@ use \App\MyClasses\VKUser;
 
 class GetUsers {
 
-  protected $members_count;
+  public $members_count = 0;
   public function __construct() {
     $this->members_count = 0;
   }
@@ -45,7 +45,7 @@ class GetUsers {
             }
 
       if (!empty($group_get[0]['id'])) {
-        $this->$members_count = array_sum(array_column($group_get, 'members_count'));
+        $this->members_count = array_sum(array_column($group_get, 'members_count'));
         return (array_column($group_get, 'id'));
       }
       else return NULL;
