@@ -40,7 +40,7 @@ class GetUsersController extends Controller
 
         $items = $get_users->fromGroup($groupid, $fields, 'getusers', $request);
         if (!empty($items) AND count($items) < 1000) $info['found'] = 'Всего нашлось <b>'.num::declension (($get_users->members_count), array('</b> подписчик', '</b> подписчика', '</b> подписчиков'));
-        if (!empty($items) AND count($items) >= 1000) $info['found'] = 'Нашлось более 1000 подписчиков';
+        if (!empty($items) AND count($items) >= 1000) $info['found'] = 'Всего нашлось <b>'.num::declension (($get_users->members_count), array('</b> подписчик', '</b> подписчика', '</b> подписчиков'));
         if (!empty($items)) {
           if (!isset($info['demo'])) $info['found'] .= '. Полный их список находится в файле Excel';
         } else $info['warning'] = 'Невозможно определить подписчиков группы, соответствующих заданным критериям';
