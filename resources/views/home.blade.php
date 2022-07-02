@@ -7,6 +7,7 @@
 
 <div class="container-fluid">
   @include('inc.toast')
+  @include('inc.tarif-recall') 
   <div class="row">
 
     @if(Session::has('vkid'))
