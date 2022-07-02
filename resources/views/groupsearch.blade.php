@@ -7,6 +7,7 @@
 
 <div class="container">
   @include('inc.toast')
+  @include('inc.tarif-recall')  
   <form class="" id="search-submit" action="{{ route('groupsearch') }}" method="post">
     @csrf
     <h2 itemprop="headline" class="m-3 text-center text-uppercase" >Поиск групп вконтакте</h2>

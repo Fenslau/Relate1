@@ -12,6 +12,14 @@
     @if (empty($items))
       <h4 class="text-center">Создайте свой новый проект <img style="width: 70px;" alt="Create Project" src="/images/create1.png"></h4>
       <div class="text-center m-5"><a class="btn btn-success text-uppercase" href="/streamdemo">Посмотреть Демо-версию</a><br /><small>бесплатно</small></div>
+      <div class="d-flex flex-md-nowrap">
+        <img class="w-50" src="/images/H0.jpg" alt="Фильтры по критериям">
+        <img class="w-50" src="/images/H01.jpg" alt="Теги, активные авторы, количество запросов">
+      </div>
+      <div class="d-flex flex-md-nowrap">
+        <img class="w-50" src="/images/H02.jpg" alt="Распределение по регионам">
+        <img class="w-50" src="/images/H03.jpg" alt="Статистика по авторам">
+      </div>
     @endif
 
 @if(Session::has('vkid'))

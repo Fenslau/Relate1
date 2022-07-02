@@ -198,7 +198,7 @@ retry:   try {
                                 $items[] = $item;
 
                             }
-    $info['found'] = 'Нашлось <b>'.num::declension (count($items), (array('</b>группа,', '</b>группы,', '</b>групп,'))).' где сидит аудитория, похожая на подписчиков исходной группы';
+    $info['found'] = 'Нашлось <b>'.num::declension (count($index), (array('</b>группа,', '</b>группы,', '</b>групп,'))).' где сидит аудитория, похожая на подписчиков исходной группы';
     $writer->writeToFile('storage/auditoria/'.session('vkid').'_auditoria.xlsx');
 ex:
 //    return view('auditoria', ['items' => $items, 'info' => $info]);

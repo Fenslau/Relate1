@@ -7,6 +7,7 @@
 
 <div class="container-lg pb-5">
   @include('inc.toast')
+  @include('inc.tarif-recall')  
   <form class="" id="search-submit" action="{{ route('new-users') }}" method="post">
     @csrf
     <h2 class="m-3 text-center text-uppercase" >Мониторинг новых подписчиков в группах ВК</h2>

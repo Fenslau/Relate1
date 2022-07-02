@@ -7,6 +7,7 @@
 
 <div class="container">
   @include('inc.toast')
+  @include('inc.tarif-recall')
   <form class="" id="search-submit" action="{{ route('auditoria') }}" method="post">
     @csrf
     <h2 class="m-3 text-center text-uppercase" >Группы с похожей целевой аудиторией</h2>
