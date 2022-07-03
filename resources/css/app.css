@@ -67,6 +67,11 @@
 .service {
 	width: min-content;
 }
+.service a.active, .service a:hover {
+	background-color: #d6f4ff !important;
+	color: blue !important;
+}
+
 .table td, .table th, .table thead th {
 	vertical-align: middle;
 }

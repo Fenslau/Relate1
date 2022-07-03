@@ -28,6 +28,9 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item bg-white rounded px-2 my-1">
+            <a class="nav-link" href="{{ route('home') }}">Топ-1000 групп ВК</a>
+          </li>
+          <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
           </li>
 
@@ -55,6 +58,10 @@
     <nav class="d-none d-sm-flex justify-content-around align-items-start navbar">
 
       <div class="m-1 service">
+        <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('home') }}">Топ-1000 групп ВК</a>
+        <div class="d-none d-md-block text-center lh-sm"><small><small>по количеству подписчиков</small></small></div>
+      </div>
+      <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
         <div class="d-none d-md-block text-center lh-sm"><small><small>из ТОП-1000 групп ВК</small></small></div>
       </div>
@@ -80,6 +87,16 @@
         <p class="d-none d-md-block text-center lh-sm"><small><small>инструмент помогает собрать посты ВК по ключевым словам, следить за упоминаниями о компании в соцсети, собрать активных авторов, провести анализ постов по количеству упоминаний, следить за репутацией компании и многое другое</small></small></p>
       </div>
     </nav>
+    <script>
+       $('document').ready(function() {
+          $('.service a').each(function() {
+              if ($(this).attr('href') == window.location.href)
+              {
+                  $(this).addClass('active');
+              }
+          });
+      });
+    </script>
 
     <div class="conainer">
       <form action="opros" method="post" autocomplete="off">
