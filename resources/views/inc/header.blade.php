@@ -90,7 +90,7 @@
     <script>
        $('document').ready(function() {
           $('.service a').each(function() {
-              if ($(this).attr('href') == window.location.href)
+              if ($(this).attr('href') == window.location.href || $(this).attr('href')+'/' == window.location.href)
               {
                   $(this).addClass('active');
               }
