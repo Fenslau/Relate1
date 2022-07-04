@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" >
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
 </head>
 <body>
 
@@ -31,6 +32,7 @@
   <script src="{{ mix('/js/ajax.js') }}"></script>
   <script src="{{ mix('/js/aside.js') }}"></script>
   <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 @if(env('APP_ENV') == 'production')
   <!-- Yandex.Metrika counter -->
   <script src="//code.jivosite.com/widget.js" data-jv-id="89Nvl6sd5x" async></script>
