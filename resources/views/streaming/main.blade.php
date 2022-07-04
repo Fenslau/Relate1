@@ -11,7 +11,6 @@
         <div class="alert alert-warning m-0">
           <p class="text-uppercase text-center">Для доступа к полной версии подключте <a href="{{ route('tarifs') }}">тариф</a> семейства POST</p>
         </div>
-        <div class="h5 m-0 text-right text-success font-weight-bold">Демо-версия</div>
       </div>
     </div>
 
@@ -31,7 +30,7 @@
           <li><b>Экспорт в Excel</b> поможет вам сохранить данные у себя на компьютере.</li>
         </ul>
 
-        <div class="h5 text-right mb-3 text-success font-weight-bold">Демо-версия</div>
+        <div class="h5 text-center mb-3 text-success text-uppercase">Демо-версия</div>
       </div>
     </div>
 
