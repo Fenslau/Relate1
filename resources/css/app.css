@@ -68,8 +68,7 @@
 	width: min-content;
 }
 .service a.active, .service a:hover {
-	background-color: #d6f4ff !important;
-	color: blue !important;
+	background-color: #fff3cd !important;
 }
 
 .table td, .table th, .table thead th {
@@ -262,5 +261,5 @@ table.dataTable thead th, table.dataTable thead td {
 	padding: 0.3rem;
 }
 body {
-	
+
 }
