@@ -30,7 +30,7 @@
           <li><b>Экспорт в Excel</b> поможет вам сохранить данные у себя на компьютере.</li>
         </ul>
 
-        <div class="h5 text-center mb-3 text-success text-uppercase">Демо-версия</div>
+        <div class="h5 mb-3 text-success text-uppercase">Демо-версия</div>
       </div>
     </div>
 
