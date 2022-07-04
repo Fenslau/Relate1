@@ -6,17 +6,21 @@
 
 <div class="container-lg">
   @if ($info['project_name'] == 'Demo')
-    <div class="alert alert-warning m-0">
-      <p class="text-uppercase text-center">Для доступа к полной версии подключте <a href="{{ route('tarifs') }}">тариф</a> семейства POST</p>
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-warning m-0">
+          <p class="text-uppercase text-center">Для доступа к полной версии подключте <a href="{{ route('tarifs') }}">тариф</a> семейства POST</p>
+        </div>
+        <div class="h5 m-0 text-right text-success font-weight-bold">Демо-версия</div>
+      </div>
     </div>
+
   @endif
   <h2 class="m-1 text-center text-uppercase">Собрать и анализировать посты (упоминания) в соцсети</h2>
   @if ($info['project_name'] == 'Demo')
     <div class="row">
       <div class="col">
-        <h4 class="mt-3 h5 text-uppercase text-success d-inline-block">Что я могу делать в полной версии?</h4>
-        <span class="h5 text-right float-right text-success font-weight-bold">Демо-версия</span>
-
+        <h4 class="mt-3 h5 text-uppercase text-success">Что я могу делать в полной версии?</h4>
         <ul class="demo-stream">
           <li><b>Собирайте упоминания с названием бренда или компании в режиме реального времени.</b> Вы будете в курсе самых свежих комментариев и не пропустите ни одного публичного сообщения (поста), содержащего ключевые фразы.</li>
           <li><b>Задайте нужный период, и система соберет вам упоминания (посты) начиная с выбранной даты по настоящее время.</b> Вы узнаете, что пользователи писали о компании/бренде, и как менялось их мнение, например, в течение года.</li>
@@ -27,9 +31,10 @@
           <li><b>Экспорт в Excel</b> поможет вам сохранить данные у себя на компьютере.</li>
         </ul>
 
-
+        <div class="h5 text-right mb-3 text-success font-weight-bold">Демо-версия</div>
       </div>
     </div>
+
   @endif
 
   @if ($info['project_name'] != 'Demo')
