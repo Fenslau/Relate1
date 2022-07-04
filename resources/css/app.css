@@ -252,3 +252,15 @@ table.dataTable thead th, table.dataTable thead td {
 .text-pink {
 	color: #ee3ec9;
 }
+
+.demo-stream {
+  list-style: url(/images/Галочка.png) inside;
+	padding-left: 0;
+}
+.demo-stream li {
+  line-height: 1.2rem;
+	padding: 0.3rem;
+}
+body {
+	
+}

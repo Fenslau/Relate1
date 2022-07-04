@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Oplata extends Model
 {
     use HasFactory;
+
+    // public function setLastNameAttribute($value) {
+    //     $this->attributes['last_name'] = ucfirst($value);
+    // }
 }
