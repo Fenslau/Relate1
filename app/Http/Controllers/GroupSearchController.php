@@ -31,6 +31,7 @@ class GroupSearchController extends Controller
     if (!empty($request->market)) $where_parsed[] = $db->parse("market = 1");
     if (!empty($request->open)) $where_parsed[] = $db->parse("is_closed = 0");
     if (!empty($request->verify)) $where_parsed[] = $db->parse("verified = 1");
+    if (!empty($request->age_18)) $where_parsed[] = $db->parse("age_limits = 3");
 
     if (count($where_parsed)) $where = "WHERE ".implode(' AND ', $where_parsed);
     else $where = '';
