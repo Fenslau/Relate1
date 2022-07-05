@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('Stream:get')->everyMinute()->withoutOverlapping(365*24*60)->runInBackground()->appendOutputTo('storage/logs/Stream.log');
 
-        $schedule->command('Parse:Groups')->monthlyOn(29, '20:32')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
+        $schedule->command('Parse:Groups')->monthlyOn(5, '07:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
 
         $schedule->command('gen:key')->monthlyOn(11, '13:20')->runInBackground()->appendOutputTo('storage/logs/GenKey.log');
 
