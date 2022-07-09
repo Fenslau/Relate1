@@ -26,6 +26,9 @@ Route::get('/toppost', 'App\Http\Controllers\TopPostController@main')
 Route::post('/groupsearch', 'App\Http\Controllers\GroupSearchController@search')
 ->name('groupsearch');
 
+Route::post('/topusers', 'App\Http\Controllers\TopUsersController@search')
+->name('topusers');
+
 Route::post('/auditoria', 'App\Http\Controllers\AuditoriaSearchController@search')
 ->name('auditoria');
 
@@ -50,6 +53,11 @@ Route::get('/groupsearch', function () {
     session()->flash('previous-route', Route::current()->getName());
     return view('groupsearch');
 })->name('groupsearch');
+
+Route::get('/topusers', function () {
+    session()->flash('previous-route', Route::current()->getName());
+    return view('topusers');
+})->name('topusers');
 
 Route::get('/auditoria', function () {
     session()->flash('previous-route', Route::current()->getName());

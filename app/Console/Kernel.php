@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\ParseGroups::class,
+        Commands\ParseUsers::class,
         Commands\Top1000::class,
         Commands\Top1000date::class,
         Commands\HelperHour::class,
@@ -38,7 +39,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('Stream:get')->everyMinute()->withoutOverlapping(365*24*60)->runInBackground()->appendOutputTo('storage/logs/Stream.log');
 
-        $schedule->command('Parse:Groups')->monthlyOn(5, '07:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
+        $schedule->command('Parse:Groups')->monthlyOn(10, '07:00')->withoutOverlapping(32*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseGroups.log');
+
+        $schedule->command('Parse:Users')->weeklyOn(1, '08:00')->withoutOverlapping(2*24*60)->runInBackground()->appendOutputTo('storage/logs/ParseUsers.log');
 
         $schedule->command('gen:key')->monthlyOn(11, '13:20')->runInBackground()->appendOutputTo('storage/logs/GenKey.log');
 

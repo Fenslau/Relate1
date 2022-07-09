@@ -79,6 +79,11 @@ retry:  $access_token = env('ACCESS_TOKEN');
             sleep(60);
             goto retry;
         }
+        catch(\Throwable $exception) {
+            echo $exception->getMessage()."\n";
+            sleep(60);
+            goto retry;
+        }
         $data_500 = array();
 		    $vk_group = New VkGroups();
         for ($i=0; $i<=499; $i++) {
