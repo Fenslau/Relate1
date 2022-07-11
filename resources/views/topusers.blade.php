@@ -19,7 +19,7 @@
 
         <div class="row">
           <div itemprop="articleBody" class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="name"><span class="h5 d-block font-weight-bold text-uppercase">Имя</span>
+            <label for="name"><span class="h5 d-block font-weight-bold text-uppercase">Имя, Фамилия</span>
             Введите имя, фамилию или её часть в виде ключевого слова для поиска</label>
           </div>
           <div class="col-md-4 form-inline w-100 flex-nowrap align-items-baseline">
@@ -65,7 +65,10 @@
             </label>
           </div>
           <div class="col-md-4">
-              <input class="mt-3 mb-5 form-control" id="sex" type="checkbox" name="sex" value="sex">
+            <select id="sex" class="form-control form-control-sm w-auto overflow-auto" name="sex[]" size="2" multiple>
+              <option value="1">женский</option>
+              <option value="2">мужской</option>
+            </select>
           </div>
         </div>
 
@@ -81,7 +84,7 @@
 
         <div class="row">
           <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="can_send_friend_request"><span class="h5 d-block font-weight-bold text-uppercase">Можно позвать в друзья</span>
+            <label for="can_send_friend_request"><span class="h5 d-block font-weight-bold text-uppercase">Можно добавить в друзья</span>
             </label>
           </div>
           <div class="col-md-4">
@@ -91,7 +94,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="can_post"><span class="h5 d-block font-weight-bold text-uppercase">Можно постить</span>
+            <label for="can_post"><span class="h5 d-block font-weight-bold text-uppercase">Можно постить на стене</span>
             Страницы, на стене которых можно разместить свой пост</label>
           </div>
           <div class="col-md-4">
@@ -136,23 +139,23 @@
         </div>
         <div itemprop="articleBody" class="font-weight-light mb-3">
           <span class="h6 d-block font-weight-bold">Сформулируйте запрос</span>
-          Определите ключевое слово и введите его в поле «Название группы», если в названиях групп присутствует название города, то укажите его здесь. Если вам требуется найти группы ВК, указавшие в настройках профиля название города, то введите его в поле «Город», во всех других случаях оставьте это поле пустым.
+          Если вы хотите найти определённого человека, попробуйте написать часть его имени в соответствующей графе. В случае, если вам нужны люди определённой категории, например музыканты, воспользуйтесь графой ключевое слово. Остальные пункты интуитивно понятны, но помните, что если отметить все из них, это значительно сузит результаты поиска, так как в этом случае будет вестись поиск людей, которые удовлетворяют всем отмеченным критериям.
         </div>
 
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           2
         </div>
         <div  class="font-weight-light mb-3">
-          <span class="h6 d-block font-weight-bold">Задайте критерии для поиска групп</span>
-          Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать все группы по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
+          <span class="h6 d-block font-weight-bold">Задайте критерии для поиска людей</span>
+          Укажите количество подписчиков от и/или до, поставьте галочки напротив важных для вас характеристик поиска. Если вы хотите собрать всех людей по ключевому слову или по принадлежности к городу, то другие поля оставьте пустыми.
         </div>
 
         <div class="font-weight-bold text-pink h1 float-left px-3 pt-0 m-0">
           3
         </div>
         <div itemscope itemtype="http://schema.org/Article" itemprop="articleBody" class="font-weight-light mb-3">
-          <span class="h6 d-block font-weight-bold">Поиск групп</span>
-          Нажмите кнопку «Поиск групп». После того как система соберет все группы, в верхней части экрана появится ссылка на скачивание Excel-таблицы, а внизу экрана отобразится первая 1000 групп из файла. ВАЖНО! В бесплатной версии система показывает на экране и в файле только 10 групп из общего количества найденных. Чтобы скачать все группы, оплатите доступ на 3 дня, 1 месяц или 3 месяца. Информацию о тарифах вы можете найти <a href="{{ route('tarifs') }}">здесь</a> или в самом верху экрана. Помните, что для работы данной услуги нужно авторизоваться ВК.
+          <span class="h6 d-block font-weight-bold">Поиск людей</span>
+          Нажмите кнопку «Найти». После того как система соберет всех пользователей, в верхней части экрана появится ссылка на скачивание Excel-таблицы, а внизу экрана отобразится первая 1000 из файла. ВАЖНО! В бесплатной версии система показывает на экране и в файле только 10 пользователей из общего количества найденных. Чтобы скачать всех, оплатите доступ на 3 дня, 1 месяц или 3 месяца. Информацию о тарифах вы можете найти <a href="{{ route('tarifs') }}">здесь</a> или в самом верху экрана. Помните, что для работы данной услуги нужно авторизоваться ВК.
         </div>
       </div>
     </div>

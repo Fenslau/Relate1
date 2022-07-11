@@ -138,7 +138,7 @@ $(document).ready(function () {
                       .find('.fa-search').removeClass('d-none');
                       _this.find('.spinner-border-sm').addClass('d-none');
 
-                      if (process1 == 'groupsearch' || process1 == 'getusers') {
+                      if (process1 == 'groupsearch' || process1 == 'getusers' || process1 == 'topusers') {
                         $('#new-search').removeClass('d-none');
                         _this.addClass('d-none');
                         $('.search-form').addClass('d-none');

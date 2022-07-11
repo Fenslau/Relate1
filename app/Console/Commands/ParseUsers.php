@@ -61,7 +61,7 @@ class ParseUsers extends Command
           if(isset($items['livejournal'])) $item['livejournal'] = $items['livejournal'];
           if(isset($items['skype'])) $item['skype'] = $items['skype'];
           if(isset($items['occupation']['name'])) $item['occupation'] = $items['occupation']['name'];
-          if(isset($items['relation'])) $item['relation'] = $items['relation'];
+          if(isset($items['status'])) $item['status'] = $items['status'];
           if(isset($items['verified'])) $item['verified'] = $items['verified'];
           if(isset($items['is_closed'])) $item['is_closed'] = $items['is_closed'];
           if(isset($items['can_post'])) $item['can_post'] = $items['can_post'];

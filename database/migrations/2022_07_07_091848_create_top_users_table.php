@@ -31,7 +31,7 @@ class CreateTopUsersTable extends Migration
             $table->string('livejournal')->nullable();
             $table->string('skype')->nullable();
             $table->string('occupation')->nullable();
-            $table->tinyInteger('relation')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->tinyInteger('verified')->nullable();
             $table->tinyInteger('is_closed')->nullable();
             $table->tinyInteger('can_post')->nullable();

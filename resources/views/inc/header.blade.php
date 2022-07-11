@@ -33,6 +33,9 @@
           <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
           </li>
+          <li class="nav-item bg-white rounded px-2 my-1">
+            <a class="nav-link" href="{{ route('topusers') }}">Топ пользователей ВК</a>
+          </li>
 
           <li class="nav-item bg-white rounded px-2 my-1">
             <a class="nav-link" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
@@ -64,6 +67,10 @@
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
         <div class="d-none d-md-block text-center lh-sm"><small><small>из ТОП-1000 групп ВК</small></small></div>
+      </div>
+      <div class="m-1 service">
+        <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('topusers') }}">Топ пользователей ВК</a>
+        <div class="d-none d-md-block text-center lh-sm"><small><small>по количеству подписчиков</small></small></div>
       </div>
 
       <div class="m-1 service">
