@@ -94,6 +94,10 @@ retry:
                     sleep(1);
                     goto retry;
     }
+    catch (\VK\Exceptions\Api\VKApiRateLimitException $exception) {
+          echo $exception->getMessage()."\n";
+          die;
+    }
       return $users_get;
     }
 
