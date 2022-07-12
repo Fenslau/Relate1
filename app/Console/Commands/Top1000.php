@@ -56,8 +56,10 @@ class Top1000 extends Command
         $group->getStats($token);
 
 		foreach ($group->groups as &$row) {
-      if (is_numeric($row['members_count']) AND $row['members_count'] < 1000000) print_r($row);
-      //VkGroups::where('group_id', $row['id'])->delete();
+      if (is_numeric($row['members_count']) AND $row['members_count'] < 1000000) {
+        print_r ($row);
+        VkGroups::where('group_id', $row['id'])->delete();
+      }
 			$id = array_search($row['id'], array_column($group_date->groups, 'id'));
       if (!empty($group_date->groups[$id]['date'])) $row['date'] = $group_date->groups[$id]['date'];
 			if (!empty($group_date->groups[$id]['comments'])) $row['comments'] = $group_date->groups[$id]['comments']; else $row['comments'] = 0;
