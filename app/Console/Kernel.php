@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ParseGroups::class,
         Commands\ParseUsers::class,
         Commands\Top1000::class,
+        Commands\Top1000users::class,
         Commands\Top1000date::class,
         Commands\HelperHour::class,
         Commands\Stream::class,
@@ -47,7 +48,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('Top1000date:get')->everySixHours()->withoutOverlapping()->appendOutputTo('storage/logs/Top1000date.log');
         $schedule->command('Top1000:get')->everyTenMinutes()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000.log');
-
+        $schedule->command('Top1000users:get')->daily()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/Top1000users.log');
 
         $schedule->command('Help:hour')->hourly()->withoutOverlapping()->runInBackground()->appendOutputTo('storage/logs/HelperHour.log');
 

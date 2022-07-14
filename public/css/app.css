@@ -263,3 +263,9 @@ table.dataTable thead th, table.dataTable thead td {
 	padding: 0.3rem;
 }
 
+.max-td {
+	max-width: 16rem;
+	overflow: hidden;
+	text-overflow: ellipsis;	
+}
+
