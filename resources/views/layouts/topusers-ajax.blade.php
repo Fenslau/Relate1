@@ -57,9 +57,9 @@
                   <td>{{ @$item['city'] }}</td>
                   <td>{{ @$item['age'] }}</td>
                   <td>{{ @$item['followers_count'] }}</td>
-                  <td>{{ @$item['about'] }}</td>
-                  <td>{{ @$item['activities'] }}</td>
-                  <td>{{ @$item['occupation'] }}</td>
+                  <td class="max-td">{{ @$item['about'] }}</td>
+                  <td class="max-td">{{ @$item['activities'] }}</td>
+                  <td class="max-td">{{ @$item['occupation'] }}</td>
                   <td>{{ @$item['can_write_private_message'] }}</td>
                   <td>{{ @$item['can_send_friend_request'] }}</td>
                   <td>{{ @$item['can_post'] }}</td>
