@@ -32,24 +32,23 @@ class GroupSearchController extends Controller
     if (!empty($request->open)) $where_parsed[] = $db->parse("is_closed = 0");
     if (!empty($request->verify)) $where_parsed[] = $db->parse("verified = 1");
     if (!empty($request->age_18)) $where_parsed[] = $db->parse("age_limits = 3");
-    else $where_parsed[] = $db->parse("age_limits < 3");
 
     $info = array();
     $user = new VKUser(session('vkid'));
     if ($user->demo === NULL OR strtotime($user->date) < date('U')) {
       $limit=100000;
       $info['demo']=TRUE;
-      if (!empty($request->age_18)) {
+
         $i = 0;
         foreach ($where_parsed as $where_close) {
           if (strpos($where_close, 'age_limits') !== FALSE) unset($where_parsed[$i]);
           $i++;
         }
         $where_parsed[] = $db->parse("age_limits < 3");
-        $info['age_18']=TRUE;
-      }
+        if (!empty($request->age_18)) $info['age_18']=TRUE;
+
     } else $limit = 100000;
-    
+
     if (count($where_parsed)) $where = "WHERE ".implode(' AND ', $where_parsed);
     else $where = '';
     $result = $db->query("SELECT * FROM vk_groups ?p ORDER BY members_count DESC LIMIT 0, ?i", $where, $limit);
