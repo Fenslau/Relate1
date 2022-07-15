@@ -99,17 +99,29 @@
               <input class="mt-3 mb-5 form-control" id="open" type="checkbox" name="open" value="open">
           </div>
         </div>
-        @if (!session('demo') AND (session('vkid') == 151103777 OR session('realvkid') == 151103777 OR session('vkid') == 409899462 OR session('realvkid') == 409899462))
+
           <div class="row">
             <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-              <label for="open"><span class="h5 d-block font-weight-bold text-uppercase">Группа 18+</span>
-              Группы с возрастным ограничением</label>
+              <label for="age_18"><span class="h5 d-block font-weight-bold text-uppercase">Группа 18+</span>
+              Группы с возрастным ограничением
+              @if (!Session::has('user_profile') || strtotime(session('user_profile')['paid_until']) - date('U') < 0)
+                <br />Доступно только для <a class="text-warning" href="{{ route('tarifs') }}">платных</a> тарифов
+              @endif
+              </label>
             </div>
-            <div class="col-md-4">
-                <input class="mt-3 mb-5 form-control" id="open" type="checkbox" name="age_18" value="age_18">
+            <div
+            @if (!Session::has('user_profile') || strtotime(session('user_profile')['paid_until']) - date('U') < 0)
+              data-toggle="tooltip" title="Доступно в платной версии"
+            @endif
+            class="col-md-4">
+                <input class="mt-3 mb-5 form-control"
+                @if (!Session::has('user_profile') || strtotime(session('user_profile')['paid_until']) - date('U') < 0)
+                  disabled
+                @endif
+                 id="age_18" type="checkbox" name="age_18" value="age_18">
             </div>
           </div>
-        @endif
+
       </div>
 
 
