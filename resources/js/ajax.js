@@ -62,7 +62,7 @@ $(document).ready(function () {
   $(document).on('click', '#js-load', function (e) {
         e.preventDefault();
     if (typeof (process1) !== 'undefined') {
-        $('#table-search').removeClass('d-none');
+
         var _this = $(this);
         var rand = getRandomInt(9999);
         var id = 0;
@@ -140,6 +140,7 @@ $(document).ready(function () {
 
                       if (process1 == 'groupsearch' || process1 == 'getusers' || process1 == 'topusers') {
                         $('#new-search').removeClass('d-none');
+                        $('#table-search').removeClass('d-none');
                         _this.addClass('d-none');
                         $('.search-form').addClass('d-none');
                       }
