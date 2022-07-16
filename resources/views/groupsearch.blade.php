@@ -52,7 +52,7 @@
 
         <div class="row">
           <div class="lh-m col-md-8 bg-secondary text-white text-right p-3">
-            <label for="age_18"><span class="h5 d-block font-weight-bold text-uppercase">Группа 18+</span>
+            <label for="age_18"><span class="h5 d-block font-weight-bold text-uppercase">Группы 18+</span>
             Группы с возрастным ограничением
             @if (!Session::has('user_profile') || strtotime(session('user_profile')['paid_until']) - date('U') < 0)
               <br />Доступно только для <a class="text-warning" href="{{ route('tarifs') }}">платных</a> тарифов
@@ -71,7 +71,7 @@
                id="age_18" type="checkbox" name="age_18" value="age_18">
           </div>
         </div>
-        
+
         <div class="row">
           <div  class="lh-m col-md-8 bg-secondary text-white text-right p-3">
             <label for="wall"><span class="h5 d-block font-weight-bold text-uppercase">Группы с открытой стеной</span>
