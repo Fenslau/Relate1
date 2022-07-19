@@ -90,8 +90,8 @@ class MainController extends Controller
       if ($request->stat) $group->getStats(session('token'), $request->rand);
 
       if ($request->date) $group->getLastPostDate(session('token'), $request->rand);
-
-      $group->write('storage/simple_search/'.session('vkid').'_simple_search.xlsx');
+      $info['filetime'] = date('d_m_y_H_i_s');
+      $group->write('storage/simple_search/'.session('vkid').'_simple_search_'.$info['filetime'].'.xlsx');
 
       $returnHTML = view('layouts.home-ajax', ['items' => $group->groups, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );

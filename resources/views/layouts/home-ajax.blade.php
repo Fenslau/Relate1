@@ -18,7 +18,7 @@
 
   @isset ($info['search'])
     @isset($info['found'])
-        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search') }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
+        <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'storage%5Csimple_search%5C'.session('vkid').'_simple_search_'.$info['filetime']) }}">Скачать таблицу результатов поиска групп в формате Excel</a></strong></div>
     @endisset
   @else
     @if(Session::has('vkid'))
@@ -34,7 +34,7 @@
         <div class="w-100 m-0 alert alert-info"><strong><a class="alert-link" href="{{ route('download', 'temp\top1000_') }}">Скачать ТОП-1000 групп (демо-версия)</a></strong></div>
         <div class="w-100 m-0 alert alert-warning">
           Для скачивания полной версии файла выберите подходящий <a href="{{ route('tarifs') }}">тариф</a>
-        </div>        
+        </div>
     @endif
   @endisset
 

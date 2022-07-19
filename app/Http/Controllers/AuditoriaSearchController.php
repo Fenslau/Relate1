@@ -199,7 +199,8 @@ retry:   try {
 
                             }
     $info['found'] = 'Нашлось <b>'.num::declension (count($index), (array('</b>группа,', '</b>группы,', '</b>групп,'))).' где сидит аудитория, похожая на подписчиков исходной группы';
-    $writer->writeToFile('storage/auditoria/'.session('vkid').'_auditoria.xlsx');
+    $info['filetime'] = date('d_m_y_H_i_s');
+    $writer->writeToFile('storage/auditoria/'.session('vkid').'_auditoria_'.$info['filetime'].'.xlsx');
 ex:
 //    return view('auditoria', ['items' => $items, 'info' => $info]);
  $returnHTML = view('layouts.auditoria-ajax', ['items' => $items, 'info' => $info])->render();

@@ -123,7 +123,8 @@ class TopUsersController extends Controller
       if ($count<=1000) $items[] = $item;
       if (isset($info['demo']) AND $count > 9) break;
     }
-    $writer->writeToFile('storage/topusers_search/'.session('vkid').'_topusers_search.xlsx');
+    $info['filetime'] = date('d_m_y_H_i_s');
+    $writer->writeToFile('storage/topusers_search/'.session('vkid').'_topusers_search_'.$info['filetime'].'.xlsx');
     unset($progress);
     $returnHTML = view('layouts.topusers-ajax', ['items' => $items, 'info' => $info])->render();
     return response()->json( array('success' => true, 'html'=>$returnHTML) );

@@ -21,7 +21,7 @@
 
       @isset ($info['found'])
         <div class="w-100 m-0 alert alert-info">
-          <strong><a class="alert-link" href="{{ route('download', 'storage%5Cgetusers%5C'.session('vkid').'_getusers') }}">Скачать таблицу результатов сбора подписчиков в формате Excel</a></strong>
+          <strong><a class="alert-link" href="{{ route('download', 'storage%5Cgetusers%5C'.session('vkid').'_getusers_'.$info['filetime']) }}">Скачать таблицу результатов сбора подписчиков в формате Excel</a></strong>
         </div>
 
         @isset ($items)

@@ -113,7 +113,8 @@ class GroupSearchController extends Controller
       if ($count<=1000) $items[] = $item;
       if (isset($info['demo']) AND $count > 9) break;
     }
-    $writer->writeToFile('storage/open_wall_search/'.session('vkid').'_open_wall_search.xlsx');
+    $info['filetime'] = date('d_m_y_H_i_s');
+    $writer->writeToFile('storage/open_wall_search/'.session('vkid').'_open_wall_search_'.$info['filetime'].'.xlsx');
 
 //    return view('groupsearch', ['items' => $items, 'info' => $info]);
 $returnHTML = view('layouts.groupsearch-ajax', ['items' => $items, 'info' => $info])->render();

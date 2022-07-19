@@ -21,6 +21,9 @@
       </div>
     @elseif (!empty($user_profile->paid_until))
     <div class="d-none text-truncate d-md-block p-2">
+      <a class="text-info" href="{{ route('files') }}">Мои файлы</a>
+    </div>
+    <div class="d-none text-truncate d-md-block p-2">
       Доступ оплачен до
       @if (strtotime($user_profile->paid_until) - date('U') < (3600*24) AND strtotime($user_profile->paid_until) - date('U') > 0)<span class="text-warning">{{ date('d.m.y H:i', strtotime($user_profile->paid_until)) }}</span> @endif
       @if (strtotime($user_profile->paid_until) - date('U') > (3600*24))<span class="text-success">{{ date('d.m.y', strtotime($user_profile->paid_until)) }}</span> @endif

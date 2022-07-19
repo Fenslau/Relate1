@@ -19,9 +19,11 @@ Route::get('/', 'App\Http\Controllers\MainController@main')
 Route::post('/search', 'App\Http\Controllers\MainController@search')
 ->name('search');
 
+Route::get('/files', 'App\Http\Controllers\FilesController@main')
+->name('files');
+
 Route::get('/toppost', 'App\Http\Controllers\TopPostController@main')
 ->name('toppost');
-
 
 Route::post('/groupsearch', 'App\Http\Controllers\GroupSearchController@search')
 ->name('groupsearch');

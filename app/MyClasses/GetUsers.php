@@ -11,8 +11,10 @@ use \App\MyClasses\VKUser;
 class GetUsers {
 
   public $members_count = 0;
+  public $filetime = '';
   public function __construct() {
     $this->members_count = 0;
+    $this->filetime = '';
   }
 
   public function groupId($groups = NULL) {
@@ -350,7 +352,8 @@ retrys:
     if ($mode == 'getusers') {
       if (isset($progress)) unset($progress);
       $progress = new GetProgress(session('vkid'), $mode.$rand, 'Записывается файл Excel', 1, 1);
-      $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers.xlsx');
+      $this->filetime = date('d_m_y_H_i_s');
+      $writer->writeToFile('storage/getusers/'.session('vkid').'_getusers_'.$this->filetime.'.xlsx');
       ksort($items_users);
       return $items_users;
     }

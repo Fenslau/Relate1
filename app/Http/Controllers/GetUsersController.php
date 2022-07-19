@@ -65,7 +65,7 @@ class GetUsersController extends Controller
           $info['token'] = TRUE;
         }
       }
-
+      $info['filetime'] = $get_users->filetime;
       $returnHTML = view('layouts.getusers-ajax', ['request' => $request, 'items' => $items, 'info' => $info])->render();
       return response()->json( array('success' => true, 'html'=>$returnHTML) );
     }
