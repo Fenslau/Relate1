@@ -12,10 +12,13 @@
           <a style="background-color: #ee3ec9;" class="border-0 btn btn-sm btn-info" href="{{ route('files') }}">Личный кабинет</a>
         </div>
       @else
-        <form action="{{ route('auth-vk') }}" method="get">
+        <form class="d-inline" action="{{ route('auth-vk') }}" method="get">
           <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
           <button type="submit" class="btn btn-sm btn-secondary"><i class="fab fa-vk"></i> Вход / Регистрация <span class="d-none d-md-inline"> через ВКонтакте</span></button>
         </form>
+        <div data-toggle="tooltip" title="Авторизуйтесь ВК" class="d-none text-truncate d-md-inline p-2">
+          <a style="background-color: #ee3ec9;" class="border-0 btn btn-sm btn-info" href="#">Личный кабинет</a>
+        </div>
       @endif
     </div>
     @if(!Session::has('token'))
