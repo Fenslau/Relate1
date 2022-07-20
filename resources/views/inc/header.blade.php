@@ -13,7 +13,7 @@
       </div>
       <div class="p-2 mt-4 text-center">
         <h1 class="h3 text-uppercase">МОНИТОРИНГ И АНАЛИЗ СОЦСЕТИ ВКОНТАКТЕ</h1>
-        <p>TOPPOST — площадка для smm-специалистов и всех, кто работает с группами и подписчиками в соцсетях.</p>
+        <p>TOPPOST — это площадка широких возможностей для тех, кто хочет лучше понимать свою аудиторию в ВК</p>
       </div>
     </div>
 
@@ -75,13 +75,13 @@
 
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
-        <div class="d-none d-md-block lh-sm"><small><small>Здесь также можно найти группы:
+        <div class="d-none d-md-block lh-sm"><small><small>Здесь можно найти группы:
           <ul style="padding-left: 1rem;">
             <li>по названию;</li>
             <li>количеству подписчиков;</li>
             <li>группы 18+;</li>
             <li>верифицированные сообщетва;</li>
-            <li>и по многим другим фильтрам</li>
+            <li>и по другим фильтрам</li>
           </ul>
         </small></small></div>
       </div>

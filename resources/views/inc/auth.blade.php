@@ -9,7 +9,7 @@
           <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-sign-out fa-flip-horizontal"></i> Выйти</button>
         </form>
         <div class="d-none text-truncate d-md-inline p-2">
-          <a class="btn btn-sm btn-info" href="{{ route('files') }}">Личный кабинет</a>
+          <a style="background-color: #ee3ec9;" class="border-0 btn btn-sm btn-info" href="{{ route('files') }}">Личный кабинет</a>
         </div>
       @else
         <form action="{{ route('auth-vk') }}" method="get">
