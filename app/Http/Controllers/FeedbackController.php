@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Mail;
 class FeedbackController extends Controller
 {
     public function send(Request $request) {
-        $request->validate([
-            'opros' => 'required|min:15|max:255',
-        ]);
+        if (empty($request->user)) {
+          $request->validate([
+              'opros' => 'required|min:15|max:255',
+          ]);
+        } else {
+          $request->validate([
+              'opros' => 'required|min:15',
+          ]);
+        }
         $data = new stdClass();
                 $data->message = $request->opros;
         try {

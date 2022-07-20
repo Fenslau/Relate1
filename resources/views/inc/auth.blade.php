@@ -4,10 +4,13 @@
   <div class="d-flex align-items-center">
     <div class="mr-auto p-2">
       @if(Session::has('token'))
-        <form action="{{ route('auth-vk-destroy') }}" method="get">
+        <form class="d-inline" action="{{ route('auth-vk-destroy') }}" method="get">
           <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
           <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-sign-out fa-flip-horizontal"></i> Выйти</button>
         </form>
+        <div class="d-none text-truncate d-md-inline p-2">
+          <a class="btn btn-sm btn-info" href="{{ route('files') }}">Личный кабинет</a>
+        </div>
       @else
         <form action="{{ route('auth-vk') }}" method="get">
           <input name="url" type="hidden" value="{{ Route::currentRouteName() }}">
@@ -20,9 +23,6 @@
         Сейчас у вас бесплатный доступ к сайту. Действуют ограничения.
       </div>
     @elseif (!empty($user_profile->paid_until))
-    <div class="d-none text-truncate d-md-block p-2">
-      <a class="text-info" href="{{ route('files') }}">Мои файлы</a>
-    </div>
     <div class="d-none text-truncate d-md-block p-2">
       Доступ оплачен до
       @if (strtotime($user_profile->paid_until) - date('U') < (3600*24) AND strtotime($user_profile->paid_until) - date('U') > 0)<span class="text-warning">{{ date('d.m.y H:i', strtotime($user_profile->paid_until)) }}</span> @endif

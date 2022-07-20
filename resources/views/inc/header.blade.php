@@ -75,7 +75,15 @@
 
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('groupsearch') }}">Группы с&nbsp;открытой стеной</a>
-        <div class="d-none d-md-block text-center lh-sm"><small><small>поможет вам найти группы ВК по различным критериям (город, название, количество подписчиков и пр.) и скачать в файле</small></small></div>
+        <div class="d-none d-md-block lh-sm"><small><small>Здесь также можно найти группы:
+          <ul style="padding-left: 1rem;">
+            <li>по названию;</li>
+            <li>количеству подписчиков;</li>
+            <li>группы 18+;</li>
+            <li>верифицированные сообщетва;</li>
+            <li>и по многим другим фильтрам</li>
+          </ul>
+        </small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('auditoria') }}">Группы с&nbsp;похожей ЦА</a>
@@ -105,13 +113,16 @@
       });
     </script>
 
-    <div class="conainer">
+    <div class="container">
       <form action="opros" method="post" autocomplete="off">
         @csrf
-        <div class="input-group">
+        <div class="input-group input-group-append">
+          <input type="hidden" name="user" value="user">
           <input class="form-control form-control-sm" type="text" name="opros"
             placeholder="ОПРОС: Какие функции нужно добавить на сайт, чтоб он стал для вас более удобным?">
-          <button class="btn btn-sm btn-outline-primary text-white input-group-append" type="submit">Отправить</button>
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-outline-primary text-white" type="submit">Отправить</button>
+            </div>
         </div>
       </form>
     </div>
