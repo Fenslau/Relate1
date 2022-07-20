@@ -62,7 +62,7 @@
 
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('home') }}">Топ-1000 групп ВК</a>
-        <div class="d-none d-md-block lh-sm"><small><small>количество подписчиков; <br />охват; <br />вовлеченность;</small></small></div>
+        <div class="d-none d-md-block lh-sm"><small><small>количество подписчиков; <br />охват; <br />вовлеченность</small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
