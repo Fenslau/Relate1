@@ -62,7 +62,7 @@
 
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('home') }}">Топ-1000 групп ВК</a>
-        <div class="d-none d-md-block text-center lh-sm"><small><small>количество подписчиков, охват, вовлеченность</small></small></div>
+        <div class="d-none d-md-block lh-sm"><small><small>количество подписчиков; <br />охват; <br />вовлеченность;</small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('toppost') }}">Самые обсуждаемые посты</a>
@@ -87,28 +87,29 @@
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('auditoria') }}">Группы с&nbsp;похожей ЦА</a>
-        <p class="d-none d-md-block text-center lh-sm"><small><small>поиск групп с целевой аудиторией, которая интересуется нужной вам темой</small></small></p>
+        <p class="d-none d-md-block lh-sm"><small><small>поиск групп с целевой аудиторией, которая интересуется нужной вам темой</small></small></p>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('getusers') }}">Собрать&nbsp;базу подписчиков групп</a>
         <div class="d-none d-md-block lh-sm"><small><small>Здесь можно собрать пописчиков групп:
           <ul style="padding-left: 1rem;">
-            <li>по основным фильтрам (имя, пол, возраст, ID и др.)</li>
-            <li>по дополнительным (сайт, отношения, день рождения, соцсети и др.)</li>
+            <li>по основным фильтрам (имя, пол, возраст, ID и др.);</li>
+            <li>по дополнительным (сайт, отношения, день рождения, соцсети и др.);</li>
           </ul>
         </small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('new-users') }}">Мониторинг новых&nbsp;подписчиков в группах</a>
-        <p class="d-none d-md-block text-center lh-sm"><small><small>инструмент, предназначенный наблюдать за ростом конкретной группы и видеть кто вступил в нее</small></small></p>
+        <p class="d-none d-md-block lh-sm"><small><small>инструмент, предназначенный наблюдать за ростом конкретной группы и видеть кто вступил в нее</small></small></p>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('stream') }}">Собрать и&nbsp;анализировать посты</a>
-        <div class="d-none d-md-block lh-sm"><small><small>Возможности ресурса: найти посты в ВК по ключевым словам
+        <div class="d-none d-md-block lh-sm"><small><small>Возможности ресурса:
           <ul style="padding-left: 1rem;">
-            <li>Следить за репутацией бренда/компании</li>
-            <li>Проводить маркетинговые исследования</li>
-            <li>Лучше узнать свою аудиторию</li>
+            <li>найти посты в ВК по ключевым словам;</li>
+            <li>следить за репутацией бренда/компании;</li>
+            <li>проводить маркетинговые исследования;</li>
+            <li>лучше узнать свою аудиторию</li>
           </ul>
         </small></small></div>
       </div>
