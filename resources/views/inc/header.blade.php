@@ -100,7 +100,7 @@
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('new-users') }}">Мониторинг новых&nbsp;подписчиков в группах</a>
-        <p class="d-none d-md-block lh-sm"><small><small>инструмент, предназначенный наблюдать за ростом конкретной группы и видеть кто вступил в нее</small></small></p>
+        <p class="d-none d-md-block lh-sm"><small><small>инструмент, предназначенный наблюдать за ростом конкретной группы и видеть, кто вступил в нее</small></small></p>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('stream') }}">Собрать и&nbsp;анализировать посты</a>
