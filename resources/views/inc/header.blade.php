@@ -91,7 +91,12 @@
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('getusers') }}">Собрать&nbsp;базу подписчиков групп</a>
-        <p class="d-none d-md-block text-center lh-sm"><small><small>поможет найти подписчиков в группах по важным для вас характеристикам (пол, возраст, открытый профиль и пр.) и скачать их в файле</small></small></p>
+        <div class="d-none d-md-block lh-sm"><small><small>Здесь можно собрать пописчиков групп:
+          <ul style="padding-left: 1rem;">
+            <li>по основным фильтрам (имя, пол, возраст, ID и др.)</li>
+            <li>по дополнительным (сайт, отношения, день рождения, соцсети и др.)</li>
+          </ul>
+        </small></small></div>
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('new-users') }}">Мониторинг новых&nbsp;подписчиков в группах</a>
@@ -99,7 +104,13 @@
       </div>
       <div class="m-1 service">
         <a class="nav-link bg-white rounded font-weight-bolder vk-top-color lh-m text-center text-uppercase" href="{{ route('stream') }}">Собрать и&nbsp;анализировать посты</a>
-        <p class="d-none d-md-block text-center lh-sm"><small><small>инструмент помогает собрать посты ВК по ключевым словам, следить за упоминаниями о компании в соцсети, собрать активных авторов, провести анализ постов по количеству упоминаний, следить за репутацией компании и многое другое</small></small></p>
+        <div class="d-none d-md-block lh-sm"><small><small>Возможности ресурса: найти посты в ВК по ключевым словам
+          <ul style="padding-left: 1rem;">
+            <li>Следить за репутацией бренда/компании</li>
+            <li>Проводить маркетинговые исследования</li>
+            <li>Лучше узнать свою аудиторию</li>
+          </ul>
+        </small></small></div>
       </div>
     </nav>
     <script>
